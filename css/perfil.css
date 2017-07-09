@@ -1,0 +1,125 @@
+@font-face{
+  font-family: 'claire';
+  src: url(../fonts/ClaireHandRegular.otf);
+}
+
+/*ScrollBar customizada*/
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+  background: transparent;
+}
+::-webkit-scrollbar-button {
+  width: 1px;
+  height: 1px;
+}
+::-webkit-scrollbar-thumb {
+  background: #846246;
+  border: 22px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #56402e;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #493727;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 48px;
+}
+
+
+
+
+
+
+
+
+
+
+.list-amigos::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+.list-amigos::-webkit-scrollbar-button {
+  width: 1px;
+  height: 1px;
+}
+.list-amigos::-webkit-scrollbar-thumb {
+  background: #f4e7cc;
+  border: 22px none #ffffff;
+  border-radius: 50px;
+}
+.list-amigos::-webkit-scrollbar-thumb:hover {
+  background: #eacf9b;
+}
+.list-amigos::-webkit-scrollbar-thumb:active {
+  background: #dfb566;
+}
+.list-amigos::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+body{
+    background-image: url(../img/paisagem-background.png);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container-main{
+  background-color: rgba(86,64,46, .5);
+  border-radius: 10px;
+  padding: 50px;
+  font-size: 18px;
+}
+
+.foto-sect{
+  font-size: 30px;
+  font-family: claire, Verdana;
+  color:#eacf9b;
+
+}
+
+.foto-perfil{
+  font-size: 210px;
+}
+
+.foto-amigos{
+  font-size: 30px;
+}
+
+.painel-fix-padding{
+  margin-top: 20px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.list-amigos{
+  overflow: scroll;
+  height: 170px;
+}
+
+.list-amigos > li{
+  margin:10px;
+}
+
+.painel-progressao, .painel-amigos{
+  height: 250px;
+}
+
+.wrapper{
+  padding: 0px;
+}
+
+.fa-certificate{
+  color: gold;
+}
+
+.botoes-progressao{
+  position: relative;
+ top: 10px;
+}
