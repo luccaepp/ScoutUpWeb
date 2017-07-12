@@ -24,6 +24,9 @@
                                 || (this.radioText != "escoteiro" && this.radioText != "escotista"));
                 return retorno;
             }
+        },
+        mounted(){
+            $( "#radioEscoteiro" ).trigger("click");
         }
     }
 </script>

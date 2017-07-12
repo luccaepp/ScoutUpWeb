@@ -12,17 +12,13 @@
   }
   firebase.initializeApp(config)
 
-  var logado = false
-  var usuarioAutenticado = ''
   firebase.auth().onAuthStateChanged(usuario => {
     if(usuario){
       console.log('conectado')
-      usuarioAutenticado = usuario
-      logado = true
+      EventBus.$emit('usuarioConectado', usuario)
     } else{
       console.log('desconectado')
-      usuarioAutenticado = ''
-      logado = false
+      EventBus.$emit('usuarioDesconectado')
     }
   })
   
@@ -31,10 +27,8 @@ export default{
     return{
       firebase: firebase
     }
-  },
-  methods: {
-
   }
+
 }
  
 </script>

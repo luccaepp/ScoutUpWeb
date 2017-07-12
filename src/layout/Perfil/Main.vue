@@ -2,12 +2,61 @@
     import StPainelInformacoes from './PainelInformacoes.vue'
     import StPainelAmigos from './PainelAmigos.vue'
     import StPainelProgressao from './PainelProgressao.vue'
+    import {EventBus} from './../../eventBus'
+
     export default{
+        data(){
+            return {
+                displayUsuario: '',
+                userDatabase: '',
+                database: '',
+                usuario: ''
+            }
+        },
         components:{
             StPainelInformacoes,
             StPainelAmigos,
             StPainelProgressao
+        },
+        computed:{
+            displayNome(){
+                if(!this.usuario || !this.database){
+                    return 'Carregando...'
+                }
+                let userDatabase = retornaUsuarioDaDatabase(this.usuario.uid, this.database)
+                this.userDatabase = userDatabase
+
+                if(this.usuario.displayName){
+                    this.displayUsuario = this.usuario.displayName
+                } else if(userDatabase){
+                    this.displayUsuario = userDatabase.nome
+                } else if(this.usuario.user){
+                    this.displayUsuario = this.usuario.user
+                } else{
+                    this.displayUsuario = this.usuario.email
+                }
+
+                return this.displayUsuario
+            }
+        },
+        created(){
+            EventBus.$on('transferirDatabase', database =>{
+                this.database = database
+            })
+
+            EventBus.$on('usuarioConectado', usuario =>{
+                this.usuario = usuario
+            })
         }
+    }
+
+    //Funções sem RealTime
+    function retornaUsuarioDaDatabase(uid, database){
+        var snap = ''
+        database.ref('usuario/'+uid+"/").on('value', snapshot => {
+            snap = snapshot.val()
+        })
+        return snap
     }
 </script>
 
@@ -17,11 +66,11 @@
                 <div class="foto-sect text-center">
                     <i class="fa fa-user-circle foto-perfil" aria-hidden="true"></i>
                     <br>
-                    <b>Joesley</b>
+                    <b>{{displayNome}}</b>
                 </div>
             </div>
             <div class="row">
-                <st-painel-informacoes></st-painel-informacoes>
+                <st-painel-informacoes v-bind:userDatabase="userDatabase" v-bind:displayNome="displayNome" v-bind:database="database"></st-painel-informacoes>
             </div>
             <div class="row">
                 <div class="col-lg-2 col-lg-offset-10">
@@ -76,7 +125,7 @@ body{
 }
 
 .painel-fix-padding{
-  margin-top: 20px;
+  top: 20px;
   padding-left: 0;
   padding-right: 0;
 }
