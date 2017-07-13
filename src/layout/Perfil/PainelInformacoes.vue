@@ -9,20 +9,19 @@
                 database: '',
                 grupo: ''
             }
-        },
-        props:["userDatabase", "displayNome"],
+        }, props:['displayNome'],
         methods:{
             displayGrupo(){
-                //Caso o usuário seja nulo, espere por ele...
+                //Caso o usuário ou a database sejam nulos, espere por eles...
                 if(!this.usuario || !this.database){
                     this.grupo = 'Carregando...'
                     return;
                 }
-                /* -- Definindo Grupo e Sessão -- */
+                /* -- Definindo Grupo -- */
                 this.database.ref('usuario/'+this.usuario.uid+'/').once('value', snapshotUsuario => {
                     if(snapshotUsuario.child('grupo').exists()){
                         //O Grupo existe!!! Recuperando o UID do grupo que está salvo no usuário
-                        this.database.ref('/usuario/'+snapshotUsuario.key+'/grupo').once('value', snapshotUIDGrupo => {
+                        this.database.ref('/usuario/'+this.usuario.uid+'/grupo').once('value', snapshotUIDGrupo => {
                             //Recuperando o nome do grupo de /grupo/uid/nome
                             this.database.ref('/grupo/'+snapshotUIDGrupo.val()+'/nome').once('value', snapshotNomeGrupo => {
                                 this.grupo = snapshotNomeGrupo.val()
@@ -33,6 +32,28 @@
                         this.grupo = false
                     }
                 })
+            },
+            displaySessao(){
+                //Caso o usuário ou a database sejam nulos, espere por eles...
+                if(!this.usuario || !this.database){
+                    this.grupo = 'Carregando...'
+                    return;
+                }
+                /* -- Definindo Sessão -- */
+                this.database.ref('usuario/'+this.usuario.uid+'/').once('value', snapshotUsuario => {
+                    if(snapshotUsuario.child('sessao').exists()){
+                        //A Sessão existe!!! Recuperando o UID da sessão que está salva no usuário
+                        this.database.ref('/usuario/'+this.usuario.uid+'/sessao').once('value', snapshotUIDSessao => {
+                            //Recuperando o nome da sessão de /sessao/uid/nome
+                            this.database.ref('/sessao/'+snapshotUIDSessao.val()+'/nome').once('value', snapshotNomeSessao => {
+                                this.sessao = snapshotNomeSessao.val()
+                            })
+                        })
+                    } else{
+                        //A sessão não existe
+                        this.sessao = false
+                    }
+                })
             }
         },
         created(){
@@ -40,14 +61,17 @@
                 this.database = database
                 console.log('database transferida')
                 this.displayGrupo()
+                this.displaySessao()
             })
             EventBus.$on('usuarioConectado', usuario =>{
                 this.usuario = usuario
                 this.displayGrupo()
+                this.displaySessao()
             })
             this.displayGrupo()
         }
     }
+    //Funções Sem RealTime
 
 
 </script>
@@ -63,13 +87,16 @@
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Grupo:</h4>  
-                <p class="list-group-item-text">{{grupo}}</p>
+                <p v-if="grupo" class="list-group-item-text">{{grupo}}</p>
+                <p v-else><a href="#">Adicionar um grupo...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">
-                <h4 class="list-group-item-heading">Sessão:</h4>  <p class="list-group-item-text">Os Magnatas</p>
+                <h4 class="list-group-item-heading">Sessão:</h4>  
+                <p v-if="sessao" class="list-group-item-text">{{sessao}}</p>
+                <p v-else><a href="#">Adicionar uma sessão...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">
-                <h4 class="list-group-item-heading">E-mail:</h4>  <p class="list-group-item-text">email</p>
+                <h4 class="list-group-item-heading">E-mail:</h4>  <p class="list-group-item-text">{{usuario.email}}</p>
                 </li>
             </ul>
 

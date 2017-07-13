@@ -7,28 +7,17 @@
             StTopBarLogado,
             StMain
         },
-        props: ["firebase"],
         data(){
             return {
-                auth: '',
-                database: '',
-                usuario: ''
             }
         },
-        mounted(){
-            //Configurando as variáveis do Firebase
-            this.auth = this.firebase.auth()
-            this.database = this.firebase.database()
-            EventBus.$emit('transferirDatabase', this.database)
+        beforeRouteEnter: (to, from, next) => {
             //Configurando o login no EventBus
             //Handlers para login e logout
-            this.usuario = this.auth.currentUser
-            EventBus.$on('usuarioConectado', usuario => {
-                this.usuario = usuario
-            })
             EventBus.$on('usuarioDesconectado', () =>{
-                //TODO handler que desconecta usuário surte efeito aqui
+                //this.$route.router.go()
             })
+            next()
         }
     }
 

@@ -3,16 +3,10 @@
     import StPainelAmigos from './PainelAmigos.vue'
     import StPainelProgressao from './PainelProgressao.vue'
     import {EventBus} from './../../eventBus'
+    import FuncoesFirebaseDatabase from './../../funcoesGlobais/firebase/funcoesDatabase'
+    
 
     export default{
-        data(){
-            return {
-                displayUsuario: '',
-                userDatabase: '',
-                database: '',
-                usuario: ''
-            }
-        },
         components:{
             StPainelInformacoes,
             StPainelAmigos,
@@ -20,43 +14,26 @@
         },
         computed:{
             displayNome(){
-                if(!this.usuario || !this.database){
+                var usuario = this.$store.state.usuario, database = this.$store.state.database
+                if(!usuario || !database){
+                    console.log('carregando...')
                     return 'Carregando...'
                 }
-                let userDatabase = retornaUsuarioDaDatabase(this.usuario.uid, this.database)
-                this.userDatabase = userDatabase
-
-                if(this.usuario.displayName){
-                    this.displayUsuario = this.usuario.displayName
-                } else if(userDatabase){
-                    this.displayUsuario = userDatabase.nome
-                } else if(this.usuario.user){
-                    this.displayUsuario = this.usuario.user
+                console.log('entrou no displayNome')
+                console.log(this.$store.state.usuarioDatabase)
+                var displayUsuario = ''
+                if(usuario.displayName){
+                    displayUsuario = usuario.displayName
+                } else if(this.$store.state.usuarioDatabase){
+                    displayUsuario = this.$store.state.usuarioDatabase.nome
+                } else if(usuario.user){
+                    displayUsuario = usuario.user
                 } else{
-                    this.displayUsuario = this.usuario.email
+                    displayUsuario = usuario.email
                 }
-
-                return this.displayUsuario
+                return displayUsuario
             }
-        },
-        created(){
-            EventBus.$on('transferirDatabase', database =>{
-                this.database = database
-            })
-
-            EventBus.$on('usuarioConectado', usuario =>{
-                this.usuario = usuario
-            })
         }
-    }
-
-    //Funções sem RealTime
-    function retornaUsuarioDaDatabase(uid, database){
-        var snap = ''
-        database.ref('usuario/'+uid+"/").on('value', snapshot => {
-            snap = snapshot.val()
-        })
-        return snap
     }
 </script>
 
@@ -70,7 +47,7 @@
                 </div>
             </div>
             <div class="row">
-                <st-painel-informacoes v-bind:userDatabase="userDatabase" v-bind:displayNome="displayNome" v-bind:database="database"></st-painel-informacoes>
+                <st-painel-informacoes :displayNome="displayNome"></st-painel-informacoes>
             </div>
             <div class="row">
                 <div class="col-lg-2 col-lg-offset-10">

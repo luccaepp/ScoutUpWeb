@@ -3,52 +3,48 @@
   import StPainelCadastro from './../layout/Cadastro/PainelCadastro.vue'
   import StPainelLogin from './../layout/Cadastro/PainelLogin.vue'
   import {EventBus} from './../eventBus'
+  import FuncoesFirebaseAuth from './../funcoesGlobais/firebase/funcoesAuth'
+  import FuncoesFirebaseDatabase from './../funcoesGlobais/firebase/funcoesDatabase'
 
 
   export default {
     data(){
       return {
-        auth: "",
-        database: ""
+        firebase: this.$store.state.firebase,
+        auth: this.$store.state.auth,
+        database: this.$store.state.database
       }
     },
-    props: ['firebase'],
     components: {
       StTopBarDeslogado,
       StPainelCadastro,
       StPainelLogin
     },
     methods: {
-      cadastrar(usuario){
+      cadastrarUsuarioComEmailESenha(usuario){
           //Criando Usuário no Firebase Auth
           this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then((snapshot) => {
             //Criando Usuário na Database
-            this.criarUsuarioNaDatabase(usuario, snapshot.uid)     
+            FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, usuario, snapshot.uid)     
             this.perfil()
           }).catch((erro) => {
             console.warn("Algo deu errado... "+erro.code+" "+erro.message)
           })
         
       },
-      criarUsuarioNaDatabase(usuario, uid){
-        this.database.ref('/usuario/'+uid+"/").set({nome: usuario.nome, email: usuario.email, tipo: usuario.tipoUsuario})
-        console.info("Usuário Registrado na database com sucesso")
-      }
-      ,
       perfil(){
         this.$router.push('/perfil')
       },
       loginPersonalizado(provider, tipoUsuario){
         this.auth.signInWithPopup(provider).then(resultado => {
           
-          var objUsuarioParaDatabase = montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user, tipoUsuario);
-          console.log(resultado)
+          var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user, tipoUsuario);
           if(!objUsuarioParaDatabase){
             console.error('Erro: impossível montar todos os campos do usuário pelo provedor de autenticação')
             throw 'Erro: impossível montar todos os campos do usuário pelo provedor de autenticação'
           }
 
-          this.criarUsuarioNaDatabase(objUsuarioParaDatabase, resultado.user.uid)
+          FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, objUsuarioParaDatabase, resultado.user.uid)
           //Router manda pra tela de perfil
           this.perfil()
         }).catch(erro => {
@@ -60,14 +56,11 @@
       }
     },
     mounted(){
-      this.auth = this.firebase.auth()
-      this.database = this.firebase.database()
-
       //Tratamentos do Bus
 
       EventBus.$on('loginPersonalizado', data => {
         var tipoLogin = data.tipoLogin, tipoUsuario = data.tipoUsuario
-        var provider = retornaProvider(tipoLogin, this.firebase.auth)
+        var provider = FuncoesFirebaseAuth.retornaProvider(tipoLogin, this.firebase.auth)
         this.loginPersonalizado(provider, tipoUsuario)
 
       })
@@ -84,37 +77,8 @@
     }
   }
 
-  //Funções sem RealTime
-  function usuarioExistenteNaDatabase(usuario, database){
-    database.ref('/usuario/'+usuario.uid)
-  }
-  function retornaProvider(tipo, auth){
-        switch(tipo){
-          case 'facebook': return new auth.FacebookAuthProvider()
-          case 'google': return new auth.GoogleAuthProvider()
-          case 'twitter': return new auth.TwitterAuthProvider()
-        }
-  }
-  function montarObjUsuarioParaDatabaseComObjetoDoAuth(resultadoDoAuth, tipoUsuario){
-    var nome, email, tipo, baseMsgErr='Impossível adquirir o seguinte campo do provedor de autenticação: ';
-    if(resultadoDoAuth.displayName){
-      nome = resultadoDoAuth.displayName
-    } else if(resultadoDoAuth.user){
-      nome = resultadoDoAuth.user
-    } else {
-      console.error(baseMsgErr+'nome de usuário')
-      return false
-    }
 
-    if(resultadoDoAuth.email){
-      email = resultadoDoAuth.email
-    } else{
-      console.error(baseMsgErr+'email')
-      return false
-    }
 
-    return {nome: nome, email: email, tipoUsuario: tipoUsuario}
-  }
     
 </script>
 
@@ -123,7 +87,7 @@
   <div class="container-fluid">
   <st-top-bar-deslogado>
   </st-top-bar-deslogado>
-  <st-painel-cadastro v-on:cadastrar="cadastrar">
+  <st-painel-cadastro v-on:cadastrar="cadastrarUsuarioComEmailESenha">
   </st-painel-cadastro>
   <st-painel-login>
   </st-painel-login>
