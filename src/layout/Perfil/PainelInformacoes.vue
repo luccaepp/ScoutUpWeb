@@ -10,14 +10,27 @@
                 grupo: ''
             }
         }, props:['displayNome'],
-        methods:{
+        computed:{
             displayGrupo(){
+                console.log('display grupo')
+                var usuario = this.$store.state.usuarioDatabase
                 //Caso o usuário ou a database sejam nulos, espere por eles...
-                if(!this.usuario || !this.database){
-                    this.grupo = 'Carregando...'
-                    return;
+                if(!usuario || !this.database){
+                    console.log('não tem usuário ou database')
+                    return false
                 }
-                /* -- Definindo Grupo -- */
+                if(!usuario.grupo){
+                    console.log('o user database não tem grupo')
+                    return false
+                    
+                }
+                var UIDgrupo = usuario.grupo
+                this.database.ref('/grupo/'+UIDgrupo+'nome').once('value', snapshotNomeGrupo => {
+                    this.grupo = snapshotNomeGrupo.val()
+                })
+                return this.grupo
+                
+                /* -- Definindo Grupo -- 
                 this.database.ref('usuario/'+this.usuario.uid+'/').once('value', snapshotUsuario => {
                     if(snapshotUsuario.child('grupo').exists()){
                         //O Grupo existe!!! Recuperando o UID do grupo que está salvo no usuário
@@ -32,13 +45,15 @@
                         this.grupo = false
                     }
                 })
+                */
             },
             displaySessao(){
                 //Caso o usuário ou a database sejam nulos, espere por eles...
                 if(!this.usuario || !this.database){
-                    this.grupo = 'Carregando...'
+                    this.sessao = 'Carregando...'
                     return;
                 }
+                                console.log('display Sessão')
                 /* -- Definindo Sessão -- */
                 this.database.ref('usuario/'+this.usuario.uid+'/').once('value', snapshotUsuario => {
                     if(snapshotUsuario.child('sessao').exists()){
@@ -60,15 +75,10 @@
             EventBus.$on('transferirDatabase', database =>{
                 this.database = database
                 console.log('database transferida')
-                this.displayGrupo()
-                this.displaySessao()
             })
             EventBus.$on('usuarioConectado', usuario =>{
                 this.usuario = usuario
-                this.displayGrupo()
-                this.displaySessao()
             })
-            this.displayGrupo()
         }
     }
     //Funções Sem RealTime
@@ -87,7 +97,7 @@
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Grupo:</h4>  
-                <p v-if="grupo" class="list-group-item-text">{{grupo}}</p>
+                <p v-if="displayGrupo" class="list-group-item-text">{{displayGrupo}}</p>
                 <p v-else><a href="#">Adicionar um grupo...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">
