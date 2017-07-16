@@ -1,89 +1,48 @@
 <script>
     import {EventBus} from './../../eventBus'
+    import state from '../../store/state'
+    import firebase from '../../funcoesGlobais/firebase/centralFirebase.js'
 
-    export default{
+    var vm = {
+        firebase: {
+
+        },
         data(){
             return {
-                sessao: '',
-                usuario: '',
-                database: '',
-                grupo: ''
-            }
-        }, props:['displayNome'],
-        computed:{
-            displayGrupo(){
-                console.log('display grupo')
-                var usuario = this.$store.state.usuarioDatabase
-                //Caso o usuário ou a database sejam nulos, espere por eles...
-                if(!usuario || !this.database){
-                    console.log('não tem usuário ou database')
-                    return false
-                }
-                if(!usuario.grupo){
-                    console.log('o user database não tem grupo')
-                    return false
-                    
-                }
-                var UIDgrupo = usuario.grupo
-                this.database.ref('/grupo/'+UIDgrupo+'nome').once('value', snapshotNomeGrupo => {
-                    this.grupo = snapshotNomeGrupo.val()
-                })
-                return this.grupo
-                
-                /* -- Definindo Grupo -- 
-                this.database.ref('usuario/'+this.usuario.uid+'/').once('value', snapshotUsuario => {
-                    if(snapshotUsuario.child('grupo').exists()){
-                        //O Grupo existe!!! Recuperando o UID do grupo que está salvo no usuário
-                        this.database.ref('/usuario/'+this.usuario.uid+'/grupo').once('value', snapshotUIDGrupo => {
-                            //Recuperando o nome do grupo de /grupo/uid/nome
-                            this.database.ref('/grupo/'+snapshotUIDGrupo.val()+'/nome').once('value', snapshotNomeGrupo => {
-                                this.grupo = snapshotNomeGrupo.val()
-                            })
-                        })
-                    } else{
-                        //O grupo não existe
-                        this.grupo = false
-                    }
-                })
-                */
-            },
-            displaySessao(){
-                //Caso o usuário ou a database sejam nulos, espere por eles...
-                if(!this.usuario || !this.database){
-                    this.sessao = 'Carregando...'
-                    return;
-                }
-                                console.log('display Sessão')
-                /* -- Definindo Sessão -- */
-                this.database.ref('usuario/'+this.usuario.uid+'/').once('value', snapshotUsuario => {
-                    if(snapshotUsuario.child('sessao').exists()){
-                        //A Sessão existe!!! Recuperando o UID da sessão que está salva no usuário
-                        this.database.ref('/usuario/'+this.usuario.uid+'/sessao').once('value', snapshotUIDSessao => {
-                            //Recuperando o nome da sessão de /sessao/uid/nome
-                            this.database.ref('/sessao/'+snapshotUIDSessao.val()+'/nome').once('value', snapshotNomeSessao => {
-                                this.sessao = snapshotNomeSessao.val()
-                            })
-                        })
-                    } else{
-                        //A sessão não existe
-                        this.sessao = false
-                    }
-                })
+                grupo: '',
+                sessao: ''
             }
         },
-        created(){
-            EventBus.$on('transferirDatabase', database =>{
-                this.database = database
-                console.log('database transferida')
-            })
-            EventBus.$on('usuarioConectado', usuario =>{
-                this.usuario = usuario
-            })
+        props:['displayNome'],
+        watch: {
+            retornaUsuarioDatabase(novo, velho){
+                displayGrupo(novo, this)
+                displaySessao(novo, this)
+            }
+        },
+        computed:{
+            retornaUsuarioDatabase(){
+                return this.$store.state.usuarioDatabase
+            }
         }
     }
-    //Funções Sem RealTime
+
+//     //Funções Separadas que geraram loop infinito como computed//
+function displayGrupo(usuarioDatabase, vm){
+    if(usuarioDatabase && usuarioDatabase.grupo){
+        vm.$bindAsObject('grupo', firebase.database().ref('/grupo/'+usuarioDatabase.grupo))
+    }
+}
+function displaySessao(usuarioDatabase, vm){
+
+    if(usuarioDatabase && usuarioDatabase.sessao){
+        vm.$bindAsObject('sessao', firebase.database().ref('/sessao/'+usuarioDatabase.sessao))
+            console.log(vm)
+    }
+}
 
 
+export default vm
 </script>
 
 
@@ -97,16 +56,20 @@
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Grupo:</h4>  
-                <p v-if="displayGrupo" class="list-group-item-text">{{displayGrupo}}</p>
-                <p v-else><a href="#">Adicionar um grupo...</a></p>
+                <p v-if="grupo" class="list-group-item-text">{{grupo.nome}}</p>
+                <p v-else><a href="/cadastroNaArea">Adicionar um grupo...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Sessão:</h4>  
-                <p v-if="sessao" class="list-group-item-text">{{sessao}}</p>
-                <p v-else><a href="#">Adicionar uma sessão...</a></p>
+                <p v-if="sessao" class="list-group-item-text">{{sessao.nome}}</p>
+                <p v-else><a href="/cadastroNaArea">Adicionar uma sessão...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">
-                <h4 class="list-group-item-heading">E-mail:</h4>  <p class="list-group-item-text">{{usuario.email}}</p>
+                <h4 class="list-group-item-heading">E-mail:</h4>  
+                <p class="list-group-item-text">
+                    <span v-if="$store.state.usuario">{{$store.state.usuario.email}}</span>
+                    <span v-else>Carregando...</span>
+                </p>
                 </li>
             </ul>
 

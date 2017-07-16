@@ -73,19 +73,6 @@
 
 <style>
 
-
-
-body{
-    background-image: url(../../assets/paisagem-background.png);
-}
-
-.container-main{
-  background-color: rgba(86,64,46, .5);
-  border-radius: 10px;
-  padding: 50px;
-  font-size: 18px;
-}
-
 .foto-sect{
   font-size: 30px;
   font-family: claire, Verdana;
@@ -102,7 +89,7 @@ body{
 }
 
 .painel-fix-padding{
-  top: 20px;
+  top: 15px;
   padding-left: 0;
   padding-right: 0;
 }

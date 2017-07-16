@@ -1,3 +1,4 @@
+import { firebaseMutations } from 'vuexfire'
 export default {
     'MUDAR_USUARIO'(state, payload){
         console.log('mudando usuario')
@@ -7,5 +8,6 @@ export default {
         console.log('mudando usuario database')
         console.log(payload)
         state.usuarioDatabase = payload
-    }
+    },
+    ...firebaseMutations
 }

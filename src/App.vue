@@ -7,15 +7,20 @@ export default{
       firebase: this.$store.state.firebase
     }
   },
-  created(){
+  beforeCreate(){
     EventBus.$on('usuarioConectado', usuario =>{
       console.log('commitando o mudar usuario')
-      this.$store.commit('MUDAR_USUARIO', usuario)
+      this.$store.commit('MUDAR_USUARIO', usuario || false)
       console.log(usuario.uid)
-      FuncoesFirebaseDatabase.prepararCommitDoChangeDoUsuarioDaDatabase(usuario.uid, this.firebase.database(), this.$store)
+      //FuncoesFirebaseDatabase.prepararCommitDoChangeDoUsuarioDaDatabase(usuario.uid, this.firebase.database(), this.$store)
 
     })
-
+    EventBus.$on('usuarioDesconectado', () =>{
+      var path = this.$route.path
+     if (path !== '/cadastro' || path !== '/') {
+          this.$router.replace('/cadastro')
+        }
+    })
   }
 
 }
@@ -30,6 +35,14 @@ export default{
 
 
 <style>
+
+  .container-main{
+  background-color: rgba(86,64,46, .5);
+  border-radius: 10px;
+  padding: 50px;
+  font-size: 18px;
+}
+
   body{
     background-attachment: fixed;
     background-position: center;

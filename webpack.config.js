@@ -14,8 +14,11 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders: {
-          }
+          loaders: [
+            {test: /\.woff$/, loader: 'url?limit=10240&mimetype=application/font-woff'},
+            {test: /\.ttf$/, loader: 'url?limit=10240&mimetype=application/x-font-ttf'},
+            {test: /\.eot$/, loader: 'url?limit=10240&mimetype=application/vnd.ms-fontobject'}
+          ]
           // other vue-loader options go here
         }
       },
@@ -30,7 +33,8 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]'
         }
-      }
+      },
+      
     ]
   },
   resolve: {

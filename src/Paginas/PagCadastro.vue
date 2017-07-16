@@ -74,6 +74,9 @@
         })
       })
 
+    },
+    beforeCreate(){
+      document.body.className='cadastro'
     }
   }
 
@@ -98,11 +101,14 @@
 
 <style>
   body{
-    background-image: url(../assets/baloes.jpg);
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+  }
+
+  body.cadastro{
+    background-image: url(../assets/baloes.jpg);
   }
 
   .img-container{

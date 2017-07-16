@@ -7,17 +7,8 @@
             StTopBarLogado,
             StMain
         },
-        data(){
-            return {
-            }
-        },
-        beforeRouteEnter: (to, from, next) => {
-            //Configurando o login no EventBus
-            //Handlers para login e logout
-            EventBus.$on('usuarioDesconectado', () =>{
-                //this.$route.router.go()
-            })
-            next()
+        beforeCreate(){
+            document.body.className = 'home'
         }
     }
 
@@ -29,3 +20,9 @@
     </div>
 
 </template>
+
+<style>
+    body.home{
+        background-image: url('../assets/paisagem-background.png')
+    }
+</style>

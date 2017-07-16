@@ -17,6 +17,11 @@
                 return this.$store.state.usuarioDatabase.nome
             }
 
+        },
+        methods: {
+            logout(){
+                this.$store.state.auth.signOut()
+            }
         }
     }
 
@@ -37,8 +42,8 @@
         </li>
     </ul>
     <template slot="lis-login">
-        <li><a href="#" @click="acessarPerfil()"><span class="glyphicon glyphicon-user"></span> {{displayUsuario}}</a></li>
-        <li><a href="index.html"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>       
+        <li><a href="/perfil"><span class="glyphicon glyphicon-user"></span> {{displayUsuario}}</a></li>
+        <li><a href="#" @click.prevent="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>       
     </template>
     </st-top-bar-prototipo>
     
