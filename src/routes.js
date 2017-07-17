@@ -2,6 +2,7 @@ import PagInicial from './Paginas/PagInicial.vue'
 import PagCadastro from './Paginas/PagCadastro.vue'
 import PagPerfil from './Paginas/PagPerfil.vue'
 import PagCadastroNaArea from './Paginas/PagCadastroNaArea.vue'
+import PagCadastrarGrupo from './Paginas/PagCadastrarGrupo.vue'
 
 export default [
     {
@@ -19,5 +20,9 @@ export default [
     {
         path: "/cadastroNaArea",
         component: PagCadastroNaArea
+    },
+    {
+      path: "/cadastrarGrupo",
+      component: PagCadastrarGrupo
     }
 ]

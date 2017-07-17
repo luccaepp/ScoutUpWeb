@@ -23,6 +23,18 @@
         computed:{
             retornaUsuarioDatabase(){
                 return this.$store.state.usuarioDatabase
+            },
+            retornaLinkGrupo(){
+              var usuarioDatabase = this.retornaUsuarioDatabase
+              if(!usuarioDatabase){
+                return '#'
+              }
+              console.log()
+              if(usuarioDatabase.tipo == 'escoteiro'){
+                return '/cadastroNaArea'
+              } else{
+                return '/cadastrarGrupo'
+              }
             }
         }
     }
@@ -55,17 +67,17 @@ export default vm
                 <h4 class="list-group-item-heading">Nome:</h4>  <p class="list-group-item-text">{{displayNome}}</p>
                 </li>
                 <li class="list-group-item list-group-item-info">
-                <h4 class="list-group-item-heading">Grupo:</h4>  
+                <h4 class="list-group-item-heading">Grupo:</h4>
                 <p v-if="grupo" class="list-group-item-text">{{grupo.nome}}</p>
-                <p v-else><a href="/cadastroNaArea">Adicionar um grupo...</a></p>
+                <p v-else><a :href="retornaLinkGrupo">Adicionar um grupo...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">
-                <h4 class="list-group-item-heading">Sessão:</h4>  
+                <h4 class="list-group-item-heading">Sessão:</h4>
                 <p v-if="sessao" class="list-group-item-text">{{sessao.nome}}</p>
                 <p v-else><a href="/cadastroNaArea">Adicionar uma sessão...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">
-                <h4 class="list-group-item-heading">E-mail:</h4>  
+                <h4 class="list-group-item-heading">E-mail:</h4>
                 <p class="list-group-item-text">
                     <span v-if="$store.state.usuario">{{$store.state.usuario.email}}</span>
                     <span v-else>Carregando...</span>
