@@ -17,7 +17,8 @@ export default{
     })
     EventBus.$on('usuarioDesconectado', () =>{
       var path = this.$route.path
-     if (path !== '/cadastro' || path !== '/') {
+
+     if (path !== '/cadastro' && path != '/') {
           this.$router.replace('/cadastro')
         }
     })
