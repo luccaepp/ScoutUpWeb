@@ -74,7 +74,11 @@
             </div>
             </div>
         </div>
+        <div v-if="this.$store.state.usuarioDatabase.tipo == escotista">
+          <p>ESCOTISTAA</p>
+        </div>
     </div>
+
 </template>
 
 

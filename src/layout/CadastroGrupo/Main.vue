@@ -5,7 +5,7 @@
         firebase() {
             return {
                 estados: this.retornaDatabase.ref('/estados/')
-            }   
+            }
         },
         data(){
             return {
@@ -59,7 +59,7 @@
                                     <option disabled>Selecione um Estado</option>
                                     <template v-for="estado in estados">
                                         <option :value="estado.nome">{{estado.sigla}}</option>
-                                    </template>     
+                                    </template>
                                 </select>
                             </div>
                             <div class="form-group col-xs-3">
@@ -82,7 +82,11 @@
                 </div>
             </div>
         </div>
+        <div v-if="this.$store.state.usuarioDatabase">
+          <p v-if="this.$store.state.usuarioDatabase.tipo == 'escotista'">ESCOTISTAAA</p>
+        </div>
     </div>
+
 </template>
 
 
