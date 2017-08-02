@@ -27,8 +27,8 @@
             }
         },
         methods: {
-          buscarGrupo(){
-
+          selecionarGrupo(evento){
+            console.log(evento)
           }
         },
         created(){
@@ -58,7 +58,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <tr v-for="grupo in listaFiltrada">
+                      <tr v-for="grupo in listaFiltrada" @click="selecionarGrupo(grupo)">
                           <td>{{grupo.nome}}</td>
                       </tr>
                   </tbody>
@@ -74,8 +74,8 @@
             </div>
             </div>
         </div>
-        <div v-if="this.$store.state.usuarioDatabase.tipo == escotista">
-          <p>ESCOTISTAA</p>
+        <div v-if="this.$store.state.usuarioDatabase">
+          <p v-if="this.$store.state.usuarioDatabase.tipo == 'escotista'">ESCOTISTAA</p>
         </div>
     </div>
 

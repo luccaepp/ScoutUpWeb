@@ -19,8 +19,8 @@
                 }
             },
             camposValidos(){
-                let retorno = !(this.txtNome.length > 40 || this.txtNome.length <= 3 || 
-                                this.txtSenha.length < 5 || this.txtSenha != this.txtConfirmarSenha 
+                let retorno = !(this.txtNome.length > 40 || this.txtNome.length <= 3 ||
+                                this.txtSenha.length < 5 || this.txtSenha != this.txtConfirmarSenha
                                 || (this.radioText != "escoteiro" && this.radioText != "escotista"));
                 return retorno;
             }
@@ -32,24 +32,24 @@
 </script>
 
 <template>
-    <div class="col-lg-5 col-lg-offset-1 panel panel-warning caixombra">
-        <div class="panel-heading">
+    <div class="col-lg-5 col-lg-offset-1 panel panel-warning caixombra panel-auth">
+        <div class="panel-heading panel-heading-cadastro">
             <div class="row">
                 <div class="col-xs-6 col-xs-offset-3 img-container">
-                    <img class="scout-image" src="../../assets/logo_scoutup_maior.png" alt="Logo do ScoutUp!">  
-                </div>            
+                    <img class="scout-image" src="../../assets/logo_scoutup_maior.png" alt="Logo do ScoutUp!">
+                </div>
             </div>
             <div class="row">
                 <h2 class="col-xs-6 col-xs-offset-3 text-center" id="cad">Cadastre-se</h2>
             </div>
         </div>
-    <div class="panel-body">
+    <div class="panel-body panel-body-cadastro">
       <div class="row">
         <form>
-            <p>Sou um: </p>   
-            
+            <p>Sou um: </p>
+
             <label class="radio-inline" for="radioEscoteiro"><input type="radio" id="radioEscoteiro" name="radioUser" value="escoteiro" v-model="radioText"> Escoteiro</label>
-            
+
             <label class="radio-inline" for="radioEscotista"><input type="radio" id="radioEscotista" name="radioUser" value="escotista" v-model="radioText"> Escotista</label>
         </form>
         <div class="form-group">
@@ -67,4 +67,3 @@
     </div>
   </div>
 </template>
-

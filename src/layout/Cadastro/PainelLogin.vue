@@ -34,24 +34,24 @@
         },
         mounted(){
             $( "#radioEscoteiroLogin" ).trigger("click");
-            
+
         }
     }
 </script>
 
 <template>
-    <div class="col-lg-5 panel panel-info caixombra">
-        <div class="panel-heading">
+    <div class="col-lg-5 panel panel-info caixombra panel-auth">
+        <div class="panel-heading panel-heading-login">
             <div class="row">
                 <div class="col-xs-6 col-xs-offset-3 img-container">
-                    <img class="scout-image" src="../../assets/logo-azul.png" alt="Logo do ScoutUp!">  
-                </div>            
+                    <img class="scout-image" src="../../assets/logo-azul.png" alt="Logo do ScoutUp!">
+                </div>
             </div>
             <div class="row">
                 <h2 class="col-xs-6 col-xs-offset-3 text-center" id="cad">FAÇA LOGIN</h2>
             </div>
         </div>
-    <div class="panel-body">
+    <div class="panel-body panel-body-login">
       <div class="row">
         <div class="form-group text-center">
           <p class="text-left text-info">Login Usual</p>
@@ -60,12 +60,12 @@
         <hr>
         <p class="text-left text-info">Login Personalizado</p>
         <form class="text-left col-xs-6">
-            <span class="apenas">(Apenas se esta é sua primeira vez aqui)</span> 
+            <span class="apenas">(Apenas se esta é sua primeira vez aqui)</span>
             <br>
-            <span class="text-info"> Sou um: </span>   
-            
+            <span class="text-info"> Sou um: </span>
+
             <label class="radio-inline" for="radioEscoteiroLogin"><input type="radio" id="radioEscoteiroLogin" name="radioUserLogin" value="escoteiro" v-model="radioText"> Escoteiro</label>
-            
+
             <label class="radio-inline" for="radioEscotistaLogin"><input type="radio" id="radioEscotistaLogin" name="radioUserLogin" value="escotista" v-model="radioText"> Escotista</label>
 
 

@@ -5,39 +5,36 @@
   import {EventBus} from './../eventBus'
   import FuncoesFirebaseAuth from './../funcoesGlobais/firebase/funcoesAuth'
   import FuncoesFirebaseDatabase from './../funcoesGlobais/firebase/funcoesDatabase'
+  import { mapGetters } from 'vuex'
 
 
   export default {
-    data(){
-      return {
-        firebase: this.$store.state.firebase,
-        auth: this.$store.state.auth,
-        database: this.$store.state.database
-      }
-    },
     components: {
       StTopBarDeslogado,
       StPainelCadastro,
       StPainelLogin
+    },
+    computed: {
+      ...mapGetters({database: 'getDatabase', firebase: 'getFirebase', auth: 'getAuth'})
     },
     methods: {
       cadastrarUsuarioComEmailESenha(usuario){
           //Criando Usuário no Firebase Auth
           this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then((snapshot) => {
             //Criando Usuário na Database
-            FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, usuario, snapshot.uid)     
+            FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, usuario, snapshot.uid)
             this.perfil()
           }).catch((erro) => {
             console.warn("Algo deu errado... "+erro.code+" "+erro.message)
           })
-        
+
       },
       perfil(){
         this.$router.push('/perfil')
       },
       loginPersonalizado(provider, tipoUsuario){
         this.auth.signInWithPopup(provider).then(resultado => {
-          
+
           var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user, tipoUsuario);
           if(!objUsuarioParaDatabase){
             console.error('Erro: impossível montar todos os campos do usuário pelo provedor de autenticação')
@@ -57,7 +54,7 @@
     },
     mounted(){
       //Tratamentos do Bus
-
+      console.log(this.database, this.firebase, this.auth)
       EventBus.$on('loginPersonalizado', data => {
         var tipoLogin = data.tipoLogin, tipoUsuario = data.tipoUsuario
         var provider = FuncoesFirebaseAuth.retornaProvider(tipoLogin, this.firebase.auth)
@@ -82,7 +79,7 @@
 
 
 
-    
+
 </script>
 
 
@@ -95,7 +92,7 @@
   <st-painel-login>
   </st-painel-login>
   </div>
-   
+
 
 </template>
 
@@ -121,14 +118,15 @@
     flex-direction: column;
 }
 
-  .panel{
+  .panel-auth{
     padding-left: 0;
     padding-right: 0;
     margin-top:100px;
     opacity: .92;
   }
 
-  .panel-body, .panel-heading{
+  .panel-body-cadastro, .panel-heading-cadastro,
+   .panel-body-login, .panel-heading-login{
     padding: 40px;
     padding-bottom: 0;
   }
@@ -149,4 +147,3 @@
 
 
 </style>
-

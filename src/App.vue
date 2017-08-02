@@ -25,11 +25,11 @@ export default{
   }
 
 }
- 
+
 </script>
 
 <template>
-  <router-view v-bind:firebase="firebase"></router-view>
+  <router-view :firebase="firebase"></router-view>
 </template>
 
 
@@ -49,6 +49,7 @@ export default{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    overflow-x: hidden;
   }
   /*ScrollBar customizada*/
 
@@ -76,4 +77,5 @@ export default{
   background-color: transparent;
   border-radius: 48px;
 }
+
 </style>

@@ -4,7 +4,7 @@
     import StPainelProgressao from './PainelProgressao.vue'
     import {EventBus} from './../../eventBus'
     import FuncoesFirebaseDatabase from './../../funcoesGlobais/firebase/funcoesDatabase'
-    
+
 
     export default{
         components:{
@@ -66,7 +66,7 @@
                     <st-painel-progressao>
                     </st-painel-progressao>
                 </div>
-                
+
             </div>
         </div>
 </template>
@@ -95,11 +95,12 @@
 }
 
 .painel-progressao, .painel-amigos{
-  height: 250px;
+  height: 250px!important;
 }
 
 .wrapper{
   padding: 0px;
 }
+
 
 </style>
