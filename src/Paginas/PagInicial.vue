@@ -1,9 +1,7 @@
 <script>
-  import StTopBarDeslogado from './../layout/TopBars/TopBarDeslogado.vue'
   import StMain from './../layout/Inicial/Main.vue'
   export default {
     components: {
-      StTopBarDeslogado,
       StMain
     },
 
@@ -14,8 +12,6 @@
 
 <template>
   <div class="container-fluid">
-    <st-top-bar-deslogado>
-    </st-top-bar-deslogado>
     <st-main></st-main>
   </div>
 </template>

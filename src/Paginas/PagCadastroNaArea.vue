@@ -1,10 +1,8 @@
 <script>
-    import StTopBarLogado from '../layout/TopBars/TopBarLogado.vue'
     import StMain from '../layout/CadastroArea/Main.vue'
     import {EventBus} from '../eventBus'
     var vm = {
         components: {
-            StTopBarLogado,
             StMain
         },
         beforeCreate(){
@@ -17,7 +15,6 @@
 
 <template>
     <div>
-        <st-top-bar-logado></st-top-bar-logado>
         <st-main></st-main>
     </div>
 </template>

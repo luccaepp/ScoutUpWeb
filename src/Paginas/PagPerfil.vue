@@ -4,7 +4,6 @@
     import {EventBus} from './../eventBus'
     export default{
         components: {
-            StTopBarLogado,
             StMain
         },
         beforeCreate(){
@@ -14,11 +13,7 @@
 
 </script>
 <template>
-    <div>
-        <st-top-bar-logado></st-top-bar-logado>
-        <st-main></st-main>
-    </div>
-
+    <st-main></st-main>
 </template>
 
 <style>

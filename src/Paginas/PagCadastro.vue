@@ -1,5 +1,4 @@
 <script>
-  import StTopBarDeslogado from './../layout/TopBars/TopBarDeslogado.vue'
   import StPainelCadastro from './../layout/Cadastro/PainelCadastro.vue'
   import StPainelLogin from './../layout/Cadastro/PainelLogin.vue'
   import {EventBus} from './../eventBus'
@@ -15,7 +14,6 @@
       }
     },
     components: {
-      StTopBarDeslogado,
       StPainelCadastro,
       StPainelLogin
     },
@@ -98,8 +96,6 @@
 
 <template>
   <div class="container-fluid">
-  <st-top-bar-deslogado>
-  </st-top-bar-deslogado>
   <st-painel-cadastro v-on:cadastrar="cadastrarUsuarioComEmailESenha">
   </st-painel-cadastro>
   <st-painel-login>

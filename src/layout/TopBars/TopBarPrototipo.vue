@@ -52,7 +52,7 @@
   position: relative;
   background-color:#56402E;
   border-radius: 4px;
-  padding: 5px;
+  padding: 8px;
   border-color: #56402E;
   
 }

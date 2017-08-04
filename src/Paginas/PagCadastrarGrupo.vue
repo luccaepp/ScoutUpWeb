@@ -1,9 +1,7 @@
 <script>
-  import StTopBar from '../layout/TopBars/TopBarLogado.vue'
   import StMain from '../layout/CadastroGrupo/Main.vue'
   var vm = {
     components: {
-      StTopBar,
       StMain
     },
     beforeCreate(){
@@ -15,7 +13,6 @@
 </script>
 <template>
   <div>
-    <st-top-bar></st-top-bar>
     <st-main></st-main>
   </div>
 </template>

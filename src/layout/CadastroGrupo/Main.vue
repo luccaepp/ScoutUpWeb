@@ -1,6 +1,4 @@
 <script>
-
-    //TODO ------------> LISTAGEM DOS ESTADOS
     var vm = {
         firebase() {
             return {
@@ -11,7 +9,8 @@
             return {
                 txtNome: '',
                 txtCidade: '',
-                estadoSelecionado: 'Acre'
+                nomeEstadoSelecionado: 'Acre',
+                cidadesDoEstado: ''
             }
         },
         computed: {
@@ -25,6 +24,16 @@
         methods: {
             cadastrarGrupo(){
                 console.log(this.txtNome, this.txtCidade)
+            }
+        },
+        watch: {
+            'nomeEstadoSelecionado': function(){
+                this.estados.forEach(estado => {
+                    if(estado['nome'] == this.nomeEstadoSelecionado){
+                        this.cidadesDoEstado = estado['cidades']
+                        return
+                    }
+                });
             }
         }
     }
@@ -55,7 +64,7 @@
                             </div>
                             <div class="form-group col-xs-3">
                                 <label class="text-warning" for="cmbEstadoGrupo">Estado</label>
-                                <select v-model="estadoSelecionado" class="form-control" id="cmbEstadoGrupo">
+                                <select v-model="nomeEstadoSelecionado" class="form-control" id="cmbEstadoGrupo">
                                     <option disabled>Selecione um Estado</option>
                                     <template v-for="estado in estados">
                                         <option :value="estado.nome">{{estado.sigla}}</option>
@@ -65,8 +74,8 @@
                             <div class="form-group col-xs-3">
                                 <label class="text-warning" for="cmbCidadeGrupo">Cidade</label>
                                 <select id="cmbCidadeGrupo" class="form-control">
-                                    <template>
-                                        <option value=""></option>
+                                    <template v-for="cidade in cidadesDoEstado">
+                                        <option value="cidade">{{cidade}}</option>
                                     </template>
                                 </select>
                             </div>
@@ -81,9 +90,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div v-if="this.$store.state.usuarioDatabase">
-          <p v-if="this.$store.state.usuarioDatabase.tipo == 'escotista'">ESCOTISTAAA</p>
         </div>
     </div>
 

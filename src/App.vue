@@ -1,10 +1,17 @@
 <script>
   import {EventBus} from './eventBus'
   import FuncoesFirebaseDatabase from './funcoesGlobais/firebase/funcoesDatabase'
+  import StTopBarDeslogado from './layout/TopBars/TopBarDeslogado.vue'
+  import StTopBarLogado from './layout/TopBars/TopBarLogado.vue'
 export default{
+  components: {
+    StTopBarDeslogado,
+    StTopBarLogado
+  },
   data(){
     return{
-      firebase: this.$store.state.firebase
+      firebase: this.$store.state.firebase,
+      conectado: false
     }
   },
   beforeCreate(){
@@ -12,11 +19,12 @@ export default{
       console.log('commitando o mudar usuario')
       this.$store.commit('MUDAR_USUARIO', usuario || false)
       console.log(usuario.uid)
-      //FuncoesFirebaseDatabase.prepararCommitDoChangeDoUsuarioDaDatabase(usuario.uid, this.firebase.database(), this.$store)
+      this.conectado = true
 
     })
     EventBus.$on('usuarioDesconectado', () =>{
       var path = this.$route.path
+      this.conectado = false
 
      if (path !== '/cadastro' && path != '/') {
           this.$router.replace('/cadastro')
@@ -29,7 +37,11 @@ export default{
 </script>
 
 <template>
-  <router-view :firebase="firebase"></router-view>
+  <div>
+    <st-top-bar-deslogado v-if="!conectado"></st-top-bar-deslogado>
+    <st-top-bar-logado v-else></st-top-bar-logado>
+    <router-view :firebase="firebase"></router-view>
+  </div>
 </template>
 
 

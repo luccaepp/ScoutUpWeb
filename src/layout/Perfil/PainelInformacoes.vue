@@ -33,6 +33,9 @@
               if(usuarioDatabase.tipo == 'escoteiro'){
                 return '/cadastroNaArea'
               } else{
+                if(usuarioDatabase.grupo){
+                    return '#'
+                }
                 return '/cadastrarGrupo'
               }
             }
