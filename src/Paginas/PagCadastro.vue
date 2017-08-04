@@ -9,6 +9,11 @@
 
 
   export default {
+    firebase(){
+      return {
+
+      }
+    },
     components: {
       StTopBarDeslogado,
       StPainelCadastro,
@@ -34,16 +39,24 @@
       },
       loginPersonalizado(provider, tipoUsuario){
         this.auth.signInWithPopup(provider).then(resultado => {
+          //Se o usuário ainda não existe, crie ele
+          this.$bindAsArray('userExists', this.database.ref('usuario/'+resultado.user.uid), null,
+           () => {if(this.userExists.length == 0){
+              console.log(this.userExists)
+              var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user, tipoUsuario)
+              if(!objUsuarioParaDatabase){
+                console.error('Erro: impossível montar todos os campos do usuário pelo provedor de autenticação')
+                throw 'Erro: impossível montar todos os campos do usuário pelo provedor de autenticação'
+              }
 
-          var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user, tipoUsuario);
-          if(!objUsuarioParaDatabase){
-            console.error('Erro: impossível montar todos os campos do usuário pelo provedor de autenticação')
-            throw 'Erro: impossível montar todos os campos do usuário pelo provedor de autenticação'
-          }
+              FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, objUsuarioParaDatabase, resultado.user.uid)
+           }
+           this.perfil()
+        })
 
-          FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, objUsuarioParaDatabase, resultado.user.uid)
+
           //Router manda pra tela de perfil
-          this.perfil()
+          
         }).catch(erro => {
           switch(erro.code){
             case "auth/account-exists-with-different-credential": alert("O seu e-mail já está cadastrado em outro método de login. Tente novamente com outro provedor de autenticação.") ;break;
