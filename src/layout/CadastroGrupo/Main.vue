@@ -2,15 +2,16 @@
     var vm = {
         firebase() {
             return {
-                estados: this.retornaDatabase.ref('/estados/')
+                estados: this.retornaDatabase.ref('/estados/'),
+                grupos: this.retornaDatabase.ref('/grupo/')
             }
         },
         data(){
             return {
                 txtNome: '',
-                txtCidade: '',
-                nomeEstadoSelecionado: 'Acre',
-                cidadesDoEstado: ''
+                estadoSelecionado: '',
+                cidadesDoEstado: '',
+                cidadeSelecionada: ''
             }
         },
         computed: {
@@ -23,18 +24,33 @@
         },
         methods: {
             cadastrarGrupo(){
-                console.log(this.txtNome, this.txtCidade)
+                console.log(this.txtNome, this.estadoSelecionado, this.cidadeSelecionada, this.grupos)
+                this.$firebaseRefs.grupos.push({
+                    nome: this.txtNome,
+                    estado: this.estadoSelecionado.nome,
+                    cidade: this.cidadeSelecionada,
+                    criador: {
+                        chave: this.retornaUsuarioDatabase['.key'], 
+                        nome: this.retornaUsuarioDatabase['nome']
+                    }
+                }).then(snapshot => {
+                    this.retornaDatabase.ref('/usuario/'+this.retornaUsuarioDatabase['.key']).update({
+                        grupo: snapshot.key
+                    })
+                })
             }
         },
         watch: {
-            'nomeEstadoSelecionado': function(){
-                this.estados.forEach(estado => {
-                    if(estado['nome'] == this.nomeEstadoSelecionado){
-                        this.cidadesDoEstado = estado['cidades']
-                        return
-                    }
-                });
+            'estadoSelecionado'(){
+                if(this.estadoSelecionado){
+                    this.cidadesDoEstado = this.estadoSelecionado['cidades']
+                    this.cidadeSelecionada = this.cidadesDoEstado[0]
+                }
+
             }
+        },
+        created(){
+            
         }
     }
     export default vm
@@ -64,18 +80,18 @@
                             </div>
                             <div class="form-group col-xs-3">
                                 <label class="text-warning" for="cmbEstadoGrupo">Estado</label>
-                                <select v-model="nomeEstadoSelecionado" class="form-control" id="cmbEstadoGrupo">
+                                <select v-model="estadoSelecionado" class="form-control" id="cmbEstadoGrupo">
                                     <option disabled>Selecione um Estado</option>
                                     <template v-for="estado in estados">
-                                        <option :value="estado.nome">{{estado.sigla}}</option>
+                                        <option :value="estado">{{estado.sigla}}</option>
                                     </template>
                                 </select>
                             </div>
                             <div class="form-group col-xs-3">
                                 <label class="text-warning" for="cmbCidadeGrupo">Cidade</label>
-                                <select id="cmbCidadeGrupo" class="form-control">
+                                <select v-model="cidadeSelecionada" id="cmbCidadeGrupo" class="form-control">
                                     <template v-for="cidade in cidadesDoEstado">
-                                        <option value="cidade">{{cidade}}</option>
+                                        <option :value="cidade">{{cidade}}</option>
                                     </template>
                                 </select>
                             </div>

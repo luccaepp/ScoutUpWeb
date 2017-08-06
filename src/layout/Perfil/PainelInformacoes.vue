@@ -20,24 +20,49 @@
                 displaySessao(novo, this)
             }
         },
+        methods: {
+        vaParaGrupo(){
+              var usuarioDatabase = this.retornaUsuarioDatabase
+              if(!usuarioDatabase || usuarioDatabase.grupo){
+                return
+              }
+              if(usuarioDatabase.tipo == 'escoteiro'){
+                //Usuário do tipo Escoteiro
+
+                this.$route.router.go('/cadastroNaArea')
+              } else{
+                //Usuário do tipo Escotista
+                var router = this.$router;
+                bootbox.dialog({
+                    message: 'Você gostaria de:',
+                    buttons: {
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-warning'
+                        },
+                        btnCriarGrupo: {
+                            label: 'Criar um novo Grupo',
+                            className: 'btn-success',
+                            callback(){
+                                router.push('/cadastrarGrupo')
+                            }
+                        },
+                        btnEntrarNoGrupo: {
+                            label: 'Entrar em um Grupo',
+                            className: 'btn-primary',
+                            callback(){
+                                router.push('/cadastroNaArea')
+                            }
+                        }
+                    }
+                })
+                
+              }
+            }
+        },
         computed:{
             retornaUsuarioDatabase(){
                 return this.$store.state.usuarioDatabase
-            },
-            retornaLinkGrupo(){
-              var usuarioDatabase = this.retornaUsuarioDatabase
-              if(!usuarioDatabase){
-                return '#'
-              }
-              console.log()
-              if(usuarioDatabase.tipo == 'escoteiro'){
-                return '/cadastroNaArea'
-              } else{
-                if(usuarioDatabase.grupo){
-                    return '#'
-                }
-                return '/cadastrarGrupo'
-              }
             }
         }
     }
@@ -72,7 +97,7 @@ export default vm
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Grupo:</h4>
                 <p v-if="grupo" class="list-group-item-text">{{grupo.nome}}</p>
-                <p v-else><a :href="retornaLinkGrupo">Adicionar um grupo...</a></p>
+                <p v-else><a href="#" @click.prevent="vaParaGrupo">Adicionar um grupo...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Sessão:</h4>
