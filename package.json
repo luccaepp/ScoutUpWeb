@@ -1,6 +1,6 @@
 {
-  "name": "avancado",
-  "description": "aprendendo com o vue-cli",
+  "name": "ScoutUp!",
+  "description": "Uma rede social para escoteiros",
   "version": "1.0.0",
   "author": "trickstival <trick_stival@hotmail.com>",
   "private": true,
