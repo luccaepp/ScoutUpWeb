@@ -40,7 +40,7 @@ export default{
   <div>
     <st-top-bar-deslogado v-if="!conectado"></st-top-bar-deslogado>
     <st-top-bar-logado v-else></st-top-bar-logado>
-    <router-view :firebase="firebase"></router-view>
+    <router-view class="router" :firebase="firebase"></router-view>
   </div>
 </template>
 
@@ -48,12 +48,27 @@ export default{
 
 
 <style>
-
-  .container-main{
+@media(max-width: 700px){
+  .router{
+    margin-top:35vh;
+  }
+}
+@media(min-width: 701px){
+.router{
+  margin-top:15vh;
+}
+}
+.container-main{
   background-color: rgba(86,64,46, .5);
   border-radius: 10px;
   padding: 50px;
   font-size: 18px;
+}
+
+h1.carregando{
+    color:#B9C159;
+    font-family: claire, Helvetica, sans-serif;
+    font-size: 90px;
 }
 
   body{

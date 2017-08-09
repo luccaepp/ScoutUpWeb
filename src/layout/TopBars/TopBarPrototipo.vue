@@ -12,47 +12,49 @@
 
 <template>
       <!-- NAVBAR -->
-      <div class="row header">
-        <nav class="navbar navbar-inverse meu-navbar navbar-fixed-top col-lg-10 col-lg-offset-1 caixombra">
+      <div class="row">
+        <div class="header">
+            <nav class="navbar navbar-inverse meu-navbar navbar-fixed-top col-lg-10 col-lg-offset-1 caixombra">
 
-                  <div class="navbar-header">
-                      <a href="/"><div class="navbar-brand" id="logo"></div></a>                      
-                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggleado">
-                        <span class="sr-only">Botão de Toggle</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+            <div class="navbar-header">
+                <a href="/"><div class="navbar-brand" id="logo"></div></a>                      
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggleado">
+                  <span class="sr-only">Botão de Toggle</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+            </div>
+                              
+            <div class="collapse navbar-collapse col-lg-6" id="toggleado">
+                <slot name="lis-navbar"></slot>
+              </div> 
+              <ul id="navbar-right" class="nav navbar-nav navbar-right">
+                  <li><form class="navbar-form">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Pesquisar">
+                    <div class="input-group-btn">
+                      <button class="btn btn-default" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
                       </button>
+                    </div>
                   </div>
-                                    
-                  <div class="collapse navbar-collapse col-lg-6" id="toggleado">
-                      <slot name="lis-navbar"></slot>
-                   </div> 
-                   <ul class="nav navbar-nav navbar-right">
-                      <li><form class="navbar-form navbar-right">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Pesquisar">
-                        <div class="input-group-btn">
-                          <button class="btn btn-default" type="submit">
-                            <i class="glyphicon glyphicon-search"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </form></li>
-                      <slot name="lis-login">
-                      </slot>
-                    </ul>
+                </form></li>
+                  <slot name="lis-login">
+                  </slot>
+                </ul>
 
-        </nav>
+
+            </nav>
+        </div>
+
       </div>
 </template>
 
 <style>
   .navbar{
-  position: relative;
   background-color:#56402E;
   border-radius: 4px;
-  padding: 8px;
   border-color: #56402E;
   
 }
@@ -94,6 +96,10 @@
 }
 #logo:hover{
   background-image: url(../../assets/scoutloco.png);
+}
+
+.header{
+  display:border-box;
 }
 
 </style>

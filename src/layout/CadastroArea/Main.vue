@@ -83,11 +83,7 @@
 
 
 <style>
-    h1.carregando{
-        color:#B9C159;
-        font-family: claire, Helvetica, sans-serif;
-        font-size: 90px;
-    }
+
     table.table-grupos, .panel-grupos > .panel-body{
         color:#eacf9b;
         background-color:#56402E;

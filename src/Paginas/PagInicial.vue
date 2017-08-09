@@ -20,7 +20,6 @@
 <style>
   body{
     background-image: url(../assets/sempre_alerta.jpg);
-    min-width: 393px;
   }
 </style>
 

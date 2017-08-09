@@ -96,7 +96,7 @@ export default vm
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Grupo:</h4>
-                <p v-if="grupo" class="list-group-item-text">{{grupo.nome}}</p>
+                <p v-if="grupo" class="list-group-item-text"><a href="/areaGrupo">{{grupo.nome}}</a></p>
                 <p v-else><a href="#" @click.prevent="vaParaGrupo">Adicionar um grupo...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">

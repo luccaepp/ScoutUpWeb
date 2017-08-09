@@ -24,7 +24,6 @@
         },
         methods: {
             cadastrarGrupo(){
-                console.log(this.txtNome, this.estadoSelecionado, this.cidadeSelecionada, this.grupos)
                 this.$firebaseRefs.grupos.push({
                     nome: this.txtNome,
                     estado: this.estadoSelecionado.nome,
@@ -32,7 +31,8 @@
                     criador: {
                         chave: this.retornaUsuarioDatabase['.key'], 
                         nome: this.retornaUsuarioDatabase['nome']
-                    }
+                    },
+                    timeStamp: this.$store.state.firebase.database.ServerValue.TIMESTAMP
                 }).then(snapshot => {
                     this.retornaDatabase.ref('/usuario/'+this.retornaUsuarioDatabase['.key']).update({
                         grupo: snapshot.key
@@ -50,7 +50,7 @@
             }
         },
         created(){
-            
+            console.log(this.$store.state.firebase.database.ServerValue.TIMESTAMP)
         }
     }
     export default vm

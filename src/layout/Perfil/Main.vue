@@ -38,37 +38,37 @@
 </script>
 
 <template>
-            <div class="container container-main">
-            <div class="row">
-                <div class="foto-sect text-center">
-                    <i class="fa fa-user-circle foto-perfil" aria-hidden="true"></i>
-                    <br>
-                    <b>{{displayNome}}</b>
-                </div>
-            </div>
-            <div class="row">
-                <st-painel-informacoes :displayNome="displayNome"></st-painel-informacoes>
-            </div>
-            <div class="row">
-                <div class="col-lg-2 col-lg-offset-10">
-                    <button class="btn btn-warning">
-                        Editar
-                    </button>
-                    <button class="btn btn-primary disabled">
-                        Salvar
-                    </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="wrapper col-lg-11 col-lg-offset-1">
-                    <st-painel-amigos>
-                    </st-painel-amigos>
-                    <st-painel-progressao>
-                    </st-painel-progressao>
-                </div>
-
+    <div class="container container-main">
+        <div class="row">
+            <div class="foto-sect text-center">
+                <i class="fa fa-user-circle foto-perfil" aria-hidden="true"></i>
+                <br>
+                <b>{{displayNome}}</b>
             </div>
         </div>
+        <div class="row">
+            <st-painel-informacoes :displayNome="displayNome"></st-painel-informacoes>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-lg-offset-10">
+                <button class="btn btn-warning">
+                    Editar
+                </button>
+                <button class="btn btn-primary disabled">
+                    Salvar
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="wrapper col-lg-11 col-lg-offset-1">
+                <st-painel-amigos>
+                </st-painel-amigos>
+                <st-painel-progressao>
+                </st-painel-progressao>
+            </div>
+
+        </div>
+    </div>
 </template>
 
 <style>
