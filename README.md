@@ -2,7 +2,7 @@
 
 > Uma rede social para escoteiros
 
-## Build Setup
+## Para Buildar
 
 ``` bash
 # Pra instalar as dependências
@@ -15,4 +15,4 @@ npm run dev
 npm run build
 ```
 
-Valeeu
+Valeeu -> By: Patrick
