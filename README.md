@@ -1,18 +1,18 @@
-# avancado
+# ScoutUp!
 
-> aprendendo com o vue-cli
+> Uma rede social para escoteiros
 
 ## Build Setup
 
 ``` bash
-# install dependencies
+# Pra instalar as dependências
 npm install
 
-# serve with hot reload at localhost:8080
+# Pra executar com hot reload no localhost:8080
 npm run dev
 
-# build for production with minification
+# Pra buildar os arquivos para produção
 npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Valeeu
