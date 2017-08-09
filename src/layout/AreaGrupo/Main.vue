@@ -91,4 +91,7 @@ export default vm
   padding: 40px;
   color: #eacf9b;
 }
+.realizar-separator{
+    margin-bottom:30px;
+}
 </style>

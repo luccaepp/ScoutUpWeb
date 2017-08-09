@@ -16,16 +16,16 @@ export default vm
 
 <template>
     <!-- PAINEL DO POST -->
-    <div class="panel panel-post panel-transparent col-xs-12">    
+    <div class="panel panel-post panel-transparent col-xs-12">
         <div class="panel-heading">
             <div class="row">
                 <div class="col-sm-1 col-xs-4 col-md-1 col-lg-1">
-                    <i class="fa fa-user-circle foto-perfil" aria-hidden="true"></i>                  
+                    <i class="fa fa-user-circle foto-perfil" aria-hidden="true"></i>
                 </div>
                 <st-informacoes-post></st-informacoes-post>
                 <st-dropdown-opcoes-post></st-dropdown-opcoes-post>
             </div>
-            
+
         </div>
         <div class="panel-body">
             <div class="row">
@@ -52,5 +52,8 @@ export default vm
 .txt-area{
     padding:15px;
     border-radius: 5px;
+}
+.panel-geral-comentarios{
+    margin-bottom: 0;
 }
 </style>

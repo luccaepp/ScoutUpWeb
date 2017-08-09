@@ -12,3 +12,21 @@
     </ul>
     </div>
 </template>
+<style>
+.menu-opt-post{
+    margin-top: 10px;
+}
+
+.menu-opt-post li :hover{
+    background-color: #846246 !important;
+}
+.glyphicon-chevron-down{
+    color:#eacf9b!important;
+}
+.dropdown-menu{
+    border: 1px solid #eacf9b;
+}
+.divider{
+    background-color: #eacf9b!important;
+}
+</style>
