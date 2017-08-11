@@ -4,6 +4,7 @@ import PagPerfil from './Paginas/PagPerfil.vue'
 import PagCadastroNaArea from './Paginas/PagCadastroNaArea.vue'
 import PagCadastrarGrupo from './Paginas/PagCadastrarGrupo.vue'
 import PagAreaGrupo from './Paginas/PagAreaGrupo.vue'
+import PagAreaSecao from './Paginas/PagAreaSecao.vue'
 
 export default [
     {
@@ -27,7 +28,11 @@ export default [
       component: PagCadastrarGrupo
     },
     {
-        path: "/areaGrupo",
+        path: "/grupos/:id",
         component: PagAreaGrupo
+    },
+    {
+        path: "/grupos/:idGrupo/secoes/:idSecao",
+        component: PagAreaSecao
     }
 ]

@@ -15,6 +15,7 @@ export default{
     }
   },
   beforeCreate(){
+    bootbox.setLocale('br')
     EventBus.$on('usuarioConectado', usuario =>{
       console.log('commitando o mudar usuario')
       this.$store.commit('MUDAR_USUARIO', usuario || false)
@@ -48,12 +49,12 @@ export default{
 
 
 <style>
-@media(max-width: 700px){
+@media(max-width: 768px){
   .router{
     margin-top:35vh;
   }
 }
-@media(min-width: 701px){
+@media(min-width: 769px){
 .router{
   margin-top:15vh;
 }

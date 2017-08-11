@@ -1,22 +1,54 @@
 <script>
+    import {mapGetters} from 'vuex'
     import StTopBarPrototipo from './TopBarPrototipo.vue'
     import {EventBus} from './../../eventBus'
     import FuncoesFirebaseDatabase from '../../funcoesGlobais/firebase/funcoesDatabase'
 
     export default {
+        firebase(){
+            return {
+
+            }
+        },
         components:{
             StTopBarPrototipo
         },
         computed:{
+            ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase'}),
             displayUsuario(){
-                console.log(this.$store.state.usuarioDatabase)
+                console.log(this.usuarioDatabase)
                 if(!this.$store.state.usuarioDatabase){
                     return 'Carregando...'
                 }
                 
                 return this.$store.state.usuarioDatabase.nome
-            }
+            },
+            retornaLinkGrupo(){
+                if(!this.usuarioDatabase){
+                    return this.$route.path
+                }
+                var grupo = this.usuarioDatabase.grupo
+                if(grupo){
+                    return '/grupos/'+grupo
+                } else{
+                    return '/cadastroNaArea'
+                }
+            },
+            retornaLinkSecao(){
+                
+                if(!this.usuarioDatabase){
+                    return this.$route.path
+                }
+                var grupo = this.usuarioDatabase.grupo
+                var secao = this.usuarioDatabase.secao
+                if(!grupo || !secao){
+                    return '/cadastroNaArea'
+                }
+                return '/grupos/'+grupo+'/secoes/'+(secao.nome).replace(' ', '_')
 
+
+
+            }
         },
         methods: {
             logout(){
@@ -32,8 +64,8 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-object-ungroup" aria-hidden="true"></i> Minhas Áreas <span class="caret"></span></a>
                 <ul class="dropdown-menu caixombra">
-                <li><a href="/areaGrupo"><i class="fa fa-building" aria-hidden="true"></i> Grupo</a></li>
-                <li><a href="#"><i class="fa fa-object-group" aria-hidden="true"></i> Sessão</a></li>
+                <li><router-link :to="retornaLinkGrupo"><i class="fa fa-building" aria-hidden="true"></i> Grupo</router-link></li>
+                <li><router-link :to="retornaLinkSecao"><i class="fa fa-object-group" aria-hidden="true"></i> Sessão</router-link></li>
                 <li><a href="#"><i class="fa fa-users" aria-hidden="true"></i> Patrulha</a></li>
             </ul>                                    
         </li>

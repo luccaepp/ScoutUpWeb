@@ -4,14 +4,18 @@ import StCabecalhoGrupo from './CabecalhoGrupo.vue'
 import StPanelInformacoesGrupo from './PanelInformacoesGrupo.vue'
 import StPanelMembros from './PanelMembros.vue'
 import StPanelSessoes from './PanelSessoes.vue'
+
 var vm = {
-    data(){
-        return {
-            grupo: ''
-        }
-    },
     firebase(){
-        return {}
+        return {
+            grupo: {
+                source: this.database.ref('/grupo/'+this.$route.params.id),
+                asObject: true,
+                readyCallback(){
+                    console.log('Ready Grupo', this.grupo)
+                }
+            }
+        }
     },
     components: {
         StCabecalhoGrupo,
@@ -20,20 +24,13 @@ var vm = {
         StPanelSessoes
     },
     computed: {
-        ...mapGetters({usuarioDatabase: 'getUsuarioDatabase'}),
+        ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase'}),
         getGrupo(){
-            if(this.grupo){
+            if(this.grupo && this.grupo['.key']){
+                console.log('getGrupo', this.grupo)
                 return this.grupo
             }
             return false
-        }
-    },
-    watch: {
-        'usuarioDatabase'(){
-            if(this.usuarioDatabase){
-                console.log('foi', this.usuarioDatabase)
-                this.$bindAsObject('grupo', this.$store.state.database.ref('/grupo/'+this.usuarioDatabase.grupo+'/'), null, () => {console.log('foi')})
-            }
         }
     }
 }
@@ -63,12 +60,12 @@ export default vm
                 <div class="col-xs-10 col-xs-offset-1">
                     <div class="col-xs-6 membros-box">
                         <div class="row">
-                            <st-panel-membros></st-panel-membros>
+                            <st-panel-membros class="panel-eq-height" :grupo="getGrupo"></st-panel-membros>
                         </div>
                     </div>
                     <div class="col-xs-6 sessoes-box">
                         <div class="row">
-                            <st-panel-sessoes></st-panel-sessoes>
+                            <st-panel-sessoes class="panel-eq-height" :grupo="getGrupo"></st-panel-sessoes>
                         </div>
                     </div>
                 </div>
@@ -93,5 +90,12 @@ export default vm
 }
 .realizar-separator{
     margin-bottom:30px;
+}
+.panel-eq-height{
+    height: 250px;
+    overflow:scroll;
+}
+.panel-eq-height::-webkit-scrollbar-thumb{
+    background-color: #9bd4ef;
 }
 </style>

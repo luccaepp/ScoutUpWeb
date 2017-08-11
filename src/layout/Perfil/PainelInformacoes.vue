@@ -29,7 +29,7 @@
               if(usuarioDatabase.tipo == 'escoteiro'){
                 //Usuário do tipo Escoteiro
 
-                this.$route.router.go('/cadastroNaArea')
+                this.$router.push('/cadastroNaArea')
               } else{
                 //Usuário do tipo Escotista
                 var router = this.$router;

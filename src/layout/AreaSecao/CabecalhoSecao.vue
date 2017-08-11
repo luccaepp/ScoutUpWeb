@@ -1,19 +1,23 @@
 <script>
 var vm = {
-    props: ['grupo']
+    props: ['grupo', 'secao']
 }
 export default vm
 </script>
 <template>
     <div>
         <span class="nav-esc col-lg-3 col-xs-12 pull-left">
-            <router-link :to="$route.path">
+            <router-link :to="'/grupos/'+grupo['.key']">
                 <i class="fa fa-building" aria-hidden="true"></i> <span>{{grupo.nome}}</span>
             </router-link>
+            /
+            <router-link :to="$route.path">
+                <i aria-hidden="true" class="fa fa-object-group"></i> <span>{{secao.nome}}</span>
+            </router-link>
         </span>
-        <p class="text-center titulo col-xs-12"><i class="fa fa-building text-verdinho" aria-hidden="true"></i>
+        <p class="text-center titulo col-xs-12"><i aria-hidden="true" class="fa fa-object-group text-verdinho"></i>
              <br> 
-             <span>{{grupo.nome}}</span>
+             <span>{{secao.nome}}</span>
         </p>
     </div>
 
