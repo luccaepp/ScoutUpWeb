@@ -2,7 +2,7 @@
 import { mapGetters } from 'vuex'
 import FormatadorDeTimeStamp from '../../funcoesGlobais/timeStamp/timeStamp'
 var vm = {
-    props: ['grupo'],
+    props: ['area'],
     computed: {
         ...mapGetters({usuarioDatabase: 'getUsuarioDatabase'})
     },
@@ -17,15 +17,18 @@ export default vm
 <template>
     <div class="panel">
         <div class="panel-heading">
-            <h2 class="text-center">Informações do Grupo</h2>
+            <h2 class="text-center">Informações</h2>
         </div>
         <div class="panel-body">
             <div class="info-escrita col-xs-9">
-                <h3>NOME: <span>{{grupo.nome}}</span></h3>
-                <h3>DATA DE CRIAÇÃO: <span>{{retornaTimeStampFormatado(grupo.timeStamp)}}</span></h3>
-                <h3>CRIADOR: 
-                    <span v-if="grupo.criador">{{grupo.criador.nome}}</span>
+                <h3><i class="fa fa-pencil" aria-hidden="true"></i> NOME: <span>{{area.nome}}</span></h3>
+                <h3><i class="fa fa-calendar" aria-hidden="true"></i> DATA DE CRIAÇÃO: <span>{{retornaTimeStampFormatado(area.timeStamp)}}</span></h3>
+                <h3><i class="fa fa-hand-o-up" aria-hidden="true"></i> CRIADOR: 
+                    <span v-if="area.criador">{{area.criador.nome}}</span>
                     <span v-else>CARREGANDO...</span>
+                </h3>
+                <h3 v-if="area.cidade && area.estado">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i> CIDADE: {{area.cidade}} / {{area.estado}}
                 </h3>
             </div>
             <div class="col-xs-2 area-foto">

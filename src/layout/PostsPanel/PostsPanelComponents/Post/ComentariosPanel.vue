@@ -6,12 +6,17 @@ import {mapGetters} from 'vuex'
 
 
 var vm = {
-    firebase(){
+    data(){
         return {
-            comentarios: this.database.ref(this.pathParaOPost+'/comentarios/')
+            limitAtual: 3
         }
     },
-    props: ['pathParaOPost'],
+    firebase(){
+        return {
+            comentarios: this.refComentarios
+        }
+    },
+    props: ['pathParaOPost', 'ehDessaArea'],
     components: {
         StComentarioBox,
         StEscrevaUmComentarioPanelFooter
@@ -19,12 +24,13 @@ var vm = {
     computed: {
         ...mapGetters({database : 'getDatabase'}),
         retornaComentariosDoPostFiltrados(){
-            var comentarios = this.comentarios
-            return comentarios 
-                    ? _.orderBy(Object.keys(comentarios)
-                        .map(key => {return comentarios[key]}), 'timeStamp', 'desc')
-                        .slice(0, 3) 
+            return this.comentarios 
+                    ? _.orderBy(Object.keys(this.comentarios)
+                        .map(key => this.comentarios[key]), 'timeStamp', 'desc') 
                     : []
+        },
+        refComentarios(){
+            return this.database.ref(this.pathParaOPost+'/comentarios/').limitToLast(this.limitAtual)
         }
     },
     methods: {
@@ -51,7 +57,7 @@ export default vm
             </div>
             <a class="pull-right text-verdinho" href="#">Mostrar mais...</a>
         </div>
-        <st-escreva-um-comentario-panel-footer :pathParaOPost="pathParaOPost"></st-escreva-um-comentario-panel-footer>
+        <st-escreva-um-comentario-panel-footer v-if="ehDessaArea" :pathParaOPost="pathParaOPost"></st-escreva-um-comentario-panel-footer>
     </div>
 </template>
 <style scoped>

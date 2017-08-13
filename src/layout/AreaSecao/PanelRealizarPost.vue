@@ -1,7 +1,7 @@
 <script>
 import {mapGetters} from 'vuex'
 var vm = {
-    props: ['secao'],
+    props: ['pathParaArea'],
     data(){
         return {
             conteudo: '',
@@ -28,7 +28,7 @@ var vm = {
                 }
             }
             //Cadastrando o Post na base de dados
-            this.database.ref('/grupo/'+this.usuarioDatabase.grupo+'/secoes/'+this.secao['.key']+'/posts/').push(post)
+            this.database.ref(this.pathParaArea+'/posts/').push(post)
             console.log(post)
         }
     }

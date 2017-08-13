@@ -1,8 +1,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import StCabecalhoGrupo from './CabecalhoGrupo.vue'
-import StPanelInformacoesGrupo from './PanelInformacoesGrupo.vue'
-import StPanelMembros from './PanelMembros.vue'
+import StPanelInformacoes from '../Areas/PanelInformacoes.vue'
+import StPanelMembros from '../Areas/PanelMembros.vue'
 import StPanelSessoes from './PanelSessoes.vue'
 
 var vm = {
@@ -19,7 +19,7 @@ var vm = {
     },
     components: {
         StCabecalhoGrupo,
-        StPanelInformacoesGrupo,
+        StPanelInformacoes,
         StPanelMembros,
         StPanelSessoes
     },
@@ -53,14 +53,14 @@ export default vm
             </div>
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1">
-                    <st-panel-informacoes-grupo :grupo="getGrupo"></st-panel-informacoes-grupo>
+                    <st-panel-informacoes :area="getGrupo"></st-panel-informacoes>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-10 col-xs-offset-1">
                     <div class="col-xs-6 membros-box">
                         <div class="row">
-                            <st-panel-membros class="panel-eq-height" :grupo="getGrupo"></st-panel-membros>
+                            <st-panel-membros class="panel-eq-height" tipoArea="grupo" :area="getGrupo"></st-panel-membros>
                         </div>
                     </div>
                     <div class="col-xs-6 sessoes-box">
