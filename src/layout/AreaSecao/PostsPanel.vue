@@ -1,6 +1,16 @@
 <script>
 import StPost from './PostsPanel/Post.vue'
+import {mapGetters} from 'vuex'
 var vm = {
+    props: ['secao'],
+    firebase(){
+        return {
+            posts: this.database.ref('/grupo/'+this.usuarioDatabase.grupo+'/secoes/'+this.secao['.key']+'/posts')
+        }
+    },
+    computed: {
+        ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'})
+    },
     components: {
         StPost
     }
@@ -8,20 +18,13 @@ var vm = {
 export default vm
 </script>
 <template>
-    <st-post></st-post>
+    <div>
+        <template v-for="post in posts">
+            <st-post :post="post" :secao="secao"></st-post>
+        </template>
+    </div>
 </template>
 
 <style>
-.panel-post {
-    position: relative;
-    border-radius: 30px;
-    border: 1px solid #eacf9b;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: transparent;
-    color:#eacf9b!important;
-    border-radius: 30px;
-}
-.panel-post > .panel-body{
-    padding-bottom: 0;
-}
+
 </style>

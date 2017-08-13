@@ -17,7 +17,7 @@
             <nav class="navbar navbar-inverse meu-navbar navbar-fixed-top col-lg-10 col-lg-offset-1 caixombra">
 
             <div class="navbar-header">
-                <a href="/"><div class="navbar-brand" id="logo"></div></a>                      
+                <router-link to="/"><div class="navbar-brand" id="logo"></div></router-link>                      
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggleado">
                   <span class="sr-only">Botão de Toggle</span>
                   <span class="icon-bar"></span>
@@ -92,7 +92,7 @@
   background-repeat: no-repeat;
   cursor: pointer;
   margin-bottom: 10px;
-
+  z-index: 5;
 }
 #logo:hover{
   background-image: url(../../assets/scoutloco.png);

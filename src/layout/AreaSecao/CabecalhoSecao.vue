@@ -6,11 +6,11 @@ export default vm
 </script>
 <template>
     <div>
-        <span class="nav-esc col-lg-3 col-xs-12 pull-left">
+        <span class="nav-esc col-lg-4 col-xs-12 pull-left">
             <router-link :to="'/grupos/'+grupo['.key']">
                 <i class="fa fa-building" aria-hidden="true"></i> <span>{{grupo.nome}}</span>
-            </router-link>
-            /
+            </router-link> 
+            <span>/</span> 
             <router-link :to="$route.path">
                 <i aria-hidden="true" class="fa fa-object-group"></i> <span>{{secao.nome}}</span>
             </router-link>

@@ -19,7 +19,7 @@
 
 <style>
   body{
-    background-image: url(../assets/sempre_alerta.jpg);
+    background-image: url(../assets/paisagem-background.png);
   }
 </style>
 

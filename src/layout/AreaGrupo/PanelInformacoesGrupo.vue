@@ -1,5 +1,6 @@
 <script>
 import { mapGetters } from 'vuex'
+import FormatadorDeTimeStamp from '../../funcoesGlobais/timeStamp/timeStamp'
 var vm = {
     props: ['grupo'],
     computed: {
@@ -7,8 +8,7 @@ var vm = {
     },
     methods: {
         retornaTimeStampFormatado(timeStamp){
-            var data = new Date(timeStamp)
-            return ("0" + data.getDate()).slice(-2) + '/' + ("0" + data.getMonth()).slice(-2) + '/' + data.getFullYear()
+            return FormatadorDeTimeStamp.retornaTimeStampFormatado(timeStamp)
         }
     }
 }

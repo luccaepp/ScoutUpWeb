@@ -74,7 +74,7 @@
         </li>
     </ul>
     <template slot="lis-login">
-        <li><a href="/perfil"><span class="glyphicon glyphicon-user"></span> {{displayUsuario}}</a></li>
+        <li><router-link to="/perfil"><span class="glyphicon glyphicon-user"></span> {{displayUsuario}}</router-link></li>
         <li><a href="#" @click.prevent="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>       
     </template>
     </st-top-bar-prototipo>

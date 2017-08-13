@@ -1,28 +1,31 @@
 <script>
+    import {mapGetters} from 'vuex'
     import {EventBus} from './../../eventBus'
     import state from '../../store/state'
-    import firebase from '../../funcoesGlobais/firebase/centralFirebase.js'
-
+    import PainelInformacoesBoxes from '../../funcoesGlobais/bootbox/Perfil/PainelInformacoesBoxes'
     var vm = {
-        firebase: {
+        firebase() {
+            return {
 
+            }
         },
         data(){
             return {
-                grupo: '',
-                sessao: ''
+                grupo: ''
             }
         },
         props:['displayNome'],
         watch: {
-            retornaUsuarioDatabase(novo, velho){
-                displayGrupo(novo, this)
-                displaySessao(novo, this)
+            'usuarioDatabase'(novoUsuarioDatabase, velhoUsuarioDatabase){
+                   if(novoUsuarioDatabase && novoUsuarioDatabase.grupo){
+                        this.$bindAsObject('grupo', this.database.ref('/grupo/'+novoUsuarioDatabase.grupo))
+                    }
             }
         },
         methods: {
+        //Esse método só é chamado quando o usuário não está cadastrado em um grupo
         vaParaGrupo(){
-              var usuarioDatabase = this.retornaUsuarioDatabase
+              var usuarioDatabase = this.usuarioDatabase
               if(!usuarioDatabase || usuarioDatabase.grupo){
                 return
               }
@@ -33,52 +36,29 @@
               } else{
                 //Usuário do tipo Escotista
                 var router = this.$router;
-                bootbox.dialog({
-                    message: 'Você gostaria de:',
-                    buttons: {
-                        cancel: {
-                            label: 'Cancelar',
-                            className: 'btn-warning'
-                        },
-                        btnCriarGrupo: {
-                            label: 'Criar um novo Grupo',
-                            className: 'btn-success',
-                            callback(){
-                                router.push('/cadastrarGrupo')
-                            }
-                        },
-                        btnEntrarNoGrupo: {
-                            label: 'Entrar em um Grupo',
-                            className: 'btn-primary',
-                            callback(){
-                                router.push('/cadastroNaArea')
-                            }
-                        }
-                    }
-                })
-                
+                PainelInformacoesBoxes.dialogOpcoesGrupo(router)
               }
             }
         },
         computed:{
-            retornaUsuarioDatabase(){
-                return this.$store.state.usuarioDatabase
+            ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase'}),
+            secaoExiste(){
+                return this.usuarioDatabase ? (this.usuarioDatabase.secao ? true : false) : false
+            },
+            grupoExiste(){
+                return this.usuarioDatabase ? (this.usuarioDatabase.grupo ? true : false) : false
+            }
+        },
+        created(){
+            if(this.usuarioDatabase && this.usuarioDatabase.grupo){
+                this.$bindAsObject('grupo', this.database.ref('/grupo/'+this.usuarioDatabase.grupo))
             }
         }
     }
 
 //     //Funções Separadas que geraram loop infinito como computed//
 function displayGrupo(usuarioDatabase, vm){
-    if(usuarioDatabase && usuarioDatabase.grupo){
-        vm.$bindAsObject('grupo', firebase.database().ref('/grupo/'+usuarioDatabase.grupo))
-    }
-}
-function displaySessao(usuarioDatabase, vm){
 
-    if(usuarioDatabase && usuarioDatabase.sessao){
-        vm.$bindAsObject('sessao', firebase.database().ref('/sessao/'+usuarioDatabase.sessao))
-            console.log(vm)
-    }
 }
 
 
@@ -96,13 +76,17 @@ export default vm
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Grupo:</h4>
-                <p v-if="grupo" class="list-group-item-text"><a href="/areaGrupo">{{grupo.nome}}</a></p>
+                <p v-if="grupo" class="list-group-item-text">
+                    <router-link :to="'/grupos/'+grupo['.key']">{{grupo.nome}}</router-link>
+                </p>
                 <p v-else><a href="#" @click.prevent="vaParaGrupo">Adicionar um grupo...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">
-                <h4 class="list-group-item-heading">Sessão:</h4>
-                <p v-if="sessao" class="list-group-item-text">{{sessao.nome}}</p>
-                <p v-else><a href="/cadastroNaArea">Adicionar uma sessão...</a></p>
+                <h4 class="list-group-item-heading">Seção:</h4>
+                <p v-if="secaoExiste" class="list-group-item-text">
+                    <router-link :to="'/grupos/'+grupo['.key']+'/secoes/'+usuarioDatabase.secao.nome">{{usuarioDatabase.secao.nome}}</router-link>
+                </p>
+                <p v-else><router-link to="/cadastroNaArea">Adicionar uma sessão...</router-link></p>
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">E-mail:</h4>

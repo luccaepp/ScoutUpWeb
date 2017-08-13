@@ -70,13 +70,13 @@ export default vm
                 <st-cabecalho-secao :secao="getSecao" :grupo="getGrupo"></st-cabecalho-secao>
             </div>
             <div v-if="ehDessaSecao" class="row">
-                <st-panel-realizar-post></st-panel-realizar-post>
+                <st-panel-realizar-post :secao="getSecao"></st-panel-realizar-post>
             </div>
             <div class="row">
                 <hr class="realizar-separator">
             </div>
             <div class="row">
-                <st-posts-panel></st-posts-panel>
+                <st-posts-panel :secao="getSecao"></st-posts-panel>
             </div>
         </div>
     </div>
