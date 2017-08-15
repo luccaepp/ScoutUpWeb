@@ -17,7 +17,7 @@ export default [
         component: PagCadastro
     },
     {
-        path: "/perfil",
+        path: "/usuarios/:idUsuario",
         component: PagPerfil
     },
     {

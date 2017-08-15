@@ -3,6 +3,7 @@
   import FuncoesFirebaseDatabase from './funcoesGlobais/firebase/funcoesDatabase'
   import StTopBarDeslogado from './layout/TopBars/TopBarDeslogado.vue'
   import StTopBarLogado from './layout/TopBars/TopBarLogado.vue'
+  
 export default{
   components: {
     StTopBarDeslogado,

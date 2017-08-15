@@ -14,7 +14,7 @@
             StTopBarPrototipo
         },
         computed:{
-            ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase'}),
+            ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase', usuario: 'getUsuario'}),
             displayUsuario(){
                 console.log(this.usuarioDatabase)
                 if(!this.$store.state.usuarioDatabase){
@@ -74,7 +74,7 @@
         </li>
     </ul>
     <template slot="lis-login">
-        <li><router-link to="/perfil"><span class="glyphicon glyphicon-user"></span> {{displayUsuario}}</router-link></li>
+        <li><router-link :to="'/usuarios/'+usuario.uid"><span class="glyphicon glyphicon-user"></span> {{displayUsuario}}</router-link></li>
         <li><a href="#" @click.prevent="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>       
     </template>
     </st-top-bar-prototipo>

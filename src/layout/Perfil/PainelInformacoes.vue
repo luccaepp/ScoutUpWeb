@@ -6,7 +6,9 @@
     var vm = {
         firebase() {
             return {
-
+                grupoDoUsuarioDaPag: {
+                    source: this.database.ref('/grupo/'+this.usuarioDaPag.grupo)
+                }
             }
         },
         data(){
@@ -14,19 +16,11 @@
                 grupo: ''
             }
         },
-        props:['displayNome'],
-        watch: {
-            'usuarioDatabase'(novoUsuarioDatabase, velhoUsuarioDatabase){
-                   if(novoUsuarioDatabase && novoUsuarioDatabase.grupo){
-                        this.$bindAsObject('grupo', this.database.ref('/grupo/'+novoUsuarioDatabase.grupo))
-                    }
-            }
-        },
+        props:['displayNome', 'usuarioDaPag', 'ehDessePerfil'],
         methods: {
         //Esse método só é chamado quando o usuário não está cadastrado em um grupo
         vaParaGrupo(){
-              var usuarioDatabase = this.usuarioDatabase
-              if(!usuarioDatabase || usuarioDatabase.grupo){
+              if(!usuarioDaPag.grupo){
                 return
               }
               if(usuarioDatabase.tipo == 'escoteiro'){
@@ -35,8 +29,7 @@
                 this.$router.push('/cadastroNaArea')
               } else{
                 //Usuário do tipo Escotista
-                var router = this.$router;
-                PainelInformacoesBoxes.dialogOpcoesGrupo(router)
+                PainelInformacoesBoxes.dialogOpcoesGrupo(this.$router)
               }
             }
         },
@@ -76,9 +69,10 @@ export default vm
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Grupo:</h4>
-                <p v-if="grupo" class="list-group-item-text">
+                <p v-if="grupo['.key']" class="list-group-item-text">
                     <router-link :to="'/grupos/'+grupo['.key']">{{grupo.nome}}</router-link>
                 </p>
+                <p v-else-if="!ehDessePerfil">Nenhum grupo adicionado...</p>
                 <p v-else><a href="#" @click.prevent="vaParaGrupo">Adicionar um grupo...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">

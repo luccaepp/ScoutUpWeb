@@ -1,9 +1,8 @@
 <script>
+import autoCompleteConfig from '../../funcoesGlobais/algolia/autoCompleteConfig'
   export default {
-    methods: {
-      cadastrar(){
-
-      }
+    mounted(){
+        autoCompleteConfig(this)
     }
   }
 </script>
@@ -32,9 +31,9 @@
               <ul id="navbar-right" class="nav navbar-nav navbar-right">
                   <li><form class="navbar-form">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Pesquisar">
-                    <div class="input-group-btn">
-                      <button class="btn btn-default" type="submit">
+                    <input id="inputPesquisarTopBar" type="text" class="form-control" placeholder="Pesquisar">
+                    <div id="btnBoxSearchTopBar" class="input-group-btn">
+                      <button class="btn btn-default">
                         <i class="glyphicon glyphicon-search"></i>
                       </button>
                     </div>
@@ -65,6 +64,10 @@
 .dropdown-menu > li > a{
   color: #eacf9b !important;
 
+}
+
+#btnBoxSearchTopBar{
+  vertical-align: top;
 }
 
 .navbar-inverse .navbar-nav > .open > a{
@@ -100,6 +103,37 @@
 
 .header{
   display:border-box;
+}
+
+/* Algolia */
+
+.algolia-autocomplete {
+  width: 100%;
+}
+.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+  width: 100%;
+}
+.algolia-autocomplete .aa-hint {
+  color: #999;
+}
+.algolia-autocomplete .aa-dropdown-menu {
+  width: 100%;
+  background-color: #56402E;
+  border: 2px solid #EACF9B;
+  border-top: none;
+  color:#EACF9B;
+  font-family: claire;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  cursor: pointer;
+  padding: 5px 4px;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+  background-color: rgba(255, 255, 255, .1);
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: bold;
+  font-style: normal;
 }
 
 </style>
