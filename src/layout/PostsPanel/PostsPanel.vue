@@ -26,7 +26,7 @@ var vm = {
             return this.posts
         },
         refPosts(){
-            return this.database.ref(this.pathParaArea+'/posts')
+            return this.database.ref(this.pathParaArea+'/posts').orderByChild('timeStampNeg')
                                                     .limitToLast(this.limitAtual)
         }
     },

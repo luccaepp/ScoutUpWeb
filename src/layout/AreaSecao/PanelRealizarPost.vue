@@ -16,7 +16,7 @@ var vm = {
             var post = {
                 titulo: this.titulo,
                 conteudo: this.conteudo,
-                timeStamp: this.firebase.database.ServerValue.TIMESTAMP,
+                timeStamp: - this.firebase.database.ServerValue.TIMESTAMP,
                 usuarioGerador: {
                     nome: this.usuarioDatabase.nome,
                     chave: this.usuarioDatabase['.key'],
