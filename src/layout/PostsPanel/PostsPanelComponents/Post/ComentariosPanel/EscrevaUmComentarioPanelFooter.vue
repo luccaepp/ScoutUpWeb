@@ -12,6 +12,10 @@ var vm = {
     },
     methods: {
         enviarComentario(){
+            if(!this.txtComentario){
+                bootbox.alert('Escoteiro, escreva um comentário!')
+                return
+            }
             this.database.ref(this.pathParaOPost+'/comentarios/').push({
                 usuarioGerador: {
                     chave: this.usuarioDatabase['.key'],
@@ -22,6 +26,7 @@ var vm = {
                 timeStamp: this.firebase.database.ServerValue.TIMESTAMP
             }).then(result => {
                 result.ref.update({chave: result.key})
+                this.txtComentario = ''
             })
         }
     }

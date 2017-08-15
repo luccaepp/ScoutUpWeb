@@ -14,6 +14,9 @@ var vm = {
     },
     methods: {
         publicar(){
+            if(!this.conteudo || !this.titulo){
+                bootbox.alert('Preencha todos os campos do Post')
+            }
             var post = {
                 titulo: this.titulo,
                 conteudo: this.conteudo,
@@ -29,7 +32,12 @@ var vm = {
                 }
             }
             //Cadastrando o Post na base de dados
-            this.database.ref(this.pathParaArea+'/posts/').push(post)
+            this.database.ref(this.pathParaArea+'/posts/').push(post).then(result => {
+                this.titulo = ''
+                this.conteudo = ''
+            }).catch(erro => {
+                console.log('Erro ao realizao o post: ', erro)
+            })
             console.log(post)
         }
     }
