@@ -12,9 +12,11 @@ admin.initializeApp({
 
 const database = admin.database();
 
+const PATH_SECAO = '/grupo/{hashGrupo}/secoes/{hashSecao}',
+PATH_POSTS_SECAO = PATH_SECAO+'/posts/{hashPost}',
+PATH_COMENTARIOS = PATH_POSTS_SECAO+'/comentarios/{hashComentario}'
 
-
-exports.postAdicionado = functions.database.ref('/grupo/{hashGrupo}/secoes/{hashSecao}/posts/{hashPost}').onWrite(evento => {
+exports.postSecaoAdicionado = functions.database.ref(PATH_POSTS_SECAO).onWrite(evento => {
   const post = evento.data.val()
   if(post.timeStampNeg){
     return
@@ -24,7 +26,14 @@ exports.postAdicionado = functions.database.ref('/grupo/{hashGrupo}/secoes/{hash
 
 })
 
-
+exports.comentarioPostSecaoAdicionado = functions.database.ref(PATH_COMENTARIOS).onWrite(evento => {
+  const comentario = evento.data.val()
+  if(comentario.timeStampNeg){
+    return
+  }
+  comentario.timeStampNeg = - comentario.timeStamp
+  evento.data.ref.set(comentario)
+})
 
 
 
