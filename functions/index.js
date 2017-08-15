@@ -14,7 +14,27 @@ const database = admin.database();
 
 const PATH_SECAO = '/grupo/{hashGrupo}/secoes/{hashSecao}',
 PATH_POSTS_SECAO = PATH_SECAO+'/posts/{hashPost}',
-PATH_COMENTARIOS = PATH_POSTS_SECAO+'/comentarios/{hashComentario}'
+PATH_COMENTARIOS_SECAO = PATH_POSTS_SECAO+'/comentarios/{hashComentario}',
+PATH_PATRULHA = PATH_SECAO+'/patrulhas/{hashPatrulha}',
+PATH_COMENTARIOS_PATRULHA = PATH_PATRULHA+'/comentarios/{hashComentario}'
+
+exports.postPatrulhaAdicionado = functions.database.ref(PATH_PATRULHA).onWrite(evento => {
+  const post = evento.data.val()
+  if(post.timeStampNeg){
+    return
+  }
+  post.timeStampNeg = - post.timeStamp
+  evento.data.ref.set(post)
+})
+
+exports.comentarioPatrulhaAdicionado = functions.database.ref(PATH_COMENTARIOS_PATRULHA).onWrite(evento => {
+  const comentario = evento.data.val()
+  if(comentario.timeStampNeg){
+    return
+  }
+  comentario.timeStampNeg = - comentario.timeStamp
+  evento.data.ref.set(comentario)
+})
 
 exports.postSecaoAdicionado = functions.database.ref(PATH_POSTS_SECAO).onWrite(evento => {
   const post = evento.data.val()
@@ -26,7 +46,7 @@ exports.postSecaoAdicionado = functions.database.ref(PATH_POSTS_SECAO).onWrite(e
 
 })
 
-exports.comentarioPostSecaoAdicionado = functions.database.ref(PATH_COMENTARIOS).onWrite(evento => {
+exports.comentarioPostSecaoAdicionado = functions.database.ref(PATH_COMENTARIOS_SECAO).onWrite(evento => {
   const comentario = evento.data.val()
   if(comentario.timeStampNeg){
     return
