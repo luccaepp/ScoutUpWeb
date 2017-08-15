@@ -23,7 +23,7 @@ var vm = {
                                 .orderByChild(this.tipoArea)
                                 .equalTo(this.area['.key']))
                     //Caso a área seja do tipo seção
-                    } else if(this.tipoArea == 'secao'){
+                    } else if(this.tipoArea == 'secao' || this.tipoArea == 'patrulha'){
                         this.$bindAsArray('membros', this.database
                                     .ref('/usuario/')
                                     .orderByChild(this.tipoArea+'/chave')

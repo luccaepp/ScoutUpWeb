@@ -17,6 +17,9 @@ var vm = {
     computed: {
         ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase', firebase: 'getFirebase'}),
         usuarioEhEscotistaDaSecao(){
+            if(!this.secao){
+                return false
+            }
             //Tipo do usuario é igual a escotista?
             return this.usuarioDatabase.tipo == 'escotista' && 
                                     //O usuário tem uma seção?
@@ -40,7 +43,7 @@ var vm = {
     },
     methods: {
         retornaLinkPatrulha(patrulha){
-            return '/grupos/'+this.$route.params.idGrupo+'/secoes/'+this.secao['.key']+'/patrulhas/'+patrulha['.key']
+            return '/grupos/'+this.$route.params.idGrupo+'/secoes/'+this.secao.nome+'/patrulhas/'+patrulha['.key']
         },
         adicionarPatrulha(){
             CadastrarPatrulha(this)
@@ -66,7 +69,7 @@ export default vm
                 <template v-else-if="patrulhas.length">
                     <li v-for="patrulha in patrulhas" class="list-group-item list-group-item-primary text-primary">
                         <i aria-hidden="true" class="fa fa-users"></i> 
-                        <router-link to="retornaLinkPatrulha(patrulha)">{{patrulha.nome}}</router-link>
+                        <router-link :to="retornaLinkPatrulha(patrulha)">{{patrulha.nome}}</router-link>
                     </li>
                 </template>
                 <!-- Caso a seção não tenha patrulhas cadastradas -->

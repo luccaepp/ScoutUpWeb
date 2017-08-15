@@ -1,7 +1,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import StCabecalhoSecao from './CabecalhoSecao.vue'
-import StPanelRealizarPost from './PanelRealizarPost.vue'
+import StPanelRealizarPost from '../Areas/PanelRealizarPost.vue'
 import StPostsPanel from '../PostsPanel/PostsPanel.vue'
 import StPanelInformacoes from '../Areas/PanelInformacoes.vue'
 import StPanelMembros from '../Areas/PanelMembros.vue'
@@ -11,20 +11,14 @@ var vm = {
         return {
             grupo: {
                 source: this.database.ref('/grupo/'+this.$route.params.idGrupo),
-                asObject: true,
-                readyCallback(){
-                    console.log('Ready Grupo', this.grupo)
-                }
+                asObject: true
             },
             secao: {
                 source: this.database.ref('/grupo/'+this.$route.params.idGrupo+'/secoes/')
                                         .orderByChild( "nome")
                                         .equalTo(this.$route.params.idSecao
                                         .replace('_', ' ')),
-                asObject: false,
-                readyCallback(){
-                    console.log('Ready Secao', this.secao)
-                }
+                asObject: false
             }
         }
     },

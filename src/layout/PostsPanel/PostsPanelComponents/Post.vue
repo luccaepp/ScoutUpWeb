@@ -194,6 +194,16 @@ export default vm
     background-color: rgba(115, 115, 115, .3);
     font-size:18px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: block;
+}
+.txt-area > span{
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    display: block;
+    white-space:pre-line;
+    word-wrap: break-word;
 }
 
 .txt-area{
@@ -208,6 +218,7 @@ export default vm
     background-color: transparent;
     color:#eacf9b!important;
     border-radius: 30px;
+    text-overflow: clip;
 }
 .panel-post > .panel-body{
     padding-bottom: 10;
