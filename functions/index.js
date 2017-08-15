@@ -15,10 +15,10 @@ const database = admin.database();
 const PATH_SECAO = '/grupo/{hashGrupo}/secoes/{hashSecao}',
 PATH_POSTS_SECAO = PATH_SECAO+'/posts/{hashPost}',
 PATH_COMENTARIOS_SECAO = PATH_POSTS_SECAO+'/comentarios/{hashComentario}',
-PATH_PATRULHA = PATH_SECAO+'/patrulhas/{hashPatrulha}',
-PATH_COMENTARIOS_PATRULHA = PATH_PATRULHA+'/comentarios/{hashComentario}'
+PATH_POSTS_PATRULHA = PATH_SECAO+'/patrulhas/{hashPatrulha}/posts/{hashPost}',
+PATH_COMENTARIOS_PATRULHA = PATH_POSTS_PATRULHA+'/comentarios/{hashComentario}'
 
-exports.postPatrulhaAdicionado = functions.database.ref(PATH_PATRULHA).onWrite(evento => {
+exports.postPatrulhaAdicionado = functions.database.ref(PATH_POSTS_PATRULHA).onWrite(evento => {
   const post = evento.data.val()
   if(post.timeStampNeg){
     return
