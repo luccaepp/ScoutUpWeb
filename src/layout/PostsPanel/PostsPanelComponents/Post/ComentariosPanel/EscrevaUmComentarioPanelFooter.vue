@@ -20,6 +20,8 @@ var vm = {
                 },
                 conteudo: this.txtComentario,
                 timeStamp: this.firebase.database.ServerValue.TIMESTAMP
+            }).then(result => {
+                result.ref.update({chave: result.key})
             })
         }
     }

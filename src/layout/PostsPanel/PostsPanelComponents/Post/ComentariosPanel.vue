@@ -3,6 +3,7 @@ import StComentarioBox from './ComentariosPanel/ComentarioBox.vue'
 import StEscrevaUmComentarioPanelFooter from './ComentariosPanel/EscrevaUmComentarioPanelFooter.vue'
 import _ from 'lodash' 
 import {mapGetters} from 'vuex'
+import {EventBus} from '../../../../eventBus.js'
 
 
 var vm = {
@@ -13,28 +14,24 @@ var vm = {
     },
     firebase(){
         return {
-            comentarios: this.refComentarios
+            comentarios: this.database.ref(this.pathParaOPost+'/comentarios/').limitToLast(this.limitAtual)
         }
     },
-    props: ['pathParaOPost', 'ehDessaArea'],
+    props: ['pathParaOPost', 'ehDessaArea', 'post'],
     components: {
         StComentarioBox,
         StEscrevaUmComentarioPanelFooter
     },
     computed: {
         ...mapGetters({database : 'getDatabase'}),
-        retornaComentariosDoPostFiltrados(){
-            return this.comentarios 
-                    ? _.orderBy(Object.keys(this.comentarios)
-                        .map(key => this.comentarios[key]), 'timeStamp', 'desc') 
-                    : []
-        },
-        refComentarios(){
-            return this.database.ref(this.pathParaOPost+'/comentarios/').limitToLast(this.limitAtual)
-        }
-    },
-    methods: {
+        comentariosLimitados(){
+            return this.post
+                     ? this.post.comentarios
+                        ? Object.keys(this.post.comentarios).map(key => this.post.comentarios[key]).slice(0, this.limitAtual)
+                        : null
+                     :null 
 
+        }
     }
 }
 export default vm
@@ -50,10 +47,10 @@ export default vm
         <!-- Comentários Session -->
         <div class="panel-body">
             <div class="row">
-                <template v-for="comentario in retornaComentariosDoPostFiltrados">
-                    <st-comentario-box :pathParaOPost="pathParaOPost" 
-                        :comentario="comentario"></st-comentario-box>
-                </template>
+                <div v-for="comentario in comentariosLimitados">
+                     <st-comentario-box :pathParaOPost="pathParaOPost" 
+                        :comentario="comentario"></st-comentario-box> 
+                </div>
             </div>
             <a class="pull-right text-verdinho" href="#">Mostrar mais...</a>
         </div>

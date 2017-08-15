@@ -1,6 +1,7 @@
 <script>
 import StPost from './PostsPanelComponents/Post.vue'
 import {mapGetters} from 'vuex'
+import {EventBus} from '../../eventBus'
 import _ from 'lodash' 
 var vm = {
     props: ['area', 'ehDessaArea', 'pathParaArea'],
@@ -15,16 +16,13 @@ var vm = {
                 source: this.refPosts,
                 asObject: false,
                 readyCallback(){
-                    
+                    console.log('ready posts')
                 }
             }
         }
     },
     computed: {
         ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
-        postsDesc(){
-            return this.posts
-        },
         refPosts(){
             return this.database.ref(this.pathParaArea+'/posts').orderByChild('timeStampNeg')
                                                     .limitToLast(this.limitAtual)
@@ -44,7 +42,7 @@ export default vm
 <template>
     <div>
         <h2>Posts</h2>
-        <template v-for="post in postsDesc">
+        <template v-for="post in posts">
             <st-post :ehDessaArea="ehDessaArea" :post="post" :area="area" :pathParaArea="pathParaArea"></st-post>
         </template>
         <div class="row">
@@ -52,7 +50,7 @@ export default vm
             <span @click="limitAtual = 15" v-if="limitAtual > 15" class="pull-left mostrares">
                 Mostrar Menos...
             </span>
-            <span @click="limitAtual += 5" v-if="postsDesc.length >= 15" class="pull-right mostrares">
+            <span @click="limitAtual += 5" v-if="posts.length >= 15" class="pull-right mostrares">
                 Mostrar Mais...
             </span>
             </div>

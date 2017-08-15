@@ -35,14 +35,14 @@ var vm = {
         },
         adicionar(upDown){
             console.log('adicionarUpDown', this.comentario)
-            this.database.ref(this.pathParaOPost+'/comentarios/'+this.comentario['.key']+'/avaliacao/'+upDown).push(this.usuarioDatabase['.key'])
+            this.database.ref(this.pathParaOPost+'/comentarios/'+this.comentario.chave+'/avaliacao/'+upDown).push(this.usuarioDatabase['.key'])
         },
         removerUp(){
             //Verificando qual a key do Up realizado
             Object.keys(this.comentario.avaliacao.ups).forEach(keyUp => {
                 if(this.comentario.avaliacao.ups[keyUp] == this.usuarioDatabase['.key']){
                     //encontrou a key, remova o Up da database
-                    this.database.ref(this.pathParaOPost+'/comentarios/'+this.comentario['.key']+'/avaliacao/ups/'+keyUp).remove()
+                    this.database.ref(this.pathParaOPost+'/comentarios/'+this.comentario.chave+'/avaliacao/ups/'+keyUp).remove()
                 }
             })
         },
@@ -51,7 +51,7 @@ var vm = {
             Object.keys(this.comentario.avaliacao.downs).forEach(keyDown => {
                 if(this.comentario.avaliacao.downs[keyDown] == this.usuarioDatabase['.key']){
                     //encontrou a key, remova o Down da database
-                    this.database.ref(this.pathParaOPost+'/comentarios/'+this.comentario['.key']+'/avaliacao/downs/'+keyDown).remove()
+                    this.database.ref(this.pathParaOPost+'/comentarios/'+this.comentario.chave+'/avaliacao/downs/'+keyDown).remove()
                 }
             })
         }

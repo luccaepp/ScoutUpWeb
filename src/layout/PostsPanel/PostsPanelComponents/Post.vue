@@ -169,7 +169,7 @@ export default vm
                 <hr>
                 <!-- O usuário só poderá comentar caso ele faça parte dessa área,
                      por isso é necessário que se passe a prop "ehDessaArea" -->
-                <st-comentarios-panel :ehDessaArea="ehDessaArea" :pathParaOPost="pathParaOPost"></st-comentarios-panel>
+                <st-comentarios-panel :ehDessaArea="ehDessaArea" :pathParaOPost="pathParaOPost" :post="post"></st-comentarios-panel>
             </div>
         </div>
     </div>

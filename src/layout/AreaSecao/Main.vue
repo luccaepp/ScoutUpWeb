@@ -107,7 +107,7 @@ export default vm
                 <hr class="realizar-separator">
             </div>
             <div class="row">
-                <st-posts-panel :ehDessaSecao="ehDessaSecao" :area="getSecao" :pathParaArea="pathParaSecao"></st-posts-panel>
+                <st-posts-panel :ehDessaArea="ehDessaSecao" :area="getSecao" :pathParaArea="pathParaSecao"></st-posts-panel>
             </div>
         </div>
     </div>
