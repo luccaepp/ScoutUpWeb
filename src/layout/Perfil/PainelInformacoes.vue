@@ -12,6 +12,12 @@
                 }
             }
         },
+        watch: {
+          'usuarioDaPag'(){
+            this.$unbind('grupoDoUsuarioDaPag')
+            this.$bindAsObject('grupoDoUsuarioDaPag', this.database.ref('/grupo/'+this.usuarioDaPag.grupo))
+          }
+        },
         props:['displayNome', 'usuarioDaPag', 'ehDessePerfil'],
         methods: {
         //Esse método só é chamado quando o usuário não está cadastrado em um grupo

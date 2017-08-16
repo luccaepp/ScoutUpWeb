@@ -14,6 +14,12 @@ var vm = {
             }
         }
     },
+    watch: {
+      'usuarioDaPag'(){
+        this.$unbind('amigos')
+        this.$bindAsArray('amigos', this.database.ref('/usuario/'+this.usuarioDaPag['.key']+'/amigos'))
+      }
+    },
     props: ['usuarioDaPag', 'ehDessePerfil'],
     computed: {
         ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
@@ -68,7 +74,7 @@ export default vm
                     <i class="fa fa-user-circle foto-amigos" aria-hidden="true"></i>
                     <h4 class="list-group-item-heading">
                         <router-link class="text-warning" :to="'/usuarios/'+amigo.chave">{{amigo.nome}}</router-link>
-                    </h4>                          
+                    </h4>
                 </li>
             </ul>
             <ul v-else-if="exibir == 'solicitacoes'" class="list-group list-amigos">
