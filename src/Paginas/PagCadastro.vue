@@ -26,20 +26,21 @@
           this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then((snapshot) => {
             //Criando Usuário na Database
             FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, usuario, snapshot.uid)
-            this.perfil()
+            this.perfil(snapshot.key)
           }).catch((erro) => {
             console.warn("Algo deu errado... "+erro.code+" "+erro.message)
           })
 
       },
-      perfil(){
-        this.$router.push('/perfil')
+      perfil(idUsuario){
+        this.$router.push('/usuarios/'+idUsuario)
       },
       loginPersonalizado(provider, tipoUsuario){
         this.auth.signInWithPopup(provider).then(resultado => {
           //Se o usuário ainda não existe, crie ele
           this.$bindAsArray('userExists', this.database.ref('usuario/'+resultado.user.uid), null,
-           () => {if(this.userExists.length == 0){
+           (snap) => {
+             if(this.userExists.length == 0){
               console.log(this.userExists)
               var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user, tipoUsuario)
               if(!objUsuarioParaDatabase){
@@ -49,7 +50,7 @@
 
               FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, objUsuarioParaDatabase, resultado.user.uid)
            }
-           this.perfil()
+           this.perfil(snap.key)
         })
 
 

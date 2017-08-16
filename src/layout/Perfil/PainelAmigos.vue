@@ -1,30 +1,109 @@
+<script>
+import {mapGetters} from 'vuex'
+var vm = {
+    data(){
+        return {
+            exibir: 'amigos'
+        }
+    },
+    firebase(){
+        return {
+            amigos: {
+                source: this.database.ref('/usuario/'+this.usuarioDaPag['.key']+'/amigos'),
+                asObject: false
+            }
+        }
+    },
+    props: ['usuarioDaPag', 'ehDessePerfil'],
+    computed: {
+        ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
+        numSolicitacoes(){
+            var solicitacoes = this.usuarioDaPag.solicitacoesDeAmizade
+            return solicitacoes
+                ? Object.keys(solicitacoes).map(k => solicitacoes[k]).length
+                : 0
+        },
+        numAmigos(){
+            return this.amigos
+                ? this.amigos.length
+                : 0
+        }
+    },
+    methods: {
+        confirmarSolicitacao(solicitacao){
+            this.database.ref('/usuario/'+this.usuarioDatabase['.key']+'/amigos').push({
+                nome: solicitacao.de.nome,
+                chave: solicitacao.de.chave
+            }).then(resultado => {
+                this.database.ref('/usuario/'+solicitacao.de.chave+'/amigos').push({
+                    nome: this.usuarioDatabase.nome,
+                    chave: this.usuarioDatabase['.key']
+                })
+                }).then(resultado => this.excluirSolicitacao(solicitacao))
+        },
+        excluirSolicitacao(solicitacao){
+            var ref = this.database.ref('/usuario/'+this.usuarioDatabase['.key']+'/solicitacoesDeAmizade/')
+            ref
+            .orderByChild('de/chave').equalTo(solicitacao.de.chave).once('value', snapshot => {
+                    let updates = {};
+                    snapshot.forEach(child => updates[child.key] = null);
+                    ref.update(updates)
+            }).catch(erro => {
+                    bootbox.alert('Erro! Não foi possível remover a solicitação')
+                    console.log(erro)
+                })
+        }
+    }
+}
+export default vm
+</script>
 <template>
     <div class="panel panel-warning painel-amigos col-lg-5 painel-fix-padding">
         <div class="panel-heading">
             <i class="fa fa-users" aria-hidden="true"></i> Amigos
         </div>
         <div class="panel-body">
-            <ul class="list-group list-inline text-center list-amigos">
-                <li class="list-group-item list-group-item-warning col-lg-3">
+            <ul v-if="exibir == 'amigos'" class="list-group list-inline text-center list-amigos">
+                <li v-for="amigo in amigos" class="list-group-item list-group-item-warning col-lg-3">
                     <i class="fa fa-user-circle foto-amigos" aria-hidden="true"></i>
-                    <h4 class="list-group-item-heading">Michel</h4>                          
+                    <h4 class="list-group-item-heading">
+                        <router-link class="text-warning" :to="'/usuarios/'+amigo.chave">{{amigo.nome}}</router-link>
+                    </h4>                          
                 </li>
-                <li class="list-group-item list-group-item-warning col-lg-3">
-                    <i class="fa fa-user-circle foto-amigos" aria-hidden="true"></i>
-                    <h4 class="list-group-item-heading">Dilma</h4>                          
-                </li>
-                <li class="list-group-item list-group-item-warning col-lg-3">
-                    <i class="fa fa-user-circle foto-amigos" aria-hidden="true"></i>
-                    <h4 class="list-group-item-heading">Gilmar</h4>                          
-                </li>
-                <li class="list-group-item list-group-item-warning col-lg-3">
-                    <i class="fa fa-user-circle foto-amigos" aria-hidden="true"></i>
-                    <h4 class="list-group-item-heading">Neves</h4>                          
+            </ul>
+            <ul v-else-if="exibir == 'solicitacoes'" class="list-group list-amigos">
+                <li v-for="solicitacao in usuarioDatabase.solicitacoesDeAmizade" class="list-group-item list-group-item-warning">
+                    <i aria-hidden="true" class="fa fa-user-circle"></i>
+                    <span>{{solicitacao.de.nome}}</span>
+                    <div class="btn-toolbar pull-right check-x">
+                        <button @click="excluirSolicitacao(solicitacao)" class="btn btn-danger">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                        <button @click="confirmarSolicitacao(solicitacao)" class="btn btn-success">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </li>
             </ul>
         </div>
+        <div class="panel-footer">
+            <div class="btn-toolbar">
+                <button @click="exibir = 'amigos'" class="btn btn-warning">
+                    ({{numAmigos}}) Amigos
+                </button>
+                <button @click="exibir = 'solicitacoes'" v-if="ehDessePerfil" class="btn btn-primary">
+                    ({{numSolicitacoes}}) Solicitações
+                </button>
+            </div>
+        </div>
     </div>
 </template>
+
+<style scoped>
+    .check-x > .btn{
+        font-size: 12px;
+    }
+</style>
 
 <style>
     .list-amigos::-webkit-scrollbar {
@@ -52,7 +131,7 @@
 
     .list-amigos{
         overflow: scroll;
-        height: 170px;
+        max-height: 370px;
     }
     .list-amigos > li{
        margin:10px;
