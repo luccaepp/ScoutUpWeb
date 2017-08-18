@@ -22,7 +22,7 @@
         methods: {
         //Esse método só é chamado quando o usuário não está cadastrado em um grupo
         vaParaGrupo(){
-              if(!this.usuarioDaPag.grupo){
+              if(this.usuarioDaPag.grupo){
                 return
               }
               if(this.usuarioDatabase.tipo == 'escoteiro'){

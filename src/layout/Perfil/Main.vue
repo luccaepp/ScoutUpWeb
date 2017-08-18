@@ -76,7 +76,7 @@
                 var ref = this.database.ref('/usuario/'+this.usuarioDaPag['.key']+'/solicitacoesDeAmizade/')
                 ref
                 .orderByChild('de/chave').equalTo(this.usuarioDatabase['.key']).once('value', snapshot => {
-                        let updates = {};
+                        var updates = {};
                         snapshot.forEach(child => updates[child.key] = null);
                         ref.update(updates)
                 }).catch(erro => {
@@ -103,7 +103,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-10 col-xs-offset-1">
-                            <button @click="adicionarAmigo()" class="btn btn-success pull-right" id="btnAdicionarAmigo" 
+                            <button @click="adicionarAmigo()" class="btn btn-success pull-right" id="btnAdicionarAmigo"
                                 v-if="!ehDessePerfil && !ehAmigo && !solicitacaoEnviada">
                             Adicionar amigo
                             </button>
@@ -116,7 +116,7 @@
 
             </div>
             <div class="row">
-                <st-painel-informacoes :ehDessePerfil="ehDessePerfil" :usuarioDaPag = "usuarioDaPag" 
+                <st-painel-informacoes :ehDessePerfil="ehDessePerfil" :usuarioDaPag = "usuarioDaPag"
                     :displayNome="displayNome"></st-painel-informacoes>
             </div>
             <div v-if="ehDessePerfil" class="row">
