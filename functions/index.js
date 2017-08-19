@@ -12,6 +12,17 @@ admin.initializeApp({
 
 const database = admin.database();
 
+
+// const PATH_SOLICITACAO_DE_ENTRADA_NA_SECAO = '/grupo/{hashGrupo}/secoes/{hashSecao}/solicitacoes/{hashSolicitacao}/'
+// //Validação das Solicitações de entrada na seção
+// exports.validacaoDaSolicitacaoDeEntradaNaSecao = functions.database.ref(PATH_SOLICITACAO_DE_ENTRADA_NA_SECAO).onWrite(evento => {
+//   const solicitacao = evento.data.val()
+//   database.ref('/')
+// })
+
+
+//Inversões de TimeStamp
+
 const PATH_SECAO = '/grupo/{hashGrupo}/secoes/{hashSecao}',
 PATH_POSTS_SECAO = PATH_SECAO+'/posts/{hashPost}',
 PATH_COMENTARIOS_SECAO = PATH_POSTS_SECAO+'/comentarios/{hashComentario}',
