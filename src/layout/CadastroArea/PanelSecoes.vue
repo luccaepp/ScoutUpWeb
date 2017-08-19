@@ -8,6 +8,18 @@ var vm = {
     methods: {
         secaoSelecionada(secao){
             console.log('Seção selecionada: ', secao)
+            if(this.usuarioDatabase.solicitacaoDeEntradaEmSecao){
+                bootbox.confirm('Você já pediu para entrar em uma seção.\n Ao enviar essa solicitação, você irá cancelar a solicitação anterior.\n Você tem certeza que quer prosseguir?',
+                resultado => {
+                    if(resultado){
+                        this.enviarSolicitacao(secao)
+                    }
+                })
+            } else{
+                this.enviarSolicitacao(secao)
+            }
+        },
+        enviarSolicitacao(secao){
             //Enviando solicitação para a seção
             this.database.ref('/grupo/'+this.grupo['.key']+'/secoes/'+secao['.key']+'/solicitacoes/').push({
                 usuario: {
