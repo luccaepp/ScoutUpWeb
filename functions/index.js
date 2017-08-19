@@ -22,7 +22,13 @@ exports.watchSolicitacaoDeSecaoUsuario = functions.database.ref(PATH_SOLICITACAO
   if(evento.previous.exists()){
     const solicitacaoAnterior = evento.previous.val()
     //excluindo referência da solicitação anterior
-    return database.ref(PATH_SECAO).child('solicitacoes').child(solicitacaoAnterior.chave).remove()
+    return database.ref('/grupo/'+solicitacaoAnterior.chaveGrupo+'/secoes/'+solicitacaoAnterior.chaveSecao)
+                                        .child('solicitacoes').orderByChild('usuario/chave').equalTo(evento.data.ref.parent.key)
+                                        .once('value', snapshot => {
+                                              var updates = {};
+                                              snapshot.forEach(child => updates[child.key] = null);
+                                              ref.update(updates);
+                                        })
   }
 })
 
