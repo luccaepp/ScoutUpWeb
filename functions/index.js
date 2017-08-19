@@ -10,8 +10,21 @@ admin.initializeApp({
   databaseURL: 'https://scoutup-59cc7.firebaseio.com'
 }, "database");
 
-const database = admin.database();
+const database = admin.database(),
+PATH_USUARIO_DATABASE = '/usuario/{hashUsuario}';
 
+const PATH_SECAO = '/grupo/{hashGrupo}/secoes/{hashSecao}'
+
+const PATH_SOLICITACAO_SECAO_USUARIO_DATABASE = PATH_USUARIO_DATABASE+'/solicitacaoDeEntradaEmSecao';
+//Alteração na solicitação do usuario, usado para excluir as solicitações anteriores
+exports.watchSolicitacaoDeSecaoUsuario = functions.database.ref(PATH_SOLICITACAO_SECAO_USUARIO_DATABASE).onUpdate(evento => {
+  const solicitacao = evento.data.val()
+  if(evento.previous.exists()){
+    const solicitacaoAnterior = evento.previous.val()
+    //excluindo referência da solicitação anterior
+    return database.ref(PATH_SECAO).child('solicitacoes').child(solicitacaoAnterior.chave).remove()
+  }
+})
 
 // const PATH_SOLICITACAO_DE_ENTRADA_NA_SECAO = '/grupo/{hashGrupo}/secoes/{hashSecao}/solicitacoes/{hashSolicitacao}/'
 // //Validação das Solicitações de entrada na seção
@@ -23,8 +36,8 @@ const database = admin.database();
 
 //Inversões de TimeStamp
 
-const PATH_SECAO = '/grupo/{hashGrupo}/secoes/{hashSecao}',
-PATH_POSTS_SECAO = PATH_SECAO+'/posts/{hashPost}',
+
+const PATH_POSTS_SECAO = PATH_SECAO+'/posts/{hashPost}',
 PATH_COMENTARIOS_SECAO = PATH_POSTS_SECAO+'/comentarios/{hashComentario}',
 PATH_POSTS_PATRULHA = PATH_SECAO+'/patrulhas/{hashPatrulha}/posts/{hashPost}',
 PATH_COMENTARIOS_PATRULHA = PATH_POSTS_PATRULHA+'/comentarios/{hashComentario}'
