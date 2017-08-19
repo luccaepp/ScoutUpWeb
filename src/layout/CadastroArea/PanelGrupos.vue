@@ -42,7 +42,7 @@ export default vm
 <template>
   <div class="panel panel-grupos">
     <div class="panel-heading">
-      Solicite a Inscrição de Grupo
+      Solicite a Inscrição no Grupo
     </div>
     <table class="table table-grupos text-center">
         <thead>

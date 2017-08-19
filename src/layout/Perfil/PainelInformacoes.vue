@@ -22,7 +22,7 @@
         methods: {
         //Esse método só é chamado quando o usuário não está cadastrado em um grupo
         vaParaGrupo(){
-              if(this.usuarioDaPag.grupo){
+              if(this.usuarioDaPag.grupo || this.usuarioDaPag.secao){
                 return
               }
               if(this.usuarioDatabase.tipo == 'escoteiro'){
@@ -75,7 +75,7 @@ export default vm
                 <p v-else-if="!ehDessePerfil">
                     Nenhuma seção adicionada...
                 </p>
-                <p v-else><router-link to="/cadastroNaArea">Adicionar uma sessão...</router-link></p>
+                <p v-else><a href="#" @click.prevent="vaParaGrupo">Adicionar uma sessão...</a></p>
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">E-mail:</h4>

@@ -1,25 +1,34 @@
 <script>
 import StPanelGrupos from './PanelGrupos.vue'
+import StPanelSecoes from './PanelSecoes.vue'
 import {mapGetters} from 'vuex'
     export default {
+      components: {
+        StPanelGrupos,
+        StPanelSecoes
+      },
       data(){
         return {
-          secoesAtuais: []
+          secoesAtuais: '',
+          grupoAtual: ''
         }
       },
-      components: {
-        StPanelGrupos
-      },
-        firebase: {
-
+      firebase() {
+          return {
+            
+          }
         },
         computed: {
-            ...mapGetters({usuarioDatabase: 'getUsuarioDatabase'})
+            ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase'})
         },
         methods: {
           grupoSelecionado(grupo){
             console.log(grupo)
-            this.secoesAtuais = grupo.secoes
+            this.grupoAtual = grupo
+            if(this.secoesAtuais.length){
+              this.$unbind('secoesAtuais')
+            }
+            this.$bindAsArray('secoesAtuais', this.database.ref('/grupo/'+grupo['.key']+'/secoes'))
           }
         }
     }
@@ -35,8 +44,8 @@ import {mapGetters} from 'vuex'
         </div>
         <div class="row" v-else>
             <div class="col-xs-12">
-              <st-panel-grupos v-if="secoesAtuais == false" @grupoSelecionado="grupoSelecionado"></st-panel-grupos>
-
+              <st-panel-grupos v-if="!secoesAtuais" @grupoSelecionado="grupoSelecionado"></st-panel-grupos>
+              <st-panel-secoes v-else-if="secoesAtuais" :secoesAtuais="secoesAtuais" :grupo="grupoAtual"></st-panel-secoes>
             </div>
         </div>
     </div>
