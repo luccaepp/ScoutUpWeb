@@ -1,7 +1,7 @@
 <script>
 import {mapGetters} from 'vuex'
 var vm = {
-    props: ['area', 'tipoArea'],
+    props: ['area', 'tipoArea', 'ehEscotistaDaArea'],
     firebase(){
         return {
 
@@ -49,6 +49,10 @@ export default vm
                     <i class="fa fa-user-circle" aria-hidden="true"></i> 
                     {{membro.nome}}
                 </li>
+                <li v-if="ehEscotistaDaArea && tipoArea=='patrulha'" class="list-group-item list-group-item-warning">
+                    <i class="fa fa-plus text-success" aria-hidden="true"></i>
+                    <span id="addMembrosPatrulha">Adicionar Membros</span>
+                </li>
             </ul>
             
         </div>
@@ -56,7 +60,15 @@ export default vm
 </template>
 
 <style scoped>
-    .fa-user-circle{
-        font-size: 18px;
-    }
+.fa-user-circle{
+    font-size: 18px;
+}
+</style>
+<style>
+#addMembrosPatrulha{
+    cursor: pointer;
+}
+#addMembrosPatrulha:hover{
+    text-decoration: underline;
+}
 </style>

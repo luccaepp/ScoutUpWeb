@@ -64,6 +64,12 @@ var vm = {
             //O usuário não é dessa patrulha
             return false
         },
+        ehEscotistaDaPatrulha(){
+            if(!this.ehDessaPatrulha){
+                return false
+            }
+            return this.usuarioDatabase.tipo == 'escotista'
+        },
         //GETTERS DE ÁREAS
         getGrupo(){
             if(this.grupo && this.grupo['.key']){
@@ -108,7 +114,7 @@ export default vm
                 <st-panel-informacoes :area="getPatrulha"></st-panel-informacoes>
             </div>
             <div class="row">
-                <st-panel-membros :area="getPatrulha" tipoArea="patrulha"></st-panel-membros>
+                <st-panel-membros :ehEscotistaDaArea="ehEscotistaDaPatrulha" :area="getPatrulha" tipoArea="patrulha"></st-panel-membros>
             </div>
             <div v-if="ehDessaPatrulha" class="row">
                 <st-panel-realizar-post :pathParaArea="pathParaPatrulha"></st-panel-realizar-post>

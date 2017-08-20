@@ -31,6 +31,9 @@ var vm = {
                 return this.grupo
             }
             return false
+        },
+        ehEscotistaDoGrupo(){
+            return this.usuarioDatabase.tipo == 'escotista' && this.usuarioDatabase.grupo.key == this.grupo.key
         }
     }
 }
@@ -60,12 +63,14 @@ export default vm
                 <div class="col-xs-10 col-xs-offset-1">
                     <div class="col-xs-6 membros-box">
                         <div class="row">
-                            <st-panel-membros class="panel-eq-height" tipoArea="grupo" :area="getGrupo"></st-panel-membros>
+                            <st-panel-membros :ehEscotistaDaArea="ehEscotistaDoGrupo" class="panel-eq-height" 
+                                tipoArea="grupo" :area="getGrupo"></st-panel-membros>
                         </div>
                     </div>
                     <div class="col-xs-6 sessoes-box">
                         <div class="row">
-                            <st-panel-sessoes class="panel-eq-height" :grupo="getGrupo"></st-panel-sessoes>
+                            <st-panel-sessoes class="panel-eq-height" :ehEscotistaDoGrupo="ehEscotistaDoGrupo" 
+                                :grupo="getGrupo"></st-panel-sessoes>
                         </div>
                     </div>
                 </div>

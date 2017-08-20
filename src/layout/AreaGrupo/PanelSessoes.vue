@@ -2,16 +2,13 @@
 import { mapGetters } from 'vuex'
 import CadastrarSecao from '../../funcoesGlobais/bootbox/PanelSecoes/CadastrarSecao'
 var vm = {
-    props: ['grupo'],
+    props: ['grupo', 'ehEscotistaDoGrupo'],
     firebase(){
         return {
         }
     },
     computed: {
         ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase', firebase: 'getFirebase'}),
-        usuarioEhEscotistaDoGrupo(){
-            return this.usuarioDatabase.tipo == 'escotista' && this.usuarioDatabase.grupo.key == this.grupo.key
-        },
         PATHLIST(){
             return {tipo: 'secao', path: '/grupo/'+this.grupo['.key']+'/secoes/'}
         }
@@ -53,7 +50,7 @@ export default vm
                     <li class="list-group-item list-group-item-info">Nenhuma seção neste grupo...</li>
                 </template>
                 <!-- Caso o usuário logado seja um escotista do grupo -->
-                <template v-if="usuarioEhEscotistaDoGrupo" class="list-group">
+                <template v-if="ehEscotistaDoGrupo" class="list-group">
                     <li class="list-group-item list-group-item-info">
                         <span class="adicionarSec" @click.prevent="adicionarSecao">
                             <i class="fa fa-plus text-success" aria-hidden="true"></i>
