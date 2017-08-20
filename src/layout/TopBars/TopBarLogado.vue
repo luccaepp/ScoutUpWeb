@@ -34,20 +34,28 @@
                     return '/cadastroNaArea'
                 }
             },
-            retornaLinkSecao(){
-                
+            retornaLinkSecao(){       
                 if(!this.usuarioDatabase){
                     return this.$route.path
                 }
-                var grupo = this.usuarioDatabase.grupo
                 var secao = this.usuarioDatabase.secao
-                if(!grupo || !secao){
+                if(this.retornaLinkGrupo == '/cadastroNaArea' || !secao){
                     return '/cadastroNaArea'
                 }
-                return '/grupos/'+grupo+'/secoes/'+(secao.nome).replace(' ', '_')
-
-
-
+                return this.retornaLinkGrupo+'/secoes/'+secao.nome.replace(' ', '_')
+            },
+            retornaLinkPatrulha(){
+                if(!this.usuarioDatabase){
+                    return this.$route.path
+                }
+                var patrulha = this.usuarioDatabase.patrulha
+                if(this.retornaLinkSecao == 'cadastroNaArea'){
+                    return 'cadastroNaArea'
+                }
+                if(!patrulha){
+                    return this.retornaLinkSecao
+                }
+                return this.retornaLinkSecao+'/patrulhas/'+patrulha.chave
             }
         },
         methods: {
@@ -66,7 +74,7 @@
                 <ul class="dropdown-menu caixombra">
                 <li><router-link :to="retornaLinkGrupo"><i class="fa fa-building" aria-hidden="true"></i> Grupo</router-link></li>
                 <li><router-link :to="retornaLinkSecao"><i class="fa fa-object-group" aria-hidden="true"></i> Seção</router-link></li>
-                <li><a href="#"><i class="fa fa-users" aria-hidden="true"></i> Patrulha</a></li>
+                <li><router-link :to="retornaLinkPatrulha"><i class="fa fa-users" aria-hidden="true"></i> Patrulha</router-link></li>
             </ul>                                    
         </li>
         <li>

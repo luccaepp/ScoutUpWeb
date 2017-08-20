@@ -41,7 +41,7 @@ export default vm
                 <input v-model="txtTitulo" type="text" class="form-control">
             </div>
             <div class="form-group">
-                <textarea v-model="txtConteudo" cols="30" rows="10" class="form-control"></textarea>
+                <textarea id="txtAreaConteudoEdit" v-model="txtConteudo" cols="30" rows="10" class="form-control"></textarea>
             </div>
             <div class="form-group">
                 <div class="btn-toolbar pull-right">
@@ -58,6 +58,9 @@ export default vm
     </div>
 </template>
 
-<style>
-    
+<style scoped>
+#txtAreaConteudoEdit{
+    resize: vertical;
+    max-height: 300px;
+}
 </style>
