@@ -32,7 +32,8 @@ var vm = {
                 this.database.ref('/usuario/'+this.usuarioDatabase['.key']).update({
                     solicitacaoDeEntradaEmSecao: {
                         nome: secao.nome,
-                        chave: secao['.key']
+                        chaveSecao: secao['.key'],
+                        chaveGrupo: this.grupo['.key']
                     }
                 })
             })

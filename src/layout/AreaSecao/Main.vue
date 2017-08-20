@@ -6,6 +6,7 @@ import StPostsPanel from '../PostsPanel/PostsPanel.vue'
 import StPanelInformacoes from '../Areas/PanelInformacoes.vue'
 import StPanelMembros from '../Areas/PanelMembros.vue'
 import StPanelPatrulhas from './PanelPatrulhas.vue'
+import StPanelSolicitacoes from './PanelSolicitacoes.vue'
 var vm = {
     firebase(){
         return {
@@ -28,7 +29,8 @@ var vm = {
         StPostsPanel,
         StPanelInformacoes,
         StPanelMembros,
-        StPanelPatrulhas
+        StPanelPatrulhas,
+        StPanelSolicitacoes
     },
     computed: {
         ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase'}),
@@ -62,6 +64,12 @@ var vm = {
         },
         pathParaSecao(){
             return '/grupo/'+this.$route.params.idGrupo+'/secoes/'+this.getSecao['.key']
+        },
+        ehEscotistaDessaSecao(){
+            if(!this.ehDessaSecao || this.usuarioDatabase.tipo != 'escotista'){
+                return false
+            }
+            return true
         }
     }
 }
@@ -92,6 +100,11 @@ export default vm
                             <st-panel-patrulhas :pathParaSecao="pathParaSecao" :secao="getSecao" class="panel-eq-height"></st-panel-patrulhas>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row" v-if="ehEscotistaDessaSecao">
+                <div class="col-xs-10 col-xs-offset-1">
+                    <st-panel-solicitacoes :secao="getSecao"></st-panel-solicitacoes>
                 </div>
             </div>
             <div v-if="ehDessaSecao" class="row">

@@ -47,9 +47,13 @@ var vm = {
     computed: {
         ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
         ehDessaPatrulha(){
-            //O usuário tem uma patrulha?
+            //Alguma patrulha foi carregada?
             if(!this.getPatrulha){
                 //O usuário não é dessa patrulha
+                return false
+            }
+            //O Usuário tem patrulha
+            if(!this.usuarioDatabase.patrulha){
                 return false
             }
             //A chave da patrulha do usuário é igual a chave da patrulha sendo exibida?
