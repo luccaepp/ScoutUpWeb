@@ -1,8 +1,12 @@
 <script>
 import autoCompleteConfig from '../../funcoesGlobais/algolia/autoCompleteConfig'
+import {mapGetters} from 'vuex'
   export default {
     mounted(){
         autoCompleteConfig(this)
+    },
+    computed: {
+      ...mapGetters({usuario: 'getUsuario'})
     }
   }
 </script>
@@ -30,8 +34,9 @@ import autoCompleteConfig from '../../funcoesGlobais/algolia/autoCompleteConfig'
               </div> 
               <ul id="navbar-right" class="nav navbar-nav navbar-right">
                   <li><form class="navbar-form">
-                  <div class="input-group">
-                    <input id="inputPesquisarTopBar" type="text" class="form-control" placeholder="Pesquisar">
+                  <div v-if="usuario" class="input-group">
+                    <input id="inputPesquisarTopBar" type="text" class="form-control" 
+                      placeholder="Buscar Usuário">
                     <div id="btnBoxSearchTopBar" class="input-group-btn">
                       <button class="btn btn-default">
                         <i class="glyphicon glyphicon-search"></i>

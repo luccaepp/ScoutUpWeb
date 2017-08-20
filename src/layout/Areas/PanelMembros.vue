@@ -1,7 +1,16 @@
 <script>
 import {mapGetters} from 'vuex'
+import StPanelSelecionarMembroSecao from './PanelMembros/PanelSelecionarMembroSecao.vue'
 var vm = {
-    props: ['area', 'tipoArea', 'ehEscotistaDaArea'],
+    props: ['area', 'tipoArea', 'ehEscotistaDaArea', 'secaoPatrulha'],
+    components: {
+        StPanelSelecionarMembroSecao
+    },
+    data(){
+        return {
+            adicionandoMembrosPatrulha: false
+        }
+    },
     firebase(){
         return {
 
@@ -27,7 +36,7 @@ var vm = {
                         this.$bindAsArray('membros', this.database
                                     .ref('/usuario/')
                                     .orderByChild(this.tipoArea+'/chave')
-                                    .equalTo(this.area['.key']))
+                                    .equalTo(this.area['.key']), null)
                     }
                 }
                 return false
@@ -50,8 +59,11 @@ export default vm
                     {{membro.nome}}
                 </li>
                 <li v-if="ehEscotistaDaArea && tipoArea=='patrulha'" class="list-group-item list-group-item-warning">
-                    <i class="fa fa-plus text-success" aria-hidden="true"></i>
-                    <span id="addMembrosPatrulha">Adicionar Membros</span>
+                    <span v-if="!adicionandoMembrosPatrulha" @click="adicionandoMembrosPatrulha = true" 
+                        id="addMembrosPatrulha"><i class="fa fa-plus text-success" aria-hidden="true"></i> Adicionar Membros</span>
+                    <st-panel-selecionar-membro-secao @pararDeExibir="adicionandoMembrosPatrulha = false" :membrosAtuais="membros" 
+                        v-if="adicionandoMembrosPatrulha" :secao="secaoPatrulha" :patrulha="area">
+                    </st-panel-selecionar-membro-secao>
                 </li>
             </ul>
             
