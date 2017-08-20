@@ -102,7 +102,7 @@ export default vm
                     </div>
                 </div>
             </div>
-            <div class="row" v-if="ehEscotistaDessaSecao">
+            <div class="row" v-if="ehEscotistaDessaSecao && secao.solicitacoes">
                 <div class="col-xs-10 col-xs-offset-1">
                     <st-panel-solicitacoes :secao="getSecao"></st-panel-solicitacoes>
                 </div>

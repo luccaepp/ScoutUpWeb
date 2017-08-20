@@ -3,15 +3,22 @@
 import StInformacoesPost from './Post/InformacoesPost.vue'
 import StDropdownOpcoesPost from './Post/DropdownOpcoesPost.vue'
 import StComentariosPanel from './Post/ComentariosPanel.vue'
+import StAreaConteudo from './Post/AreaConteudo.vue'
 import {mapGetters} from 'vuex'
 var vm = {
+    data(){
+        return {
+            editando: false
+        }
+    },
     //Objetos herdados por props
     props: ['post', 'area', 'ehDessaArea', 'pathParaArea'],
     //componentes que são filhos do componente Post
     components: {
         StInformacoesPost,
         StDropdownOpcoesPost,
-        StComentariosPanel
+        StComentariosPanel,
+        StAreaConteudo
     },
     computed: {
         ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
@@ -137,7 +144,7 @@ export default vm
                     <st-informacoes-post :post="post"></st-informacoes-post>
                     <!-- Dropdown que permite apagar ou editar o post. Ele só será mostrado se o
                     usuário logado for autor do post -->
-                    <st-dropdown-opcoes-post :pathParaOPost="pathParaOPost" 
+                    <st-dropdown-opcoes-post @editar="editando = true" :editando="editando" :pathParaOPost="pathParaOPost" 
                         v-if="usuarioDatabase['.key'] == post.usuarioGerador.chave"></st-dropdown-opcoes-post>
                 </template>
             </div>
@@ -158,11 +165,7 @@ export default vm
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 txt-area">
-                    <h2>{{post.titulo}}</h2>
-                    <div class="separator"></div>
-                    <span>{{post.conteudo}}</span>
-                </div>
+                <st-area-conteudo @pararEdicao="editando = false" :pathParaOPost="pathParaOPost" :editando="editando" :post="post"></st-area-conteudo>
             </div>
 
             <div class="row">

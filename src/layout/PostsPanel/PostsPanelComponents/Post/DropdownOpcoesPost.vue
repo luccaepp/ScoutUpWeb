@@ -1,7 +1,7 @@
 <script>
 import {mapGetters} from 'vuex'
 var vm = {
-    props: ['post', 'pathParaOPost'],
+    props: ['post', 'pathParaOPost', 'editando'],
     computed: {
         ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase'})
     },
@@ -9,6 +9,9 @@ var vm = {
         excluirPost(){
             console.log('excluindo o post...', this.pathParaOPost)
             this.database.ref(this.pathParaOPost).remove();
+        },
+        editar(){
+            this.$emit('editar')
         }
     }
 }
@@ -22,7 +25,7 @@ export default vm
             </span>
         </span>
     <ul class="dropdown-menu dropdown-menu-right menu-opt-post" role="menu">
-        <li role="presentation">
+        <li @click="editar" role="presentation">
             <span class="item-dropdown" role="menuitem" tabindex="-1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</span>
         </li>
         <li role="presentation" class="divider"></li>
