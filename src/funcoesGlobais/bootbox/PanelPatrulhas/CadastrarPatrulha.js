@@ -25,7 +25,13 @@ export default function(isso){
         } else if(!nome){
             return
             //tratando inserção da patrulha
-        } else{
+            
+        } else if(nome.length < 5 || nome.length > 50){
+            bootbox.alert('Erro! O nome da patrulha deve ter no mínimo 5 e no máximo 50 caracteres.')
+            return
+        } 
+        else{
+            console.log('nome: ', nome)
             InsercaoSecaoPatrulha(isso, nome)
         }   
     })

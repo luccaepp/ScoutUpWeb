@@ -16,6 +16,10 @@ var vm = {
         publicar(){
             if(!this.conteudo || !this.titulo){
                 bootbox.alert('Preencha todos os campos do Post')
+                return
+            } else if(this.titulo.length > 40){
+                bootbox.alert('O tamanho máximo do título é de 40 caracteres')
+                return
             }
             var post = {
                 titulo: this.titulo,
