@@ -78,7 +78,7 @@
             </ul>                                    
         </li>
         <li>
-            <a href="#" id="a2"><i class="fa fa-free-code-camp" aria-hidden="true"></i> Atividades</a>
+            <router-link to="/atividades" id="a2"><i class="fa fa-free-code-camp" aria-hidden="true"></i> Atividades</router-link>
         </li>
     </ul>
     <template slot="lis-login">

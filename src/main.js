@@ -4,7 +4,10 @@ import Routes from './routes'
 import App from './App.vue'
 import store from './store/store'
 import VueFire from 'vuefire'
+//EventCalendar
+import vueEventCalendar from 'vue-event-calendar'
 
+Vue.use(vueEventCalendar, {locale: 'en'})
 Vue.use(VueRouter)
 Vue.use(VueFire)
 

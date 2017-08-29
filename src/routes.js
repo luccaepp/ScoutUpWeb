@@ -6,6 +6,7 @@ import PagCadastrarGrupo from './Paginas/PagCadastrarGrupo.vue'
 import PagAreaGrupo from './Paginas/PagAreaGrupo.vue'
 import PagAreaSecao from './Paginas/PagAreaSecao.vue'
 import PagAreaPatrulha from './Paginas/PagAreaPatrulha.vue'
+import PagAtividades from './Paginas/PagAtividades.vue'
 
 export default [
     {
@@ -39,5 +40,9 @@ export default [
     {
         path: "/grupos/:idGrupo/secoes/:idSecao/patrulhas/:idPatrulha",
         component: PagAreaPatrulha
+    },
+    {
+        path: '/atividades',
+        component: PagAtividades
     }
 ]
