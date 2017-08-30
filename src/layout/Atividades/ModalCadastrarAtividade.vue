@@ -1,5 +1,9 @@
 <script>
+import Datepicker from 'vuejs-datepicker';
 export default {
+    components: {
+      'date-picker': Datepicker
+    },
     data(){
         return {
             tiposAtividade: ['Atividade normal (sede)',
@@ -13,7 +17,8 @@ export default {
                             'Visita a outro Grupo',
                             'Atividades Especiais',
                             'Outro'
-                            ]
+                          ],
+            dataInicio: 'dd/MM/aaaa'
         }
     }
 }
@@ -27,7 +32,7 @@ export default {
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">
-                        <i aria-hidden="true" class="fa fa-free-code-camp"></i> 
+                        <i aria-hidden="true" class="fa fa-free-code-camp"></i>
                         Cadastre uma Atividade
                     </h4>
                 </div>
@@ -36,7 +41,7 @@ export default {
                         <div class="form-group">
                             <label for="txtTituloAtividade">Título:</label>
                             <input class="form-control" placeholder="Ex: Atividade no Jardim Botânico" type="text" id="txtTituloAtividade">
-                        </div>                  
+                        </div>
                     </div>
                     <div class="row">
                         <div class="form-group">
@@ -51,6 +56,7 @@ export default {
                     </div>
                     <div class="row">
                         <div class="form-group">
+                          <date-picker language="ja" v-model="dataInicio" id="datePickerModalAtividade" format="dd/MM/yyyy"></date-picker>
                         </div>
                     </div>
                 </div>
@@ -62,8 +68,18 @@ export default {
         </div>
     </div>
 </template>
+
 <style scoped>
 .modal-body{
     padding: 30px;
+}
+</style>
+
+<style>
+#datePickerModalAtividade{
+  border-color:transparent;
+  background-color:rgba(0,0,0,.2);
+  border-radius:5px;
+  text-align: center;
 }
 </style>
