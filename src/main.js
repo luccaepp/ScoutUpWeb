@@ -7,7 +7,6 @@ import VueFire from 'vuefire'
 //EventCalendar
 import vueEventCalendar from 'vue-event-calendar'
 
-
 Vue.use(vueEventCalendar, {locale: 'pt-br', color: 'rgba(86,64,46, .8)'})
 Vue.use(VueRouter)
 Vue.use(VueFire)

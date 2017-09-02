@@ -1,8 +1,8 @@
 <script>
-import Datepicker from 'vuejs-datepicker';
+
 export default {
     components: {
-      'date-picker': Datepicker
+
     },
     data(){
         return {
@@ -18,7 +18,7 @@ export default {
                             'Atividades Especiais',
                             'Outro'
                           ],
-            dataInicio: 'dd/MM/aaaa'
+            dataInicio: new Date()
         }
     }
 }
@@ -56,12 +56,21 @@ export default {
                     </div>
                     <div class="row">
                         <div class="form-group">
-                          <date-picker language="ja" v-model="dataInicio" id="datePickerModalAtividade" format="dd/MM/yyyy"></date-picker>
+                          <label for="datetimeInicio">Data e hora de início:</label>
+                          <input id="datetimeInicio" class="form-control" type="datetime-local">
                         </div>
+                        <div class="form-group">
+                            <label for="datetimeTermino">Data e hora do término:</label>
+                            <input id="datetimeTermino" class="form-control" type="datetime-local">
+                        </div>
+                    </div>
+                    <div class="row">
+
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Fechar</button>
+                    <button class="btn btn-success" data-dismiss="modal">Enviar</button>
                 </div>
             </div>
 
@@ -76,10 +85,5 @@ export default {
 </style>
 
 <style>
-#datePickerModalAtividade{
-  border-color:transparent;
-  background-color:rgba(0,0,0,.2);
-  border-radius:5px;
-  text-align: center;
-}
+
 </style>
