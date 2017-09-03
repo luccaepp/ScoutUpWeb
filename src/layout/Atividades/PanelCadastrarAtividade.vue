@@ -118,7 +118,7 @@ export default {
                                 <gmap-marker v-if="lugar"
                                             :position="{
                                                 lat: lugar.geometry.location.lat(),
-                                                lng: lugar.geometry.location.lng(),
+                                                lng: lugar.geometry.location.lng()
                                                 }">
 
                                 </gmap-marker>
