@@ -2,11 +2,11 @@
 import 'vue-event-calendar/dist/style.css'
 import {mapGetters} from 'vuex'
 import formatadorDeTimeStamp from '../funcoesGlobais/timeStamp/timeStamp.js'
-import ModalCadastrarAtividade from '../layout/Atividades/ModalCadastrarAtividade.vue'
+import PanelCadastrarAtividade from '../layout/Atividades/PanelCadastrarAtividade.vue'
 
 export default {
     components: {
-        ModalCadastrarAtividade
+        'cadastrar-atividades': PanelCadastrarAtividade
     },
     firebase(){
         return {
@@ -16,7 +16,8 @@ export default {
         return {
             atividades: [],
             //Atividades processadas = eventos
-            eventos: []
+            eventos: [],
+            cadastrando: false
         }
     },
     methods: {
@@ -50,7 +51,7 @@ export default {
 <template>
     <div class="container-fluid">
         <div class="row">
-            <vue-event-calendar :events="eventos">
+            <vue-event-calendar v-if="!cadastrando" :events="eventos">
                 <template scope="props">
                     <!-- RAIZ -->
                     <div>
@@ -65,7 +66,7 @@ export default {
                         </div>
                         <div class="row">
                             <div class="btn-toolbar btn-toolbar-down col-xs-11">
-                                <button class="btn btn-success btn-lg btn-circle pull-right" data-toggle="modal" data-target="#modalCadastrarAtividade">
+                                <button class="btn btn-success btn-lg btn-circle pull-right" @click="cadastrando = true">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -75,7 +76,7 @@ export default {
             </vue-event-calendar>
         </div>
         <div class="row">
-            <modal-cadastrar-atividade></modal-cadastrar-atividade>
+            <cadastrar-atividades v-if="cadastrando"></cadastrar-atividades>
         </div>
     </div>
 
