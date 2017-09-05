@@ -1,9 +1,18 @@
 <script>
+import FormGrupos from './PanelConvidados/FormGrupos.vue'
+import FormSecoes from './PanelConvidados/FormSecoes.vue'
+import FormPatrulhas from './PanelConvidados/FormPatrulhas.vue'
+
 export default {
+    components: {
+        FormGrupos,
+        FormSecoes,
+        FormPatrulhas
+    },
     data(){
         return {
             convidados: [],
-            tipoConv: ''
+            tipoConv: 'grupo'
         }
     }
 }
@@ -40,10 +49,17 @@ export default {
                 <h4 class="modal-title">Adicione Participantes</h4>
                 </div>
                 <div class="modal-body">
-                <p>Adicionar: </p>
-                <label class="radio-inline"><input type="radio" name="optTipoConv" v-model="tipoConv">Grupo</label>
-                <label class="radio-inline"><input type="radio" name="optTipoConv" v-model="tipoConv">Seção</label>
-                <label class="radio-inline"><input type="radio" name="optTipoConv" v-model="tipoConv">Patrulha</label>
+                    <div class="row">
+                        <p>Adicionar: </p>
+                        <label class="radio-inline"><input type="radio" value="grupo" name="optTipoConv" v-model="tipoConv">Grupo</label>
+                        <label class="radio-inline"><input type="radio" value="secao" name="optTipoConv" v-model="tipoConv">Seção</label>
+                        <label class="radio-inline"><input type="radio" value="patrulha" name="optTipoConv" v-model="tipoConv">Patrulha</label>
+                    </div>
+                    <div class="row">
+                        <form-grupos v-if="tipoConv == 'grupo'"></form-grupos>
+                        <form-secoes v-else-if="tipoConv == 'secao'"></form-secoes>
+                        <form-patrulhas v-else-if="tipoConv == 'patrulha'"></form-patrulhas>
+                    </div>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -66,6 +82,9 @@ export default {
 }
 #addPart:hover{
     text-decoration:underline;
+}
+.modal-body{
+    padding: 30px;
 }
 </style>
 
