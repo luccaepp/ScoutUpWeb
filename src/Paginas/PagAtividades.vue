@@ -32,18 +32,18 @@ export default {
         atividades(){
             console.log('atividades: ', this.atividades)
                 this.atividades.forEach(atividade => {
-                    let data = formatadorDeTimeStamp.retornaTimeStampSoDateUSA(atividade.timeStamp * 1000)
-                    console.log('atividade: ', data)
+                    let data = formatadorDeTimeStamp.retornaTimeStampSoDateUSA(atividade.inicio)
+                    console.log('atividade: ', atividade)
                     this.eventos.push({
                         date: data,
-                        title: atividade.nome,
+                        title: atividade.titulo,
                         desc: atividade.tipo
                     })
                 })
         }
     },
     created(){
-        this.$bindAsArray('atividades', this.database.ref('/atividade'))
+        this.$bindAsArray('atividades', this.database.ref('/atividade/'))
     }  
 }
 </script>
@@ -62,6 +62,16 @@ export default {
                                 <span class="titEvento">{{event.title}}</span>
                                 <span class="pull-right">{{usaBR(event.date)}}</span>
                                 </div>
+                                <div class="panel-body">
+                                    <p>Informações: </p>
+                                    <!-- TODO <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Local</th>                                       
+                                            </tr>
+                                        </thead>
+                                    </table> -->
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -76,7 +86,7 @@ export default {
             </vue-event-calendar>
         </div>
         <div class="row">
-            <cadastrar-atividades v-if="cadastrando"></cadastrar-atividades>
+            <cadastrar-atividades @cancelarCadastroDeAtividade="cadastrando = false" v-if="cadastrando"></cadastrar-atividades>
         </div>
     </div>
 

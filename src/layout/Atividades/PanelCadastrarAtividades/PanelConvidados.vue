@@ -1,18 +1,48 @@
 <script>
 import FormGrupos from './PanelConvidados/FormGrupos.vue'
 import FormSecoes from './PanelConvidados/FormSecoes.vue'
-import FormPatrulhas from './PanelConvidados/FormPatrulhas.vue'
 
 export default {
     components: {
         FormGrupos,
-        FormSecoes,
-        FormPatrulhas
+        FormSecoes
     },
     data(){
         return {
             convidados: [],
             tipoConv: 'grupo'
+        }
+    },
+    methods: {
+        adicionarSecao(data){
+            let secao = data.secao
+            this.convidados.push({
+                tipo: 'secao',
+                nome: secao.nome,
+                chave: secao['.key'],
+                chaveGrupo: data.chaveGrupo
+            })
+        },
+        adicionarGrupo(grupo){
+            //Retire todas as seções que pertencem a esse grupo dos convidados
+            this.convidados
+                .filter(conv => conv.chaveGrupo == grupo['.key'])
+                .forEach(secaoFilha => this.convidados
+                    .splice(this.convidados
+                        .indexOf(secaoFilha), 1))
+            this.convidados.push({
+                tipo: 'grupo',
+                chave: grupo['.key'],
+                nome: grupo.nome
+            })
+        },
+        removerConvidado(convKey){
+            this.convidados.splice(this.convidados.indexOf(this.convidados.filter(c => c.chave == convKey)[0]), 1)
+        }
+    },
+    watch: {
+        convidados(){
+            this.$emit('atualizarParticipantes', this.convidados)
         }
     }
 }
@@ -53,12 +83,10 @@ export default {
                         <p>Adicionar: </p>
                         <label class="radio-inline"><input type="radio" value="grupo" name="optTipoConv" v-model="tipoConv">Grupo</label>
                         <label class="radio-inline"><input type="radio" value="secao" name="optTipoConv" v-model="tipoConv">Seção</label>
-                        <label class="radio-inline"><input type="radio" value="patrulha" name="optTipoConv" v-model="tipoConv">Patrulha</label>
                     </div>
                     <div class="row">
-                        <form-grupos v-if="tipoConv == 'grupo'"></form-grupos>
-                        <form-secoes v-else-if="tipoConv == 'secao'"></form-secoes>
-                        <form-patrulhas v-else-if="tipoConv == 'patrulha'"></form-patrulhas>
+                        <form-grupos @removerConvidado="removerConvidado" :convidados="convidados" @adicionarGrupo="adicionarGrupo" v-if="tipoConv == 'grupo'"></form-grupos>
+                        <form-secoes @removerConvidado="removerConvidado" :convidados="convidados" @adicionarSecao="adicionarSecao" v-else-if="tipoConv == 'secao'"></form-secoes>
                     </div>
                 </div>
                 <div class="modal-footer">
