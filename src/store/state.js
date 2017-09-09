@@ -16,6 +16,7 @@ const state = {
   firebase: firebase,
   auth: firebase.auth(),
   database: firebase.database(),
+  storage: firebase.storage(),
   usuario: null,
   usuarioDatabase: null
 }

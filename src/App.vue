@@ -3,11 +3,14 @@
   import FuncoesFirebaseDatabase from './funcoesGlobais/firebase/funcoesDatabase'
   import StTopBarDeslogado from './layout/TopBars/TopBarDeslogado.vue'
   import StTopBarLogado from './layout/TopBars/TopBarLogado.vue'
+    import Chat from './layout/Chat/Main.vue'
+
   
 export default{
   components: {
     StTopBarDeslogado,
-    StTopBarLogado
+    StTopBarLogado,
+    Chat
   },
   data(){
     return{
@@ -43,6 +46,7 @@ export default{
     <st-top-bar-deslogado v-if="!conectado"></st-top-bar-deslogado>
     <st-top-bar-logado v-else></st-top-bar-logado>
     <router-view class="router" :firebase="firebase"></router-view>
+    <chat v-if="conectado"></chat>
   </div>
 </template>
 
