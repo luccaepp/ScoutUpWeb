@@ -26,7 +26,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({database: 'getDatabase'})
+        ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'})
     },
     watch: {
         atividades(){
@@ -37,14 +37,18 @@ export default {
                     this.eventos.push({
                         date: data,
                         title: atividade.titulo,
-                        desc: atividade.tipo
+                        desc: atividade.tipo,
+                        atividade: atividade
                     })
                 })
+        },
+        usuarioDatabase(){
+            if(this.usuarioDatabase){
+                console.log('entrou', this.usuarioDatabase.grupo)
+                this.$bindAsArray('atividades', this.database.ref('/atividade/').orderByChild('chave').equalTo(this.usuarioDatabase.grupo))
+            }
         }
-    },
-    created(){
-        this.$bindAsArray('atividades', this.database.ref('/atividade/'))
-    }  
+    }
 }
 </script>
 
@@ -63,14 +67,29 @@ export default {
                                 <span class="pull-right">{{usaBR(event.date)}}</span>
                                 </div>
                                 <div class="panel-body">
-                                    <p>Informações: </p>
-                                    <!-- TODO <table class="table table-striped">
+                                    <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">Local</th>                                       
+                                                <th colspan="2">Informações{{event.atividade}}   </th>                                                                                        
                                             </tr>
                                         </thead>
-                                    </table> -->
+                                        <tbody>
+                                            <tr>
+                                                <td>Início</td>
+                                                <td>
+                                                    {{new Date(event.atividade.inicio).toLocaleDateString()}}
+                                                    {{new Date(event.atividade.inicio).toLocaleTimeString().substring(0, 5)}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Término</td>
+                                                <td>
+                                                    {{new Date(event.atividade.termino).toLocaleDateString()}}
+                                                    {{new Date(event.atividade.termino).toLocaleTimeString().substring(0, 5)}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -91,6 +110,11 @@ export default {
     </div>
 
 </template>
+<style scoped>
+.table > thead > tr > th, .table > tbody > tr > td{
+    text-align: center;
+}
+</style>
 
 <style>
 body{
