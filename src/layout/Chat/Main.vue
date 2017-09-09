@@ -19,6 +19,7 @@ var vm = {
     'usuarioDatabase'() {
       this.$bindAsArray('amigos', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos"))
       this.$bindAsArray('usuarioConversas', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/conversas"))
+      this.$bindAsArray('conversas', this.database.ref("conversas"))
     }
   },
   data(){
@@ -37,25 +38,32 @@ var vm = {
     },
     conversaJaExiste: function(chaveAmigo){
       let isCriado = false;
-      console.log("usuarioConversas",this.$firebaseRefs.usuarioConversas)
-      this.$firebaseRefs.usuarioConversas.on('child_added', snapshot =>{
-          if(snapshot.val().outroUser === chaveAmigo){
+      this.$firebaseRefs.usuarioConversas.on('value', snapshot =>{
+        snapshot.forEach(childSnap => {
+          console.log(childSnap.val())
+          if(childSnap.val().outroUser === chaveAmigo){
             isCriado = true;
-            this.chaveConversa = snapshot.val().chave
+            this.chaveConversa = childSnap.val().chave
           } 
+        });   
       })
+      console.log(isCriado)
       return isCriado   
     },
     abrirChat: function(amigo){
       console.log("amigo",amigo)
       console.log("chave amigo",amigo.chave)
       if(!this.conversaJaExiste(amigo.chave)){
+        console.log("conversas", this.$firebaseRefs.conversas)
         var conversaRef = this.$firebaseRefs.conversas.push()
         this.chaveConversa = conversaRef.key
         this.database.ref("usuario/"+this.usuarioDatabase['.key']+"/conversas").push({"chave": this.chaveConversa, "outroUser": amigo.chave})
         this.database.ref("usuario/"+amigo.chave+"/conversas").push({"chave": this.chaveConversa, "outroUser": this.usuarioDatabase['.key']})
       }
-      this.conversaSelecionada = this.conversaRef
+      console.log("conversasRef", conversaRef)
+      console.log("chaveconversa", this.chaveConversa)
+      console.log("conversas", this.$firebaseRefs.conversas.child(this.chaveConversa))
+      this.conversaSelecionada = this.$firebaseRefs.conversas.child(this.chaveConversa)
       this.amigoSelecionado = amigo
       this.mostrarChat = !this.mostrarChat
     }

@@ -9,7 +9,7 @@ var vm = {
   },
     data(){
     return{
-      mensagem: "",
+      txtMensagem: "",
     }
   },
   props:['conversaRef', 'amigo'],
@@ -18,10 +18,11 @@ var vm = {
       let mensagem = {
           nome: this.auth.currentUser.displayName,
           chave: this.auth.currentUser.uid,
-          texto: this.mensagem.trim(),
+          texto: this.txtMensagem.trim(),
           timeStamp: this.firebase.database.ServerValue.TIMESTAMP
       }
-      this.mensagens.push(mensagem)
+      
+      this.conversaRef.push(mensagem)
       this.mensagem = ""
     },
     carregarMensagens: function(){
@@ -54,7 +55,7 @@ export default vm
         </div>
       </div>
       <div class="form-container">
-      <input type="text" v-model="mensagem" class="">
+      <input type="text" v-model="txtMensagem" class="">
       <input type="submit" @click="enviarMensagem()">
       </div>
     </div>
