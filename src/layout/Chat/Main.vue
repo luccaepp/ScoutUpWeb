@@ -9,16 +9,14 @@ var vm = {
     Chat
   },
   firebase(){
-    return {
-      amigos: this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos"),
-      usuarioConversas: this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/conversas"),
-      conversas: this.database.ref("conversas")
-    }
+    return { }
   },
   watch:{
     'usuarioDatabase'() {
-      this.$bindAsArray('amigos', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos"))
-      this.$bindAsArray('usuarioConversas', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/conversas"))
+      if(this.usuarioDatabase){
+        this.$bindAsArray('amigos', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos"))
+        this.$bindAsArray('usuarioConversas', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/conversas"))
+      }
       this.$bindAsArray('conversas', this.database.ref("conversas"))
     }
   },
@@ -27,7 +25,10 @@ var vm = {
       mostrarChat: false,
       conversaSelecionada: null,
       chaveConversa: null,
-      amigoSelecionado: null
+      amigoSelecionado: null,
+      amigos: null,
+      usuarioConversas: null,
+      conversas: null
     }
   },
   methods: {
@@ -77,6 +78,9 @@ var vm = {
       }
     }
   },
+  created(){
+
+  }
 }
 export default vm
 
