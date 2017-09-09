@@ -94,7 +94,7 @@ export default vm
   </div>
   <div id="corpo-friendlist" class="collapse">
     <div class="list-group">
-      <li v-for="amigo in getAmigos" class="item-lista list-group-item" @click="abrirChat(amigo)">
+      <li v-for="amigo in amigos" class="item-lista list-group-item" @click="abrirChat(amigo)">
           <i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.nome }}
       </li>
   </div> 

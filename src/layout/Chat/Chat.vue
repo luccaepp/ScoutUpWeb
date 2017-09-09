@@ -67,6 +67,7 @@ export default vm
         </span>
     </div>
   </div>
+  </div>
 </template>
 
 <style scoped>
