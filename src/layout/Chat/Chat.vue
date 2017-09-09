@@ -2,10 +2,14 @@
 import {mapGetters} from 'vuex'
 
 var vm = {
+  firebase(){
+    return {
+      mensagens: this.conversaRef
+    }
+  },
     data(){
     return{
       mensagem: "",
-      mensagens: []
     }
   },
   props:['conversaRef', 'amigo'],
@@ -17,7 +21,7 @@ var vm = {
           texto: this.mensagem.trim(),
           timeStamp: this.firebase.database.ServerValue.TIMESTAMP
       }
-      this.conversaRef.push(mensagem)
+      this.mensagens.push(mensagem)
       this.mensagem = ""
     },
     carregarMensagens: function(){
@@ -30,9 +34,6 @@ var vm = {
   computed:{
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
                             firebase: 'getFirebase'})
-  },
-  mounted(){
-    this.carregarMensagens()
   }
 
 }

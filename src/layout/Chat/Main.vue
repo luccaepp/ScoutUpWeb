@@ -8,6 +8,19 @@ var vm = {
   components:{
     Chat
   },
+  firebase(){
+    return {
+      amigos: this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos"),
+      usuarioConversas: this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/conversas"),
+      conversas: this.database.ref("conversas")
+    }
+  },
+  watch:{
+    'usuarioDatabase'() {
+      this.$bindAsArray('amigos', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos"))
+      this.$bindAsArray('usuarioConversas', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/conversas"))
+    }
+  },
   data(){
     return {
       mostrarChat: false,
@@ -22,36 +35,27 @@ var vm = {
         return true;
       }
     },
-    criarArrayAmigos: function(){
-      var amigos = []
-      this.database.ref("usuario/"+this.usuarioDatabase['.key']+"/amigos").on('child_added',(snapshot) => {
-          amigos.push(snapshot.val()) 
-      })
-      return amigos
-    },
     conversaJaExiste: function(chaveAmigo){
       let isCriado = false;
-      this.database.ref("usuario/"+this.usuarioDatabase['.key']+"/conversas").once('child_added', snapshot =>{
-        // snapshot.forEach(childSnap => {
+      console.log("usuarioConversas",this.$firebaseRefs.usuarioConversas)
+      this.$firebaseRefs.usuarioConversas.on('child_added', snapshot =>{
           if(snapshot.val().outroUser === chaveAmigo){
             isCriado = true;
             this.chaveConversa = snapshot.val().chave
           } 
-        // })
       })
       return isCriado   
     },
     abrirChat: function(amigo){
       console.log("amigo",amigo)
       console.log("chave amigo",amigo.chave)
-      var conversasRef = this.database.ref("conversas");
       if(!this.conversaJaExiste(amigo.chave)){
-        var conversaRef = conversasRef.push()
+        var conversaRef = this.$firebaseRefs.conversas.push()
         this.chaveConversa = conversaRef.key
         this.database.ref("usuario/"+this.usuarioDatabase['.key']+"/conversas").push({"chave": this.chaveConversa, "outroUser": amigo.chave})
         this.database.ref("usuario/"+amigo.chave+"/conversas").push({"chave": this.chaveConversa, "outroUser": this.usuarioDatabase['.key']})
       }
-      this.conversaSelecionada = conversasRef.child(this.chaveConversa)
+      this.conversaSelecionada = this.conversaRef
       this.amigoSelecionado = amigo
       this.mostrarChat = !this.mostrarChat
     }
@@ -59,11 +63,10 @@ var vm = {
   computed: {
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
                             firebase: 'getFirebase'}),
-    getAmigos: function(){
-      return this.criarArrayAmigos()
-    },
     getCountAmigos:function(){
-      return this.getAmigos.length
+      if(this.amigos){
+        return this.amigos.length
+      }
     }
   },
 }
@@ -78,7 +81,7 @@ export default vm
   </div>
   <div id="corpo-friendlist" class="collapse">
     <ul class="list-group">
-      <li v-for="amigo in getAmigos" class="item-lista list-group-item"><a @click="abrirChat(amigo)"><i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.nome }}</a></li>
+      <li v-for="amigo in amigos" class="item-lista list-group-item"><a @click="abrirChat(amigo)"><i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.nome }}</a></li>
   </ul> 
   </div>
   <chat v-if="mostrarChat" :amigo="amigoSelecionado" :conversaRef="conversaSelecionada"></chat>
