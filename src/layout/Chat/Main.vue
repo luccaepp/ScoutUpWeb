@@ -74,14 +74,19 @@ export default vm
 <template>
 <div v-if="usuarioDatabase" class="root">
   <div class="text-center row friendlist-minimizado">
-    <a data-toggle="collapse" data-target="#corpo-friendlist">Lista de Amigos</a> <span class="badge">{{ getCountAmigos }}</span>
+    <span data-toggle="collapse" data-target="#corpo-friendlist">
+      Lista de Amigos
+    </span> 
+    <span class="badge">{{ getCountAmigos }}</span>
   </div>
   <div id="corpo-friendlist" class="collapse">
     <ul class="list-group">
-      <li v-for="amigo in getAmigos" class="item-lista list-group-item"><a @click="abrirChat(amigo)"><i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.nome }}</a></li>
+      <li @click="abrirChat(amigo)" v-for="amigo in getAmigos" class="item-lista list-group-item">
+          <i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.nome }}
+      </li>
   </ul> 
   </div>
-  <chat v-if="mostrarChat" :amigo="amigoSelecionado" :conversaRef="conversaSelecionada"></chat>
+  <chat @fecharChat="mostrarChat = false" v-if="mostrarChat" :amigo="amigoSelecionado" :conversaRef="conversaSelecionada"></chat>
 </div>
 </template>
 
@@ -93,26 +98,29 @@ export default vm
   height: 25px;
   position: fixed;
   bottom: 0;
-  opacity: 0.8;
-  right: 15px;
+  right: 30px;
   width: 200px;
   color:white;
+  z-index: 5;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .item-lista{
   background-color: #eacf9b ;
-  border-radius: 15px 15px 0px  0px !important ;
+  border-radius: 15px 15px 6px  6px !important ;
   opacity: 0.8;
   color: black;
+  cursor: pointer;
 }
 #corpo-friendlist{
-  background-color: #56402E;
+  background-color: transparent;
   opacity: 0.8;
   max-height: 500px;
   position: fixed;
   border-radius: 15px 15px 0px  0px !important ;
-  bottom: 25px;
-  right: 0px;
+  bottom: 5px;
+  right: 15px;
   width: 200px;
   color:white;
 }

@@ -41,7 +41,11 @@ export default vm
 
 <template>
   <div class="panel panel-default" id="chat" v-if="usuarioDatabase">
-    <div class="panel-heading"><i class="fa fa-user-circle" aria-hidden="true"></i> {{amigo.nome}}</div>
+    <div class="panel-heading">
+      <i class="fa fa-user-circle" aria-hidden="true"></i> 
+      {{amigo.nome}}
+      <button @click="$emit('fecharChat')" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
     <div class="panel-body">
       <div class="messages-container col-lg-10">
         <div v-for="msg in mensagens">
@@ -60,14 +64,14 @@ export default vm
   </div>
 </template>
 
-<style>
+<style scoped>
 #chat{
   /* background-color: #56402E; */
   opacity: 0.8;
   position: fixed;
   width: 300px;
   height: 300px;
-  right: 200px;
+  right: 220px;
   bottom: 0px;
 }
 .messages-container{
@@ -81,5 +85,9 @@ export default vm
 .panel-body{
   height: 100%;
   width: 100%;
+}
+.panel{
+  margin-bottom: 0;
+  z-index: 6;
 }
 </style>
