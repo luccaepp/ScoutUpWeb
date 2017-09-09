@@ -2,10 +2,14 @@
 import {mapGetters} from 'vuex'
 
 var vm = {
+  firebase(){
+    return {
+      mensagens: this.conversaRef
+    }
+  },
     data(){
     return{
-      mensagem: "",
-      mensagens: []
+      txtMensagem: "",
     }
   },
   props:['conversaRef', 'amigo'],
@@ -14,9 +18,10 @@ var vm = {
       let mensagem = {
           nome: this.auth.currentUser.displayName,
           chave: this.auth.currentUser.uid,
-          texto: this.mensagem.trim(),
+          texto: this.txtMensagem.trim(),
           timeStamp: this.firebase.database.ServerValue.TIMESTAMP
       }
+      
       this.conversaRef.push(mensagem)
       this.mensagem = ""
     },
@@ -30,9 +35,6 @@ var vm = {
   computed:{
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
                             firebase: 'getFirebase'})
-  },
-  mounted(){
-    this.carregarMensagens()
   }
 
 }
@@ -59,11 +61,10 @@ export default vm
     </div>
     <div class="panel-footer">
       <div class="input-group">
-        <input type="text" v-model="mensagem" class="form-control">
+        <input type="text" v-model="txtMensagem" class="form-control">
         <span class="input-group-btn">
           <button class="btn btn-default" @click="enviarMensagem()">Enviar</button>
         </span>
-      </div>
     </div>
   </div>
 </template>
