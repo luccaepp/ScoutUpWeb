@@ -43,7 +43,6 @@ var vm = {
     },
     abrirChat: function(amigo){
       console.log("amigo",amigo)
-      console.log("chave amigo",amigo.chave)
       var conversasRef = this.database.ref("conversas");
       if(!this.conversaJaExiste(amigo.chave)){
         var conversaRef = conversasRef.push()
@@ -73,18 +72,16 @@ export default vm
 
 <template>
 <div v-if="usuarioDatabase" class="root">
-  <div class="text-center row friendlist-minimizado">
-    <span data-toggle="collapse" data-target="#corpo-friendlist">
+  <div data-toggle="collapse" data-target="#corpo-friendlist" class="text-center friendlist-minimizado">
       Lista de Amigos
-    </span> 
     <span class="badge">{{ getCountAmigos }}</span>
   </div>
   <div id="corpo-friendlist" class="collapse">
-    <ul class="list-group">
-      <li @click="abrirChat(amigo)" v-for="amigo in getAmigos" class="item-lista list-group-item">
+    <div class="list-group">
+      <li v-for="amigo in getAmigos" class="item-lista list-group-item" @click="abrirChat(amigo)">
           <i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.nome }}
       </li>
-  </ul> 
+  </div> 
   </div>
   <chat @fecharChat="mostrarChat = false" v-if="mostrarChat" :amigo="amigoSelecionado" :conversaRef="conversaSelecionada"></chat>
 </div>
@@ -95,10 +92,10 @@ export default vm
 
 .friendlist-minimizado{
   background-color: #56402E;
-  height: 25px;
+  height: 30px;
   position: fixed;
   bottom: 0;
-  right: 30px;
+  right: 15px;
   width: 200px;
   color:white;
   z-index: 5;
@@ -119,7 +116,7 @@ export default vm
   max-height: 500px;
   position: fixed;
   border-radius: 15px 15px 0px  0px !important ;
-  bottom: 5px;
+  bottom: 10px;
   right: 15px;
   width: 200px;
   color:white;

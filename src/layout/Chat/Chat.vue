@@ -56,9 +56,13 @@ export default vm
           </div>
         </div>
       </div>
-      <div class="form-container">
-      <input type="text" v-model="mensagem" class="">
-      <input type="submit" @click="enviarMensagem()">
+    </div>
+    <div class="panel-footer">
+      <div class="input-group">
+        <input type="text" v-model="mensagem" class="form-control">
+        <span class="input-group-btn">
+          <button class="btn btn-default" @click="enviarMensagem()">Enviar</button>
+        </span>
       </div>
     </div>
   </div>
@@ -78,12 +82,12 @@ export default vm
   height: 80%;
   width: 100%;
 }
-.form-container{
+.panel-footer{
   bottom:0;
 }
 
 .panel-body{
-  height: 100%;
+  height: 205px;
   width: 100%;
 }
 .panel{
