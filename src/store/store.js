@@ -24,6 +24,9 @@ const store = new VueX.Store({
         getAuth(state){
             return state.auth
         },
+        getStorage(state){
+            return state.storage
+        },
         getUsuarioDatabase(state){
             return state.usuarioDatabase
         }
