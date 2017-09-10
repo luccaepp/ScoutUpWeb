@@ -205,11 +205,20 @@ export default vm
   bottom: 0px;
   margin-bottom: 10px;
   z-index: 6;
+  padding: 0;
 }
 .panel-heading{
-  color: #56402E;
+  color: #EACF9B;
   font-family: claire;
   font-size: 20px;
+  background-color: #56402E;
+  margin: -1px;
 }
-
+.close{
+  color: #EACF9B;
+  opacity: .8;
+}
+.close:hover{
+  opacity: .5;
+}
 </style>

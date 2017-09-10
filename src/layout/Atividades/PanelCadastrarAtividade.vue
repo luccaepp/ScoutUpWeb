@@ -84,7 +84,17 @@ export default {
             }
             console.log(novaAtividade)
             //Cadastrando no firebase
-            this.database.ref('/atividade/').push(novaAtividade)
+            this.database.ref('/atividade/').push(novaAtividade).then(snap => {
+                //Adicionando o mapAtividadeParteHierarquica para cada participante
+                // OBSERVAÇÃO IMPORTANTE: ISSO TEM QUE IR PRO BACKEND DEPOIS
+                novaAtividade.participantes.forEach(participante =>
+                    this.database.ref('/mapAtividadePH/').push({
+                        chaveAtividade: snap.key,
+                        chavePH: participante.chave
+                    })
+                )
+
+            })
             this.cancelar()
             
         },

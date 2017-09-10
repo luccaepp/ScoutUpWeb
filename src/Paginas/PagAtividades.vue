@@ -17,7 +17,8 @@ export default {
             atividades: [],
             //Atividades processadas = eventos
             eventos: [],
-            cadastrando: false
+            cadastrando: false,
+            atividadesCarregadas: false
         }
     },
     methods: {
@@ -45,7 +46,37 @@ export default {
         usuarioDatabase(){
             if(this.usuarioDatabase){
                 console.log('entrou', this.usuarioDatabase.grupo)
-                this.$bindAsArray('atividades', this.database.ref('/atividade/').orderByChild('chave').equalTo(this.usuarioDatabase.grupo))
+                //Retornando os maps com as keys das atividades do grupo
+                this.$bindAsArray('mapAtividadesGrupo', this.database.ref('/mapAtividadePH/').orderByChild('chavePH').equalTo(this.usuarioDatabase.grupo))
+                this.$bindAsArray('mapAtividadesSecao', this.database.ref('/mapAtividadePH/').orderByChild('chavePH').equalTo(this.usuarioDatabase.secao.chave))
+            }
+        },
+        mapAtividadesGrupo(){
+            if(this.mapAtividadesGrupo){
+                let vm = this, i = 0
+                if(this.mapAtividadesGrupo.length != 0)
+                    this.atividadesCarregadas = false
+                this.mapAtividadesGrupo.forEach(map => {
+                    i++
+                    this.database.ref('atividade').child(map.chaveAtividade).on('value', snap => {
+                        this.atividades.push(snap.val())
+                    })
+                    if(mapAtividadesGrupo.length == i) vm.atividadesCarregadas = true
+                })
+            }
+        },
+        mapAtividadesSecao(){
+            if(this.mapAtividadesSecao){
+                let vm = this, i = 0
+                if(this.mapAtividadesSecao.length != 0)
+                    this.atividadesCarregadas = false
+                this.mapAtividadesSecao.forEach(map => {
+                    i++
+                    this.database.ref('atividade').child(map.chaveAtividade).on('value', snap => {
+                        this.atividades.push(snap.val())
+                    })
+                    if(mapAtividadesSecao.length == i) vm.atividadesCarregadas = true
+                })
             }
         }
     }
@@ -53,7 +84,12 @@ export default {
 </script>
 
 <template>
-    <div class="container-fluid">
+    <div v-if="usuarioDatabase && !usuarioDatabase.grupo" class="container-fluid">
+        <div class="row">
+            <h1>Você precisa de um grupo para ter acesse às Atividades.</h1>
+        </div>
+    </div>
+    <div v-else class="container-fluid">
         <div class="row">
             <vue-event-calendar v-if="!cadastrando" :events="eventos">
                 <template scope="props">
