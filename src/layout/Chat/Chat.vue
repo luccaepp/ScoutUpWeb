@@ -1,5 +1,6 @@
 <script>
 import {mapGetters} from 'vuex'
+import timeStampFormatter from '../../funcoesGlobais/timeStamp/timeStamp'
 
 var vm = {
   firebase(){
@@ -14,7 +15,9 @@ var vm = {
   },
   props:['conversaRef', 'amigo'],
   methods:{
-    enviarMensagem: function(){
+    enviarMensagem(){
+      if(!this.txtMensagem)
+        return
       let mensagem = {
           nome: this.auth.currentUser.displayName,
           chave: this.auth.currentUser.uid,
@@ -23,13 +26,20 @@ var vm = {
       }
       
       this.conversaRef.push(mensagem)
-      this.mensagem = ""
+      this.mensagem = ''
+      this.txtMensagem = ''
     },
-    carregarMensagens: function(){
+    carregarMensagens(){
       this.conversaRef.off()
       this.conversaRef.on('child_added', snapshot =>{
         this.mensagens.push(snapshot)
       })
+    },
+    ehDesseUsuario(msg){
+      return msg.chave == this.usuarioDatabase['.key']
+    },
+    formatTS(ts){
+      return timeStampFormatter.retornaTimeStampFormatado(ts)
     }
   },
   computed:{
@@ -42,26 +52,41 @@ export default vm
 </script>
 
 <template>
-  <div class="panel panel-default" id="chat" v-if="usuarioDatabase">
+  <div class="panel" v-if="usuarioDatabase">
     <div class="panel-heading">
       <i class="fa fa-user-circle" aria-hidden="true"></i> 
       {{amigo.nome}}
       <button @click="$emit('fecharChat')" type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
     <div class="panel-body">
-      <div class="messages-container col-lg-10">
-        <div v-for="msg in mensagens">
-          <div class="message-container">
-            <div class="spacing"><div class="pic"></div></div>
-            <div class="message">{{msg.texto}}</div>
-            <div class="name">{{msg.nome}}</div>
+      <ul class="messages-container col-lg-10">
+        <li class="message-box" v-for="msg in mensagens">
+          <div :class="{'message-wrapper-direita' : ehDesseUsuario(msg), 'message-wrapper-esquerda' : !ehDesseUsuario(msg)}">
+            <div v-if="!ehDesseUsuario(msg)" class="avatar">
+              <p class="foto-usuario-wrapper">
+                <i aria-hidden="true" class="fa fa-user-circle"></i>
+              </p>
+              <p class="horario">{{formatTS(msg.timeStamp)}}</p>
+            </div>
+            <div class="textoBox">
+              <div class="textoBox-body">{{msg.texto}}</div>
+              <div class="textoBox-footer">
+                {{msg.nome}}
+              </div>
+            </div>
+            <div v-if="ehDesseUsuario(msg)" class="avatar">
+              <p class="foto-usuario-wrapper">
+                <i aria-hidden="true" class="fa fa-user-circle"></i>
+              </p>
+              <p class="horario">{{formatTS(msg.timeStamp)}}</p>
+            </div>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
     <div class="panel-footer">
       <div class="input-group">
-        <input type="text" v-model="txtMensagem" class="form-control">
+        <input @keyup.enter="enviarMensagem()" type="text" v-model="txtMensagem" class="form-control">
         <span class="input-group-btn">
           <button class="btn btn-default" @click="enviarMensagem()">Enviar</button>
         </span>
@@ -70,20 +95,98 @@ export default vm
   </div>
 </template>
 
-<style scoped>
-#chat{
-  /* background-color: #56402E; */
-  opacity: 0.8;
-  position: fixed;
-  width: 300px;
-  height: 300px;
-  right: 220px;
-  bottom: 0px;
+<style>
+.foto-usuario-wrapper{
+  display: flex;
+  align-self: flex-start;
+}
+.horario{
+  display: flex;
+  align-self: flex-end;
+  margin-left: -55px;
+  margin-top: 85px;
+  margin-bottom: 0;
+  text-align: center;
+}
+.textoBox{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+}
+.textoBox-body{
+  align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  word-break: break-word;
+  min-width: 80px;
+}
+.textoBox-footer{
+  align-self: flex-end;
+  font-family: claire;
+}
+.avatar{
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  max-width: 25%;
+}
+.avatar > p > .fa{
+    font-size:40px;
+}
+.message-wrapper-esquerda > .avatar{
+  float: left;
+  margin-right: 20px;
+}
+.message-wrapper-direita > .avatar{
+  float: right;
+  margin-left: 60px;
 }
 .messages-container{
-  height: 80%;
+  height: 100%;
   width: 100%;
+  list-style: none;
+  overflow-y: scroll;
 }
+
+.message-wrapper-esquerda, .message-wrapper-direita{
+  background-color: #56402E;
+  color: #EACF9B;
+  margin-top: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+}
+.message-wrapper-esquerda::before{
+  box-sizing: border-box;
+  width: 0;
+  height: 0;
+  content: "";
+  top: -10px;
+  left: -21px;
+  position: relative;
+  border-style: solid;
+  border-width: 0px 15px 15px 0px;
+  border-color: transparent #56402E transparent transparent;
+}
+.message-wrapper-direita::after{
+  box-sizing: border-box;
+  width: 0;
+  height: 0;
+  content: "";
+  top: -10px;
+  right: -9px;
+  position: relative;
+  border-style: solid;
+  border-width: 15px 15px 15px 15px;
+  border-color: #56402E transparent transparent transparent;
+}
+</style>
+
+
+<style scoped>
 .panel-footer{
   bottom:0;
 }
@@ -93,7 +196,20 @@ export default vm
   width: 100%;
 }
 .panel{
-  margin-bottom: 0;
+  background-color: rgba(234,207,155,.9);
+  opacity: 0.9;
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  right: 220px;
+  bottom: 0px;
+  margin-bottom: 10px;
   z-index: 6;
 }
+.panel-heading{
+  color: #56402E;
+  font-family: claire;
+  font-size: 20px;
+}
+
 </style>

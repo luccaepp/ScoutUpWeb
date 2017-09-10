@@ -72,14 +72,11 @@ var vm = {
   computed: {
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
                             firebase: 'getFirebase'}),
-    getCountAmigos:function(){
-      if(this.amigos){
+    getCountAmigos(){
+      if(this.amigos && this.amigos != null){
         return this.amigos.length
       }
     }
-  },
-  created(){
-
   }
 }
 export default vm
@@ -122,13 +119,13 @@ export default vm
 .item-lista{
   background-color: #eacf9b ;
   border-radius: 15px 15px 6px  6px !important ;
-  opacity: 0.8;
+  opacity: 0.9;
   color: black;
   cursor: pointer;
 }
 #corpo-friendlist{
   background-color: transparent;
-  opacity: 0.8;
+  opacity: 0.9;
   max-height: 500px;
   position: fixed;
   border-radius: 15px 15px 0px  0px !important ;

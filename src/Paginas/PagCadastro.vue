@@ -8,6 +8,11 @@
 
 
   export default {
+    data(){
+      return {
+        userExists: []
+      }
+    },
     firebase(){
       return {
 
@@ -38,10 +43,9 @@
       loginPersonalizado(provider, tipoUsuario){
         this.auth.signInWithPopup(provider).then(resultado => {
           //Se o usuário ainda não existe, crie ele
-          this.$bindAsArray('userExists', this.database.ref('usuario/'+resultado.user.uid), null,
-           (snap) => {
-             if(this.userExists.length == 0){
-              console.log(this.userExists)
+          this.$bindAsArray('userExists', this.database.ref('/usuario/'+resultado.user.uid), null,
+           snap => {
+             if(!snap.exists()){
               var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user, tipoUsuario)
               if(!objUsuarioParaDatabase){
                 console.error('Erro: impossível montar todos os campos do usuário pelo provedor de autenticação')
