@@ -83,7 +83,7 @@ export default {
                     vm.database.ref('atividade').child(map.chaveAtividade).on('value', snap => {
                         vm.atividades.push(snap.val())
                     })
-                    if(mapAtividadesSecao.length == i) vm.atividadesCarregadas = true
+                    if(this.mapAtividadesSecao.length == i) vm.atividadesCarregadas = true
                 })
             }
         }
