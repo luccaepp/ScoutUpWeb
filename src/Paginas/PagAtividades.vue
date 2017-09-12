@@ -18,7 +18,9 @@ export default {
             //Atividades processadas = eventos
             eventos: [],
             cadastrando: false,
-            atividadesCarregadas: false
+            atividadesCarregadas: false,
+            mapAtividadesGrupo: null,
+            mapAtividadesSecao: null
         }
     },
     methods: {
@@ -52,16 +54,18 @@ export default {
             }
         },
         mapAtividadesGrupo(){
+            console.log('mapAtividadesGrupo', this.mapAtividadesGrupo)
             if(this.mapAtividadesGrupo){
                 let vm = this, i = 0
                 if(this.mapAtividadesGrupo.length != 0)
                     this.atividadesCarregadas = false
+                this.atividades = []
                 this.mapAtividadesGrupo.forEach(map => {
                     i++
                     this.database.ref('atividade').child(map.chaveAtividade).on('value', snap => {
                         this.atividades.push(snap.val())
                     })
-                    if(mapAtividadesGrupo.length == i) vm.atividadesCarregadas = true
+                    if(vm.mapAtividadesGrupo.length == i) vm.atividadesCarregadas = true
                 })
             }
         },
@@ -70,10 +74,11 @@ export default {
                 let vm = this, i = 0
                 if(this.mapAtividadesSecao.length != 0)
                     this.atividadesCarregadas = false
+                this.atividades = []
                 this.mapAtividadesSecao.forEach(map => {
                     i++
-                    this.database.ref('atividade').child(map.chaveAtividade).on('value', snap => {
-                        this.atividades.push(snap.val())
+                    vm.database.ref('atividade').child(map.chaveAtividade).on('value', snap => {
+                        vm.atividades.push(snap.val())
                     })
                     if(mapAtividadesSecao.length == i) vm.atividadesCarregadas = true
                 })
@@ -98,15 +103,15 @@ export default {
                         <div v-for="(event, index) in props.showEvents" class="event-item">
                             <div class="panel">
                                 <div class="panel-heading">
-                                <i aria-hidden="true" class="fa fa-free-code-camp ifaccamp"></i>
-                                <span class="titEvento">{{event.title}}</span>
+                                <i aria-hidden="true" class="fa fa-free-code-camp ifaccamp text-danger"></i>
+                                <span class="titEvento">{{event.title}} - <span class="text-success">{{event.atividade.tipo}}</span></span>
                                 <span class="pull-right">{{usaBR(event.date)}}</span>
                                 </div>
                                 <div class="panel-body">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th colspan="2">Informações{{event.atividade}}   </th>                                                                                        
+                                                <th colspan="2">Informações</th>                                                                                        
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -124,12 +129,42 @@ export default {
                                                     {{new Date(event.atividade.termino).toLocaleTimeString().substring(0, 5)}}
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td>Local</td>
+                                                <td>
+                                                    <gmap-map
+                                                        :center="event.atividade.local"
+                                                        :zoom="14"
+                                                        map-type-id="hybrid"
+                                                        style="width: 290px; height: 260px"
+                                                        >
+                                                            <gmap-marker v-if="event.atividade.local"
+                                                                        :position="event.atividade.local">
+
+                                                            </gmap-marker>
+                                                    </gmap-map>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Participantes</td>
+                                                <td>
+                                                    <li v-for="part in event.atividade.participantes" class="list-group-item list-group-item-info">
+                                                        {{part.nome}}
+                                                    </li>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Materiais Necessários</td>
+                                                <td>
+                                                    <li v-for="material in event.atividade.materiais" class="list-group-item">{{material}}</li>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div v-if="usuarioDatabase && usuarioDatabase.tipo == 'escotista'" class="row">
                             <div class="btn-toolbar btn-toolbar-down col-xs-11">
                                 <button class="btn btn-success btn-lg btn-circle pull-right" @click="cadastrando = true">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
