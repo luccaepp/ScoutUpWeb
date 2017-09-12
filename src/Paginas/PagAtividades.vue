@@ -26,6 +26,14 @@ export default {
     methods: {
         usaBR(usa){
             return formatadorDeTimeStamp.strUSAParaBR(usa)
+        },
+        fazerBinds(){
+            if(this.usuarioDatabase){
+                console.log('entrou', this.usuarioDatabase.grupo)
+                //Retornando os maps com as keys das atividades do grupo
+                this.$bindAsArray('mapAtividadesGrupo', this.database.ref('/mapAtividadePH/').orderByChild('chavePH').equalTo(this.usuarioDatabase.grupo))
+                this.$bindAsArray('mapAtividadesSecao', this.database.ref('/mapAtividadePH/').orderByChild('chavePH').equalTo(this.usuarioDatabase.secao.chave))
+            }
         }
     },
     computed: {
@@ -46,12 +54,7 @@ export default {
                 })
         },
         usuarioDatabase(){
-            if(this.usuarioDatabase){
-                console.log('entrou', this.usuarioDatabase.grupo)
-                //Retornando os maps com as keys das atividades do grupo
-                this.$bindAsArray('mapAtividadesGrupo', this.database.ref('/mapAtividadePH/').orderByChild('chavePH').equalTo(this.usuarioDatabase.grupo))
-                this.$bindAsArray('mapAtividadesSecao', this.database.ref('/mapAtividadePH/').orderByChild('chavePH').equalTo(this.usuarioDatabase.secao.chave))
-            }
+            this.fazerBinds()
         },
         mapAtividadesGrupo(){
             console.log('mapAtividadesGrupo', this.mapAtividadesGrupo)
@@ -84,6 +87,9 @@ export default {
                 })
             }
         }
+    },
+    created(){
+        this.fazerBinds()
     }
 }
 </script>
