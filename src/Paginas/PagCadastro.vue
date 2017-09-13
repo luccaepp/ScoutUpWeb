@@ -28,10 +28,10 @@
     methods: {
       cadastrarUsuarioComEmailESenha(usuario){
           //Criando Usuário no Firebase Auth
-          this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then((snapshot) => {
+          this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then(snapshot => {
             //Criando Usuário na Database
             FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, usuario, snapshot.uid)
-            this.perfil(snapshot.key)
+            this.perfil(snapshot.uid)
           }).catch((erro) => {
             console.warn("Algo deu errado... "+erro.code+" "+erro.message)
           })
@@ -54,12 +54,12 @@
 
               FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, objUsuarioParaDatabase, resultado.user.uid)
            }
-           this.perfil(snap.key)
+           this.perfil(resultado.user.uid)
         })
 
 
           //Router manda pra tela de perfil
-          
+
         }).catch(erro => {
           switch(erro.code){
             case "auth/account-exists-with-different-credential": alert("O seu e-mail já está cadastrado em outro método de login. Tente novamente com outro provedor de autenticação.") ;break;
@@ -81,9 +81,10 @@
       EventBus.$on('login', data => {
         this.auth.signInWithEmailAndPassword(data.email, data.senha).then(resultado => {
           console.info(resultado)
-          this.perfil()
+          this.perfil(data.key)
         }).catch(erro => {
           alert('Não foi possível autenticar o usuário. \nVerifique as as informações nos campos')
+          console.error(erro)
         })
       })
 

@@ -34,7 +34,6 @@
         },
         mounted(){
             $( "#radioEscoteiroLogin" ).trigger("click");
-
         }
     }
 </script>
