@@ -4,91 +4,35 @@ const nodemailer = require('nodemailer');
 const serviceAccount = require("./chave.json");
 const numSpams = 5;
 
-admin.initializeApp(functions.config().firebase);
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://scoutup-59cc7.firebaseio.com'
-}, "database");
+initFirebase()
 
-const database = admin.database(),
-PATH_USUARIO_DATABASE = '/usuario/{hashUsuario}';
+const database = admin.database();
+const PATH_USUARIO_DATABASE = require('./PATHs').PATH_USUARIO_DATABASE,
+      PATH_SECAO = require('./PATHs').PATH_SECAO
 
-const PATH_SECAO = '/grupo/{hashGrupo}/secoes/{hashSecao}'
-
-const PATH_SOLICITACAO_SECAO_USUARIO_DATABASE = PATH_USUARIO_DATABASE+'/solicitacaoDeEntradaEmSecao';
-//Alteração na solicitação do usuario, usado para excluir as solicitações anteriores
-exports.watchSolicitacaoDeSecaoUsuario = functions.database.ref(PATH_SOLICITACAO_SECAO_USUARIO_DATABASE).onUpdate(evento => {
-  const solicitacao = evento.data.val()
-  if(evento.previous.exists()){
-    const solicitacaoAnterior = evento.previous.val()
-    //excluindo referência da solicitação anterior
-    return database.ref('/grupo/'+solicitacaoAnterior.chaveGrupo+'/secoes/'+solicitacaoAnterior.chaveSecao)
-                                        .child('solicitacoes').orderByChild('usuario/chave').equalTo(evento.data.ref.parent.key)
-                                        .once('value', snapshot => {
-                                              var updates = {};
-                                              snapshot.forEach(child => updates[child.key] = null);
-                                              ref.update(updates);
-                                        })
-  }
-})
-
-// const PATH_SOLICITACAO_DE_ENTRADA_NA_SECAO = '/grupo/{hashGrupo}/secoes/{hashSecao}/solicitacoes/{hashSolicitacao}/'
-// //Validação das Solicitações de entrada na seção
-// exports.validacaoDaSolicitacaoDeEntradaNaSecao = functions.database.ref(PATH_SOLICITACAO_DE_ENTRADA_NA_SECAO).onWrite(evento => {
-//   const solicitacao = evento.data.val()
-//   database.ref('/')
-// })
+//Excluindo solicitações de entrada na seção antigas
+exports.watchSolicitacaoDeSecaoUsuario = require('./Secao/watchSolicitacaoDeSecaoUsuario').handler
 
 
 //Inversões de TimeStamp
+exports.postPatrulhaAdicionado = require('./Patrulha/postPatrulhaAdicionado').handler
 
+exports.comentarioPatrulhaAdicionado = require('./Patrulha/comentarioPatrulhaAdicionado').handler
 
-const PATH_POSTS_SECAO = PATH_SECAO+'/posts/{hashPost}',
-PATH_COMENTARIOS_SECAO = PATH_POSTS_SECAO+'/comentarios/{hashComentario}',
-PATH_POSTS_PATRULHA = PATH_SECAO+'/patrulhas/{hashPatrulha}/posts/{hashPost}',
-PATH_COMENTARIOS_PATRULHA = PATH_POSTS_PATRULHA+'/comentarios/{hashComentario}'
+exports.postSecaoAdicionado = require('./Secao/postSecaoAdicionado').handler
 
-exports.postPatrulhaAdicionado = functions.database.ref(PATH_POSTS_PATRULHA).onWrite(evento => {
-  const post = evento.data.val()
-  if(post.timeStampNeg){
-    return
-  }
-  post.timeStampNeg = - post.timeStamp
-  evento.data.ref.set(post)
-})
-
-exports.comentarioPatrulhaAdicionado = functions.database.ref(PATH_COMENTARIOS_PATRULHA).onWrite(evento => {
-  const comentario = evento.data.val()
-  if(comentario.timeStampNeg){
-    return
-  }
-  comentario.timeStampNeg = - comentario.timeStamp
-  evento.data.ref.set(comentario)
-})
-
-exports.postSecaoAdicionado = functions.database.ref(PATH_POSTS_SECAO).onWrite(evento => {
-  const post = evento.data.val()
-  if(post.timeStampNeg){
-    return
-  }
-  post.timeStampNeg = - post.timeStamp
-  evento.data.ref.set(post)
-
-})
-
-exports.comentarioPostSecaoAdicionado = functions.database.ref(PATH_COMENTARIOS_SECAO).onWrite(evento => {
-  const comentario = evento.data.val()
-  if(comentario.timeStampNeg){
-    return
-  }
-  comentario.timeStampNeg = - comentario.timeStamp
-  evento.data.ref.set(comentario)
-})
+exports.comentarioPostSecaoAdicionado = require('./Secao/comentarioPostSecaoAdicionado').handler
 
 
 
 
-
+function initFirebase(){
+  admin.initializeApp(functions.config().firebase);
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://scoutup-59cc7.firebaseio.com'
+  }, "database");
+}
 
 
 //Teste inicial pra saber como as Cloud Functions funcionam

@@ -1,0 +1,46 @@
+[debug] [2017-09-14T05:31:29.883Z] ----------------------------------------------------------------------
+[debug] [2017-09-14T05:31:29.883Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Bibizerozerozerooito\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2017-09-14T05:31:29.883Z] CLI Version:   3.10.1
+[debug] [2017-09-14T05:31:29.883Z] Platform:      win32
+[debug] [2017-09-14T05:31:29.883Z] Node Version:  v6.11.2
+[debug] [2017-09-14T05:31:29.883Z] Time:          Thu Sep 14 2017 02:31:29 GMT-0300 (Hora oficial do Brasil)
+[debug] [2017-09-14T05:31:29.883Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-14T05:31:30.021Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-14T05:31:30.021Z] > authorizing via signed-in user
+[debug] [2017-09-14T05:31:30.036Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-09-14T05:31:30.036Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/KBQQSUa8TXngI4gnbs4sxjPzdWndk_gtvHr7Nkt2Cj4',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Sep 14 2017 02:31:30 GMT-0300 (Hora oficial do Brasil)
+[debug] [2017-09-14T05:31:30.820Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-14T05:31:31.198Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/scoutup-59cc7  
+ Thu Sep 14 2017 02:31:31 GMT-0300 (Hora oficial do Brasil)
+[debug] [2017-09-14T05:31:32.535Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-14T05:31:32.535Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/scoutup-59cc7/tokens  
+ Thu Sep 14 2017 02:31:32 GMT-0300 (Hora oficial do Brasil)
+[debug] [2017-09-14T05:31:33.334Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'scoutup-59cc7'...
+[info] 
+[info] i  deploying database, functions, hosting
+[info] +  database: rules ready to deploy.
+[debug] [2017-09-14T05:31:36.234Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "dependencies": {
+    "firebase-admin": "^4.2.1",
+    "firebase-functions": "^0.5.7",
+    "nodemailer": "^4.0.1",
+    "xoauth2": "^1.2.0"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[info] i  runtimeconfig: ensuring necessary APIs are enabled...
+[debug] [2017-09-14T05:31:36.249Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/scoutup-59cc7?view=CONSUMER_VIEW  
+ Thu Sep 14 2017 02:31:36 GMT-0300 (Hora oficial do Brasil)
+[debug] [2017-09-14T05:31:36.249Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/scoutup-59cc7?view=CONSUMER_VIEW  
+ Thu Sep 14 2017 02:31:36 GMT-0300 (Hora oficial do Brasil)
