@@ -3,7 +3,7 @@
   import FuncoesFirebaseDatabase from './funcoesGlobais/firebase/funcoesDatabase'
   import StTopBarDeslogado from './layout/TopBars/TopBarDeslogado.vue'
   import StTopBarLogado from './layout/TopBars/TopBarLogado.vue'
-    import Chat from './layout/Chat/Main.vue'
+  import Chat from './layout/Chat/Main.vue'
 
   
 export default{
@@ -14,8 +14,8 @@ export default{
   },
   data(){
     return{
-      firebase: this.$store.state.firebase,
-      conectado: false
+      conectado: false,
+      firebase: this.$store.state.firebase
     }
   },
   beforeCreate(){
@@ -35,8 +35,12 @@ export default{
           this.$router.replace('/cadastro')
         }
     })
+  },
+  created(){
+    this.firebase.messaging().requestPermission()
+      .then(() => console.info('Permissão concedida'))
+      .catch(warn => console.warn('Permissão negada', warn))
   }
-
 }
 
 </script>
