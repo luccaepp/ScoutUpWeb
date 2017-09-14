@@ -16,3 +16,5 @@ exports.PATH_COMENTARIOS_SECAO = PATH_POSTS_SECAO + '/comentarios/{hashComentari
 const PATH_POSTS_PATRULHA = PATH_SECAO + '/patrulhas/{hashPatrulha}/posts/{hashPost}'
 exports.PATH_POSTS_PATRULHA = PATH_POSTS_PATRULHA
 exports.PATH_COMENTARIOS_PATRULHA = PATH_POSTS_PATRULHA + '/comentarios/{hashComentario}'
+
+exports.PATH_ATIVIDADES = '/atividade'
