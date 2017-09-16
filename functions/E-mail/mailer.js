@@ -10,7 +10,8 @@ const transporter = nodemailer.createTransport( {
 })
 
 exports.mensageiro = (email) => {
+    console.log('booora mensageiro')
     transporter.sendMail(email).then(() =>
         console.log("SPAMOU")
-    ).catch(erro => console.err(erro))
+    ).catch(erro => console.log(erro))
 }

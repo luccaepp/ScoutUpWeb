@@ -23,6 +23,8 @@ exports.postSecaoAdicionado = require('./Secao/postSecaoAdicionado').handler
 
 exports.comentarioPostSecaoAdicionado = require('./Secao/comentarioPostSecaoAdicionado').handler
 
+exports.atividadeAdicionada = require('./Atividade/atividadeAdicionada').handler
+
 
 
 
