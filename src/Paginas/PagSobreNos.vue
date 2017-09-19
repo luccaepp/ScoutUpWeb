@@ -7,7 +7,7 @@ export default {
 <template>
     <div class="container container-main">
         <div class="row">
-            <h1 class="text-center">Sobre Nós</h1>
+            <h1 class="text-center sobre-nos-titulo">Sobre Nós</h1>
         </div>
         <div class="row">
             <ul class="list-group text-center">
@@ -78,11 +78,18 @@ img{
     width: 200px;
     height: 215px;
 }
+.list-group-item{
+    padding: 30px;
+}
 </style>
 
 <style>
 body{
     background-image: url(../assets/paisagem-background.png);
+}
+.sobre-nos-titulo{
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
 }
 </style>
 

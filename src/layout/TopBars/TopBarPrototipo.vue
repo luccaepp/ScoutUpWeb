@@ -1,12 +1,22 @@
 <script>
 import autoCompleteConfig from '../../funcoesGlobais/algolia/autoCompleteConfig'
 import {mapGetters} from 'vuex'
+import {EventBus} from '../../eventBus'
   export default {
+    data(){
+      return {
+        hideTopBar: false
+      }
+    },
     mounted(){
         autoCompleteConfig(this)
     },
     computed: {
       ...mapGetters({usuario: 'getUsuario'})
+    },
+    created(){
+      let self = this
+      EventBus.$on('hideTopBar', hide => self.hideTopBar = hide)
     }
   }
 </script>
@@ -15,48 +25,116 @@ import {mapGetters} from 'vuex'
 
 <template>
       <!-- NAVBAR -->
-      <div class="row">
-        <div class="header">
-            <nav class="navbar navbar-inverse meu-navbar navbar-fixed-top col-lg-10 col-lg-offset-1 caixombra">
+        <transition name="hideTopBar">
+          <div key="header" v-if="!hideTopBar" class="header">
+              <nav class="navbar navbar-inverse meu-navbar navbar-fixed-top col-lg-10 col-lg-offset-1 caixombra">
 
-            <div class="navbar-header">
-                <router-link to="/"><div class="navbar-brand" id="logo"></div></router-link>                      
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggleado">
-                  <span class="sr-only">Botão de Toggle</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-            </div>
-                              
-            <div class="collapse navbar-collapse col-lg-6" id="toggleado">
-                <slot name="lis-navbar"></slot>
-              </div> 
-              <ul id="navbar-right" class="nav navbar-nav navbar-right">
-                  <li><form class="navbar-form">
-                  <div v-if="usuario" class="input-group">
-                    <input id="inputPesquisarTopBar" type="text" class="form-control" 
-                      placeholder="Buscar Usuário">
-                    <div id="btnBoxSearchTopBar" class="input-group-btn">
-                      <button class="btn btn-default">
-                        <i class="glyphicon glyphicon-search"></i>
-                      </button>
+              <div class="navbar-header">
+                  <router-link to="/"><div class="navbar-brand" id="logo"></div></router-link>                      
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggleado">
+                    <span class="sr-only">Botão de Toggle</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+              </div>
+                                
+              <div class="collapse navbar-collapse col-lg-6" id="toggleado">
+                  <slot name="lis-navbar"></slot>
+                </div> 
+                <ul id="navbar-right" class="nav navbar-nav navbar-right">
+                    <li v-if="usuario"><form class="navbar-form">
+                    <div class="input-group">
+                      <input id="inputPesquisarTopBar" type="text" class="form-control" 
+                        placeholder="Buscar Usuário">
+                      <div id="btnBoxSearchTopBar" class="input-group-btn">
+                        <button class="btn btn-default">
+                          <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </form></li>
-                  <slot name="lis-login">
-                  </slot>
-                </ul>
+                  </form></li>
+                    <slot name="lis-login">
+                    </slot>
+                  </ul>
 
 
-            </nav>
-        </div>
+              </nav>
+              <div class="col-xs-2 col-xs-offset-10">
+                <i @click="hideTopBar = true" class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+              </div>
+          </div>
+          <div id="opt-mostrar-top-bar" key="mostrarHeader" v-else>
+            <div class="container">
+              <div class="col-xs-12 text-center">
+                  <i @click="hideTopBar = false" class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </transition>
 
-      </div>
 </template>
 
+<style scoped>
+.fa-chevron-circle-down{
+  font-size: 100px;
+  cursor: pointer;
+  color: #56402E;
+  opacity: .7;
+}
+.fa-chevron-circle-up{
+  position: absolute;
+  font-size: 30px;
+  z-index: 10000;
+  color: #EACF9B;
+  top: 50px;
+  cursor: pointer;
+}
+
+@media(max-width: 1238px){
+  .fa-chevron-circle-up{
+      top: 88px;
+  }
+}
+
+@media(max-width: 1200px){
+    .fa-chevron-circle-up{
+      top: 105px;
+      right: 90px;
+  }
+}
+
+@media(max-width: 768px){
+    .fa-chevron-circle-up{
+      font-size: 90px;
+      top: 235px;
+      right: 30px;
+  }
+}
+</style>
+
 <style>
-  .navbar{
+
+#opt-mostrar-top-bar{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 11;
+}
+
+.hideTopBar-enter-active{
+  transition: all .4s ease;
+}
+
+.hideTopBar-leave-active{
+  transition: all .4s ease;
+}
+
+.hideTopBar-enter, .hideTopBar-leave-to{
+  transform: translateY(-700px);
+}
+
+.navbar{
   background-color:#56402E;
   border-radius: 4px;
   border-color: #56402E;
@@ -107,7 +185,11 @@ import {mapGetters} from 'vuex'
 }
 
 .header{
-  display:border-box;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  clear: both;
+  z-index: 10;
 }
 
 /* Algolia */

@@ -58,7 +58,7 @@
           <input type="password" class="form-control" placeholder="Digite sua Senha" v-model="txtSenha">
         <hr>
         <p class="text-left text-info">Login Personalizado</p>
-        <form class="text-left col-xs-6">
+        <form class="text-left col-xs-7">
             <span class="apenas">(Apenas se esta é sua primeira vez aqui)</span>
             <br>
             <span class="text-info"> Sou um: </span>
@@ -103,5 +103,8 @@
     .apenas{
         color:#999999;
         font-size: 12px;
+    }
+    .panel{
+        margin-bottom: 0;
     }
 </style>

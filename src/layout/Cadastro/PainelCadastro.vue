@@ -67,3 +67,10 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+.panel{
+    margin-bottom: 0;
+}
+</style>
+

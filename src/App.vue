@@ -69,6 +69,7 @@ export default{
   margin-top:15vh;
 }
 }
+
 .container-main{
   background-color: rgba(86,64,46, .5);
   border-radius: 10px;

@@ -30,15 +30,18 @@ import { Carousel, Slide } from 'vue-carousel';
           <div class="row">
             <carousel paginationActiveColor="#B9C159" paginationColor="#EACF9B" :navigationPrevLabel="previousLabel" :navigationNextLabel="nextLabel" :perPage="1" 
                       :navigationEnabled="true">
+              <!-- SLIDE -->
               <slide>
                 <div class="row">
-                  <div class="col-xs-4 col-xs-offset-1">
-                    <div class="markt col-xs-10 col-xs-offset-1">
-                      <i class="fa fa-android icone" aria-hidden="true"></i>
-                      <p>Aplicativo <br> Android</p>
+                  <div class="col-xs-12 col-md-4 col-md-offset-1">
+                    <div class="col-xs-6 col-xs-offset-3">
+                      <div class="markt">
+                        <i class="fa fa-android icone" aria-hidden="true"></i>
+                        <p>Aplicativo <br> Android</p>
+                      </div>
                     </div>
                   </div>
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12 col-md-5 col-md-offset-1">
                       <div class="well">
                         <p class="texto-feature"><i class="fa fa-map-marker" aria-hidden="true"></i> Chamada via GPS</p>
                         <p class="texto-feature"><i class="fa fa-envelope-o" aria-hidden="true"></i> Envie Notificações</p>
@@ -46,28 +49,34 @@ import { Carousel, Slide } from 'vue-carousel';
                     </div>
                 </div>
               </slide>
+              <!-- SLIDE -->
               <slide>
-                <div class="col-xs-4 col-xs-offset-1">
-                  <div class="markt col-xs-10 col-xs-offset-1">
-                    <i class="fa fa-calendar icone" aria-hidden="true"></i>
-                    <p>Calendário <br> de <br> Atividades</p>
+                <div class="col-xs-12 col-md-4 col-md-offset-1">
+                  <div class="col-xs-6 col-xs-offset-3">
+                    <div class="markt col-xs-10 col-xs-offset-1">
+                      <i class="fa fa-calendar icone" aria-hidden="true"></i>
+                      <p>Calendário <br> de <br> Atividades</p>
+                    </div>
                   </div>
                 </div>
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 col-md-5 col-md-offset-1">
                     <div class="well">
                       <p class="texto-feature"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Adicione Atividades</p>
                       <p class="texto-feature"><i class="fa fa-building-o" aria-hidden="true"></i> Convide Grupos</p>
                     </div>
                   </div>
               </slide>
+              <!-- SLIDE -->
               <slide>
-                <div class="col-xs-4 col-xs-offset-1">
-                  <div class="markt col-xs-10 col-xs-offset-1">
-                    <i class="fa fa-share-alt icone" aria-hidden="true"></i>
-                    <p>Compartilhe <br> com o <br> seu Grupo</p>
-                  </div>
+                <div class="col-xs-12 col-md-4 col-md-offset-1">
+                  <div class="col-xs-6 col-xs-offset-3"> 
+                    <div class="markt col-xs-10 col-xs-offset-1">
+                      <i class="fa fa-share-alt icone" aria-hidden="true"></i>
+                      <p>Compartilhe <br> com o <br> seu Grupo</p>
+                    </div>
+                  </div>                
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-md-5 col-md-offset-1">
                     <div class="well">
                       <p class="texto-feature"><i class="fa fa-clipboard" aria-hidden="true"></i> Faça Posts</p>
                       <p class="texto-feature"><i class="fa fa-level-up" aria-hidden="true"></i> Faça Avaliações</p>
@@ -145,6 +154,7 @@ import { Carousel, Slide } from 'vue-carousel';
   }
 
   .markt{
+    position: relative;
     height: 300px;
     width: 300px;
     background-color: #B9C159;
@@ -155,6 +165,8 @@ import { Carousel, Slide } from 'vue-carousel';
     font-family: 'Pangolin', Verdana, Arial;
     font-size: 20px;
     padding-top: 20px;
+    left: 50%;
+    margin-left: -150px;
   }
 
   .icone{
