@@ -15,7 +15,8 @@ export default{
   data(){
     return{
       conectado: false,
-      firebase: this.$store.state.firebase
+      firebase: this.$store.state.firebase,
+      pathsPermitidos: ['/cadastro', '/', '/o-projeto', '/sobre-nos']
     }
   },
   beforeCreate(){
@@ -30,8 +31,8 @@ export default{
     EventBus.$on('usuarioDesconectado', () =>{
       var path = this.$route.path
       this.conectado = false
-
-     if (path !== '/cadastro' && path != '/') {
+      
+     if (this.pathsPermitidos.indexOf(path) == -1) {
           this.$router.replace('/cadastro')
         }
     })

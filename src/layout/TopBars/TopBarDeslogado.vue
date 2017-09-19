@@ -14,10 +14,10 @@
   <st-top-bar-prototipo>
       <ul slot="lis-navbar" class="nav navbar-nav list-inline">
         <li>
-            <a href="#" id="a1" class="a">O Projeto</a>
+            <router-link to="/o-projeto" id="a1" class="a">O Projeto</router-link>
         </li>
         <li>
-            <a href="#" id="a2" class="a">Sobre Nós</a>
+            <router-link to="sobre-nos" id="a2" class="a">Sobre Nós</router-link>
         </li>
         <li>
             <a href="#" id="a3" class="a">Contato</a>

@@ -7,6 +7,8 @@ import PagAreaGrupo from './Paginas/PagAreaGrupo.vue'
 import PagAreaSecao from './Paginas/PagAreaSecao.vue'
 import PagAreaPatrulha from './Paginas/PagAreaPatrulha.vue'
 import PagAtividades from './Paginas/PagAtividades.vue'
+import PagOProjeto from './Paginas/PagOProjeto.vue'
+import PagSobreNos from './Paginas/PagSobreNos.vue'
 
 export default [
     {
@@ -44,5 +46,13 @@ export default [
     {
         path: '/atividades',
         component: PagAtividades
+    },
+    {
+        path: '/o-projeto',
+        component: PagOProjeto
+    },
+    {
+        path: '/sobre-nos',
+        component: PagSobreNos
     }
 ]

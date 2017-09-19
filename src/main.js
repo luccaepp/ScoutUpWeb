@@ -7,6 +7,9 @@ import VueFire from 'vuefire'
 //EventCalendar
 import vueEventCalendar from 'vue-event-calendar'
 import * as VueGoogleMaps from 'vue2-google-maps'
+
+import VueCarousel from 'vue-carousel';
+
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyA22BiH17slvEAGl8q8hN4oBTDa6_lcKPM',
@@ -18,6 +21,7 @@ Vue.use(VueGoogleMaps, {
 })
 
 Vue.use(vueEventCalendar, {locale: 'pt-br', color: 'rgba(86,64,46, .8)'})
+Vue.use(VueCarousel);
 Vue.use(VueRouter)
 Vue.use(VueFire)
 
