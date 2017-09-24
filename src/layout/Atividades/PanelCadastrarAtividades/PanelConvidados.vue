@@ -3,6 +3,7 @@ import FormGrupos from './PanelConvidados/FormGrupos.vue'
 import FormSecoes from './PanelConvidados/FormSecoes.vue'
 
 export default {
+    props: ['convidadosProps'],
     components: {
         FormGrupos,
         FormSecoes
@@ -43,6 +44,11 @@ export default {
     watch: {
         convidados(){
             this.$emit('atualizarParticipantes', this.convidados)
+        }
+    },
+    created(){
+        if(this.convidadosProps){
+            this.convidados = this.convidadosProps
         }
     }
 }

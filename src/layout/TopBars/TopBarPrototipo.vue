@@ -1,7 +1,6 @@
 <script>
 import autoCompleteConfig from '../../funcoesGlobais/algolia/autoCompleteConfig'
 import {mapGetters} from 'vuex'
-import {EventBus} from '../../eventBus'
   export default {
     data(){
       return {
@@ -13,10 +12,6 @@ import {EventBus} from '../../eventBus'
     },
     computed: {
       ...mapGetters({usuario: 'getUsuario'})
-    },
-    created(){
-      let self = this
-      EventBus.$on('hideTopBar', hide => self.hideTopBar = hide)
     }
   }
 </script>

@@ -1,6 +1,8 @@
 <script>
 import PanelConvidados from './PanelCadastrarAtividades/PanelConvidados.vue'
 import Validador from './PanelCadastrarAtividades/Validador'
+import tiposAtividadeImport from '../../constantes/Atividades/tiposAtividade'
+import materiaisImport from '../../constantes/Atividades/materiais'
 import {mapGetters} from 'vuex'
 export default {
     components: {
@@ -8,27 +10,8 @@ export default {
     },
     data(){
         return {
-            tiposAtividade: ['Atividade normal (sede)',
-                            'Bivaque',
-                            'Bivaque noturno',
-                            'Acampamento',
-                            'Acantonamento',
-                            'Jornada',
-                            'Atividade Náutica',
-                            'Atividade Aérea',
-                            'Visita a outro Grupo',
-                            'Atividades Especiais',
-                            'Outro'
-                          ],
-            materiais: [
-                'Barraca',
-                'Cordas',
-                'Lona',
-                'Material de Sapa',
-                'Material de Lenha',
-                'Material Cartográfico',
-                'Outros'
-            ],
+            tiposAtividade: tiposAtividadeImport,
+            materiais: materiaisImport,
             materiaisSelecionados: [],
             materiaisAdicionados: [],
             txtNovoMaterial: '',

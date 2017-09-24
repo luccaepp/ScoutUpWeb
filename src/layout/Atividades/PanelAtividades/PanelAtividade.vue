@@ -1,13 +1,21 @@
 <script>
 import formatadorDeTimeStamp from '../../../funcoesGlobais/timeStamp/timeStamp'
+import PanelConvidados from '../PanelCadastrarAtividades/PanelConvidados.vue'
 export default {
   props: ['event'],
+  components: {
+      PanelConvidados
+  },
   data(){
       return {
           editando: false,
           datetimeInicial: null,
           datetimeFinal: null,
-          txtTitulo: ''
+          txtTitulo: '',
+          lugar: '',
+          localEvent: '',
+          participantesEdit: null,
+          participantesEvent: null
       }
   },
   methods: {
@@ -23,7 +31,33 @@ export default {
     },
     remover(){
         this.$emit('remover', this.event.atividade)
+    },
+    setPlace(lugarSelecionado){
+        this.lugar = {
+            lat: lugarSelecionado.geometry.location.lat(),
+            lng: lugarSelecionado.geometry.location.lng()
+        }
+    },
+    atualizarParticipantes(part){
+        this.participantesEvent = part
     }
+  },
+  watch: {
+    participantesEvent(){
+        if(this.participantesEvent)
+            this.participantesEdit = this.participantesEvent
+    },
+    localEvent(){
+        if(this.localEvent){
+            this.lugar = this.localEvent
+        }
+    }
+  },
+  created(){
+      this.participantesEvent = this.event.atividade.participantes
+      this.localEvent = this.event.atividade.local
+      this.datetimeInicial = this.event.atividade.inicio
+      this.datetimeFinal = this.event.atividade.termino
   }
 }
 </script>
@@ -81,17 +115,34 @@ export default {
                             :zoom="14"
                             map-type-id="hybrid"
                             style="width: 290px; height: 260px"
+                            v-if="!editando"
                             >
-                                <gmap-marker v-if="event.atividade.local"
+                                <gmap-marker v-if="event.atividade.local && !editando"
                                             :position="event.atividade.local">
 
                                 </gmap-marker>
                         </gmap-map>
+                        <template v-else>
+                            <gmap-map
+                                :center="lugar"
+                                :zoom="14"
+                                map-type-id="hybrid"
+                                style="width: 290px; height: 260px"
+                                >
+                                <gmap-marker :position="lugar">
+                                </gmap-marker>
+                            </gmap-map>
+                            <gmap-autocomplete v-if="editando" class="form-control" @place_changed="setPlace"></gmap-autocomplete>
+                        </template>
+
                     </td>
                 </tr>
                 <tr>
                     <td>Participantes</td>
-                    <td>
+                    <td v-if="editando">
+                        <panel-convidados @atualizarParticipantes="atualizarParticipantes" :convidados-props="participantesEdit"></panel-convidados>
+                    </td>
+                    <td v-else>
                         <li v-for="part in event.atividade.participantes" class="list-group-item list-group-item-info">
                             <router-link :to="to(part)">{{part.nome}}</router-link>
                         </li>
