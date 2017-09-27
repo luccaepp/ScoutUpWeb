@@ -45,11 +45,11 @@ var vm = {
           if(childSnap.val().outroUser === chaveAmigo){
             isCriado = true;
             this.chaveConversa = childSnap.val().chave
-          } 
-        });   
+          }
+        });
       })
       console.log(isCriado)
-      return isCriado   
+      return isCriado
     },
     abrirChat: function(amigo){
       console.log("amigo",amigo)
@@ -94,7 +94,7 @@ export default vm
       <li v-for="amigo in amigos" class="item-lista list-group-item" @click="abrirChat(amigo)">
           <i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.nome }}
       </li>
-  </div> 
+  </div>
   </div>
   <chat @fecharChat="mostrarChat = false" v-if="mostrarChat" :amigo="amigoSelecionado" :conversaRef="conversaSelecionada"></chat>
 </div>
@@ -110,7 +110,8 @@ export default vm
   bottom: 0;
   right: 15px;
   width: 200px;
-  color:white;
+  padding: 5px;
+  color: white;
   z-index: 5;
   border-radius: 5px;
   cursor: pointer;
@@ -118,14 +119,11 @@ export default vm
 
 .item-lista{
   background-color: #eacf9b ;
-  border-radius: 15px 15px 6px  6px !important ;
-  opacity: 0.9;
   color: black;
   cursor: pointer;
 }
 #corpo-friendlist{
   background-color: transparent;
-  opacity: 0.9;
   max-height: 500px;
   position: fixed;
   border-radius: 15px 15px 0px  0px !important ;
@@ -135,4 +133,3 @@ export default vm
   color:white;
 }
 </style>
-

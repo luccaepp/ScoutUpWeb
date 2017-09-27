@@ -5,7 +5,7 @@
   import StTopBarLogado from './layout/TopBars/TopBarLogado.vue'
   import Chat from './layout/Chat/Main.vue'
 
-  
+
 export default{
   components: {
     StTopBarDeslogado,
@@ -31,7 +31,7 @@ export default{
     EventBus.$on('usuarioDesconectado', () =>{
       var path = this.$route.path
       this.conectado = false
-      
+
      if (this.pathsPermitidos.indexOf(path) == -1) {
           this.$router.replace('/cadastro')
         }

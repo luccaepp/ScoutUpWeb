@@ -24,7 +24,7 @@ var vm = {
           texto: this.txtMensagem.trim(),
           timeStamp: this.firebase.database.ServerValue.TIMESTAMP
       }
-      
+
       this.conversaRef.push(mensagem)
       this.mensagem = ''
       this.txtMensagem = ''
@@ -54,7 +54,7 @@ export default vm
 <template>
   <div class="panel" v-if="usuarioDatabase">
     <div class="panel-heading">
-      <i class="fa fa-user-circle" aria-hidden="true"></i> 
+      <i class="fa fa-user-circle" aria-hidden="true"></i>
       {{amigo.nome}}
       <button @click="$emit('fecharChat')" type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
@@ -62,23 +62,16 @@ export default vm
       <ul class="messages-container col-lg-10">
         <li class="message-box" v-for="msg in mensagens">
           <div :class="{'message-wrapper-direita' : ehDesseUsuario(msg), 'message-wrapper-esquerda' : !ehDesseUsuario(msg)}">
-            <div v-if="!ehDesseUsuario(msg)" class="avatar">
-              <p class="foto-usuario-wrapper">
-                <i aria-hidden="true" class="fa fa-user-circle"></i>
-              </p>
-              <p class="horario">{{formatTS(msg.timeStamp)}}</p>
-            </div>
             <div class="textoBox">
               <div class="textoBox-body">{{msg.texto}}</div>
               <div class="textoBox-footer">
-                {{msg.nome}}
+                <template v-if="ehDesseUsuario(msg)">
+                  <p class="horario">você - {{formatTS(msg.timeStamp)}}</p>
+                </template>
+                <template v-else>
+                  <p class="horario">{{formatTS(msg.timeStamp)}}</p>
+                </template>
               </div>
-            </div>
-            <div v-if="ehDesseUsuario(msg)" class="avatar">
-              <p class="foto-usuario-wrapper">
-                <i aria-hidden="true" class="fa fa-user-circle"></i>
-              </p>
-              <p class="horario">{{formatTS(msg.timeStamp)}}</p>
             </div>
           </div>
         </li>
@@ -96,20 +89,16 @@ export default vm
 </template>
 
 <style>
-.foto-usuario-wrapper{
-  display: flex;
-  align-self: flex-start;
-}
 .horario{
   display: flex;
   align-self: flex-end;
-  margin-left: -55px;
-  margin-top: 85px;
+  margin-left: 0px;
+  margin-top: 30px;
   margin-bottom: 0;
   text-align: center;
 }
 .textoBox{
-    display: flex;
+    display: row;
     flex-flow: row;
     flex-wrap: wrap;
 }
@@ -122,7 +111,8 @@ export default vm
   min-width: 80px;
 }
 .textoBox-footer{
-  align-self: flex-end;
+  display: flex;
+  align-items: flex-end;
   font-family: claire;
 }
 .avatar{
@@ -134,7 +124,7 @@ export default vm
   max-width: 25%;
 }
 .avatar > p > .fa{
-    font-size:40px;
+    font-size:90px;
 }
 .message-wrapper-esquerda > .avatar{
   float: left;
@@ -159,6 +149,7 @@ export default vm
   border-radius: 5px;
   display: flex;
 }
+
 .message-wrapper-esquerda::before{
   box-sizing: border-box;
   width: 0;
@@ -177,7 +168,7 @@ export default vm
   height: 0;
   content: "";
   top: -10px;
-  right: -9px;
+  right: -30px;
   position: relative;
   border-style: solid;
   border-width: 15px 15px 15px 15px;
@@ -196,8 +187,7 @@ export default vm
   width: 100%;
 }
 .panel{
-  background-color: rgba(234,207,155,.9);
-  opacity: 0.9;
+  background-color: rgb(234,207,155);
   position: fixed;
   width: 300px;
   height: 300px;
