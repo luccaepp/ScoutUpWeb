@@ -108,7 +108,8 @@ export default vm
   flex-direction: column;
   justify-content: flex-end;
   word-break: break-word;
-  min-width: 80px;
+  min-width: 10px;
+  max-width: 150px;
 }
 .textoBox-footer{
   display: flex;
@@ -168,7 +169,7 @@ export default vm
   height: 0;
   content: "";
   top: -10px;
-  right: -30px;
+  right: -48px;
   position: relative;
   border-style: solid;
   border-width: 15px 15px 15px 15px;
