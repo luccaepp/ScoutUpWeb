@@ -1,12 +1,22 @@
 <script>
+/* COMPONENTES */
+import CheckMateriais from './CheckMateriais.vue'
 import PanelConvidados from './PanelCadastrarAtividades/PanelConvidados.vue'
+
+/* FERRAMENTAS */
 import Validador from './PanelCadastrarAtividades/Validador'
+
+/* CONSTANTES */
 import tiposAtividadeImport from '../../constantes/Atividades/tiposAtividade'
 import materiaisImport from '../../constantes/Atividades/materiais'
+
+/* VUEX */
 import {mapGetters} from 'vuex'
+
 export default {
     components: {
-        PanelConvidados
+        PanelConvidados,
+        CheckMateriais
     },
     data(){
         return {
@@ -83,6 +93,9 @@ export default {
         },
         atualizarParticipantes(part){
             this.participantes = part
+        },
+        atualizarMateriaisSelecionados(novosMateriais){
+            this.materiaisSelecionados = novosMateriais
         }
     },
     computed: {
@@ -136,16 +149,7 @@ export default {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group">
-                        <label>Materiais Necessários:</label>
-                        <template v-for="material in materiais">
-                            <label class="checkbox-inline">
-                                <input type="checkbox" :value="material" v-model="materiaisSelecionados">
-                                {{material}}
-                            </label>
-                            
-                        </template>
-                    </div>
+                    <check-materiais @atualizarMateriaisSelecionados="atualizarMateriaisSelecionados"></check-materiais>
                 </div>
                 <template v-if="materiaisSelecionados.indexOf('Outros') != -1">
                     <div class="row">

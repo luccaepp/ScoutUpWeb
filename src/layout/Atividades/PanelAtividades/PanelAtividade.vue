@@ -1,6 +1,8 @@
 <script>
 import formatadorDeTimeStamp from '../../../funcoesGlobais/timeStamp/timeStamp'
 import PanelConvidados from '../PanelCadastrarAtividades/PanelConvidados.vue'
+import TiposAtividade from '../../../constantes/Atividades/tiposAtividade'
+
 export default {
   props: ['event'],
   components: {
@@ -15,13 +17,17 @@ export default {
           lugar: '',
           localEvent: '',
           participantesEdit: null,
-          participantesEvent: null
+          participantesEvent: null,
+          TiposAtividade,
+          tipoDaAtividadeEdit: null,
+          materiaisEdit: null
       }
   },
   methods: {
     usaBR(usa){
         return formatadorDeTimeStamp.strUSAParaBR(usa)
     },
+    /* Define o "to" do router-link */
     to(part){
         return part.tipo == 'grupo' 
                 ? '/grupos/' + part.chave
@@ -54,28 +60,40 @@ export default {
     }
   },
   created(){
+      /* Valores padrão dos inputs de atualização */
       this.participantesEvent = this.event.atividade.participantes
       this.localEvent = this.event.atividade.local
       this.datetimeInicial = this.event.atividade.inicio
       this.datetimeFinal = this.event.atividade.termino
+      this.tipoDaAtividadeEdit = this.event.atividade.tipo
+      this.txtTitulo = this.event.atividade.titulo
+      this.materiaisEdit = this.event.atividade.materiais
   }
 }
 </script>
 
 <template>
-    <div class="panel">
-        <div class="panel-heading">
+<div class="panel">
+    <div class="panel-heading">
+        <!-- Inputs que permitem alterar a Atividade -->
         <template v-if="editando">
             <input v-model="txtTitulo" class="form-control" placeholder="Digite o nome da atividade" type="text" id="txtTituloAtividade">
+            <select v-model="tipoDaAtividadeEdit" class="form-control select-tipos-atividade">
+                <option disabled>Selecione um tipo de Atividade</option>
+                <template v-for="tipoAtividade in TiposAtividade">
+                    <option :value="tipoAtividade">{{tipoAtividade}}</option>
+                </template>
+            </select>
         </template>
+        <!-- Apenas Mostrando Informações -->
         <template v-else>
             <i aria-hidden="true" class="fa fa-free-code-camp ifaccamp text-danger"></i>
             <span class="titEvento">{{event.title}} - <span class="text-success">{{event.atividade.tipo}}</span></span>
             <span class="pull-right">{{usaBR(event.date)}}</span>
         </template>
-
-        </div>
+    </div>
     <div class="panel-body">
+        <!-- Tabela de informações específicas -->
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -151,7 +169,19 @@ export default {
                 <tr>
                     <td>Materiais Necessários</td>
                     <td>
-                        <li v-for="material in event.atividade.materiais" class="list-group-item">{{material}}</li>
+                        <template v-if="editando">
+                            <li v-for="material in materiaisEdit" class="list-group-item">
+                                {{material}}
+                            </li>
+                            <button v-if="editando" class="btn btn-warning pull-right">
+                                Editar
+                            </button>
+                        </template>
+                        <template v-else>
+                            <li v-for="material in event.atividade.materiais" class="list-group-item">
+                                {{material}}
+                            </li>
+                        </template>
                     </td>
                 </tr>
             </tbody>
@@ -179,8 +209,16 @@ export default {
             </div>
         </div>
     </div>
-    </div>
+</div>
 </template>
+
+<style scoped>
+.select-tipos-atividade{
+    margin-top: 5px;
+}
+</style>
+
+
 <style>
 .btn-space {
     margin-right: 5px;

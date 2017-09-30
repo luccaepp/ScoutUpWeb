@@ -67,8 +67,8 @@ export default {
                         <template v-for="convidado in convidados">
                             <div class="list-group-item">{{convidado.nome}}</div>
                         </template>
-                        <div id="addPart" class="list-group-item list-group-item-success" data-toggle="modal" data-target="#modalAddConv">
-                            + Adicionar Participantes
+                        <div id="addPart" class="list-group-item list-group-item-info" data-toggle="modal" data-target="#modalAddConv">
+                            Alterar Participantes
                         </div>
                     </div>
                 </div>
