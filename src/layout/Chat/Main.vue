@@ -1,6 +1,5 @@
 
 <script>
-//TODO o mapGetters só consegue pegar as informações só se for feito o login antes, se o usuario ja estiver logado ele da not defined, tem que arrumar isso ai
 import {mapGetters} from 'vuex'
 import Chat from './Chat.vue'
 
@@ -16,6 +15,7 @@ var vm = {
       if(this.usuarioDatabase){
         this.$bindAsArray('amigos', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos"))
         this.$bindAsArray('usuarioConversas', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/conversas"))
+        this.$bindAsArray('amigosOnline', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos").orderByChild('presenca').equalTo('visivel'))
       }
       this.$bindAsArray('conversas', this.database.ref("conversas"))
     }
@@ -27,17 +27,18 @@ var vm = {
       chaveConversa: null,
       amigoSelecionado: null,
       amigos: null,
+      amigosOnline:null,
       usuarioConversas: null,
       conversas: null
     }
   },
   methods: {
-    checkSignedInWithMessage: function() {
+    checkSignedInWithMessage() {
       if (this.auth.currentUser) {
         return true;
       }
     },
-    conversaJaExiste: function(chaveAmigo){
+    conversaJaExiste(chaveAmigo){
       let isCriado = false;
       this.$firebaseRefs.usuarioConversas.on('value', snapshot =>{
         snapshot.forEach(childSnap => {
@@ -51,7 +52,7 @@ var vm = {
       console.log(isCriado)
       return isCriado   
     },
-    abrirChat: function(amigo){
+    abrirChat(amigo){
       console.log("amigo",amigo)
       console.log("chave amigo",amigo.chave)
       if(!this.conversaJaExiste(amigo.chave)){
@@ -76,6 +77,11 @@ var vm = {
       if(this.amigos && this.amigos != null){
         return this.amigos.length
       }
+    },
+    getCountAmigosOnline(){
+      if(this.amigosOnline && this.amigosOnline != null){
+        return this.amigosOnline.length
+      }
     }
   }
 }
@@ -87,7 +93,7 @@ export default vm
 <div v-if="usuarioDatabase" class="root">
   <div data-toggle="collapse" data-target="#corpo-friendlist" class="text-center friendlist-minimizado">
       Lista de Amigos
-    <span class="badge">{{ getCountAmigos }}</span>
+    <span class="badge">{{ getCountAmigosOnline }}</span>
   </div>
   <div id="corpo-friendlist" class="collapse">
     <div class="list-group">
