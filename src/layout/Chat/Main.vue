@@ -15,7 +15,6 @@ var vm = {
       if(this.usuarioDatabase){
         this.$bindAsArray('amigos', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos"))
         this.$bindAsArray('usuarioConversas', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/conversas"))
-        this.$bindAsArray('amigosOnline', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos").orderByChild('presenca').equalTo('visivel'))
       }
       this.$bindAsArray('conversas', this.database.ref("conversas"))
     }
@@ -77,11 +76,6 @@ var vm = {
       if(this.amigos && this.amigos != null){
         return this.amigos.length
       }
-    },
-    getCountAmigosOnline(){
-      if(this.amigosOnline && this.amigosOnline != null){
-        return this.amigosOnline.length
-      }
     }
   }
 }
@@ -93,12 +87,12 @@ export default vm
 <div v-if="usuarioDatabase" class="root">
   <div data-toggle="collapse" data-target="#corpo-friendlist" class="text-center friendlist-minimizado">
       Lista de Amigos
-    <span class="badge">{{ getCountAmigosOnline }}</span>
+    <span class="badge">{{ getCountAmigos }}</span>
   </div>
   <div id="corpo-friendlist" class="collapse">
     <div class="list-group">
       <li v-for="amigo in amigos" class="item-lista list-group-item" @click="abrirChat(amigo)">
-          <i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.nome }}
+          <i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.status + ' - '+ amigo.nome }}
       </li>
   </div> 
   </div>
