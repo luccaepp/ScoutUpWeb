@@ -76,6 +76,12 @@ var vm = {
       if(this.amigos && this.amigos != null){
         return this.amigos.length
       }
+    },
+    ordenarPorStatus(){
+      let amigosOnline = this.amigos.filter(amigo => amigo.status == 'online')
+      let amigosOffline = this.amigos.filter(amigo => amigo.status == 'offline')
+
+      return amigosOnline.concat(amigosOffline)
     }
   }
 }
@@ -91,7 +97,7 @@ export default vm
   </div>
   <div id="corpo-friendlist" class="collapse">
     <div class="list-group">
-      <li v-for="amigo in amigos" class="item-lista list-group-item" @click="abrirChat(amigo)">
+      <li v-for="amigo in ordenarPorStatus" class="item-lista list-group-item" @click="abrirChat(amigo)">
           <i v-if="amigo.status == 'online'" class="fa fa-circle text-success" aria-hidden="true"></i> 
           <i v-else-if="amigo.status == 'offline'" class="fa fa-circle text-danger" aria-hidden="true"></i>
           {{ amigo.nome }}

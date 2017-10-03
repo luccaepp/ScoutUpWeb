@@ -156,6 +156,7 @@
 
 .foto-perfil{
   font-size: 210px;
+  cursor: pointer;
 }
 
 .foto-amigos{
