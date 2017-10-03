@@ -9,8 +9,7 @@ firebase.auth().onAuthStateChanged(usuario => {
     const statusRef = firebase.database().ref("/usuario/"+usuario.uid+"/status")
     const usuarioRef = firebase.database().ref("/usuario/"+usuario.uid)   
 
-    statusRef.onDisconnect().set('offline').then(EventBus.$emit('cadastrarStatusNasFriendLists',usuarioRef)
-    )
+    statusRef.onDisconnect().set('offline').then(EventBus.$emit('cadastrarStatusNasFriendLists',usuarioRef))
     statusRef.set('online').then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef)
   )
   } else{
