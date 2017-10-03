@@ -61,6 +61,7 @@
         methods: {
             logout(){
                 this.$store.state.auth.signOut()
+                this.$store.state.database.goOffline()                
             }
         }
     }

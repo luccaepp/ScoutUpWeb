@@ -1,6 +1,5 @@
 
 <script>
-//TODO o mapGetters só consegue pegar as informações só se for feito o login antes, se o usuario ja estiver logado ele da not defined, tem que arrumar isso ai
 import {mapGetters} from 'vuex'
 import Chat from './Chat.vue'
 
@@ -27,17 +26,18 @@ var vm = {
       chaveConversa: null,
       amigoSelecionado: null,
       amigos: null,
+      amigosOnline:null,
       usuarioConversas: null,
       conversas: null
     }
   },
   methods: {
-    checkSignedInWithMessage: function() {
+    checkSignedInWithMessage() {
       if (this.auth.currentUser) {
         return true;
       }
     },
-    conversaJaExiste: function(chaveAmigo){
+    conversaJaExiste(chaveAmigo){
       let isCriado = false;
       this.$firebaseRefs.usuarioConversas.on('value', snapshot =>{
         snapshot.forEach(childSnap => {
@@ -51,7 +51,7 @@ var vm = {
       console.log(isCriado)
       return isCriado
     },
-    abrirChat: function(amigo){
+    abrirChat(amigo){
       console.log("amigo",amigo)
       console.log("chave amigo",amigo.chave)
       if(!this.conversaJaExiste(amigo.chave)){
@@ -92,7 +92,7 @@ export default vm
   <div id="corpo-friendlist" class="collapse">
     <div class="list-group">
       <li v-for="amigo in amigos" class="item-lista list-group-item" @click="abrirChat(amigo)">
-          <i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.nome }}
+          <i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.status + ' - '+ amigo.nome }}
       </li>
   </div>
   </div>
