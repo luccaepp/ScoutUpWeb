@@ -2,11 +2,13 @@
 import formatadorDeTimeStamp from '../../../funcoesGlobais/timeStamp/timeStamp'
 import PanelConvidados from '../PanelCadastrarAtividades/PanelConvidados.vue'
 import TiposAtividade from '../../../constantes/Atividades/tiposAtividade'
+import ModalMateriais from './PanelAtividade/ModalMateriais.vue'
 
 export default {
   props: ['event'],
   components: {
-      PanelConvidados
+      PanelConvidados,
+      ModalMateriais
   },
   data(){
       return {
@@ -173,7 +175,7 @@ export default {
                             <li v-for="material in materiaisEdit" class="list-group-item">
                                 {{material}}
                             </li>
-                            <button v-if="editando" class="btn btn-warning pull-right">
+                            <button v-if="editando" class="btn btn-warning pull-right" data-toggle="modal" data-target="#modalAlterarMateriaisAtividade">
                                 Editar
                             </button>
                         </template>
@@ -209,6 +211,7 @@ export default {
             </div>
         </div>
     </div>
+    <modal-materiais :materiais="materiaisEdit"></modal-materiais>
 </div>
 </template>
 
