@@ -77,11 +77,16 @@ var vm = {
         return this.amigos.length
       }
     },
+    getCountAmigosOnline(){
+      if(this.amigosOnline && this.amigosOnline != null){
+        return this.amigosOnline.length
+      }
+    },
     ordenarPorStatus(){
-      let amigosOnline = this.amigos.filter(amigo => amigo.status == 'online')
-      let amigosOffline = this.amigos.filter(amigo => amigo.status == 'offline')
-
-      return amigosOnline.concat(amigosOffline)
+      this.amigosOnline = this.amigos.filter(amigo => amigo.status == 'online')
+      this.amigosOffline = this.amigos.filter(amigo => amigo.status == 'offline')
+      let amigos = this.amigosOnline.concat(this.amigosOffline)
+      return amigos
     }
   }
 }
@@ -93,7 +98,7 @@ export default vm
 <div v-if="usuarioDatabase" class="root">
   <div data-toggle="collapse" data-target="#corpo-friendlist" class="text-center friendlist-minimizado">
       Lista de Amigos
-    <span class="badge">{{ getCountAmigos }}</span>
+    <span class="badge">{{ getCountAmigosOnline }}</span>
   </div>
   <div id="corpo-friendlist" class="collapse">
     <div class="list-group">
