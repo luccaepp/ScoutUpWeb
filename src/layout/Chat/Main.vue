@@ -11,7 +11,7 @@ var vm = {
     return { }
   },
   watch:{
-    'usuarioDatabase'() {
+    usuarioDatabase() {
       if(this.usuarioDatabase){
         this.$bindAsArray('amigos', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos"))
         this.$bindAsArray('usuarioConversas', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/conversas"))
@@ -92,7 +92,9 @@ export default vm
   <div id="corpo-friendlist" class="collapse">
     <div class="list-group">
       <li v-for="amigo in amigos" class="item-lista list-group-item" @click="abrirChat(amigo)">
-          <i class="fa fa-user-circle" aria-hidden="true"></i> {{ amigo.status + ' - '+ amigo.nome }}
+          <i v-if="amigo.status == 'online'" class="fa fa-circle text-success" aria-hidden="true"></i> 
+          <i v-else-if="amigo.status == 'offline'" class="fa fa-circle text-danger" aria-hidden="true"></i>
+          {{ amigo.nome }}
       </li>
   </div>
   </div>

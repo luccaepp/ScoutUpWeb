@@ -57,7 +57,7 @@ export default vm
       <i class="fa fa-user-circle" aria-hidden="true"></i>
       {{amigo.nome}}
       <button @click="$emit('fecharChat')" type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
+    </div>
     <div class="panel-body">
       <ul class="messages-container col-lg-10">
         <li class="message-box" v-for="msg in mensagens">
