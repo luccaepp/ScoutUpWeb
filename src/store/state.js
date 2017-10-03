@@ -43,7 +43,7 @@ const state = {
   firebase: firebase,
   auth: firebase.auth(),
   database: firebase.database(),
-  storage: firebase.storage(),
+  storage: firebase.app().storage(),
   usuario: null,
   usuarioDatabase: null
 }

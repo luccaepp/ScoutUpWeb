@@ -1,5 +1,4 @@
 <script>
-import autoCompleteConfig from '../../funcoesGlobais/algolia/autoCompleteConfig'
 import {mapGetters} from 'vuex'
   export default {
     data(){
@@ -8,7 +7,6 @@ import {mapGetters} from 'vuex'
       }
     },
     mounted(){
-        autoCompleteConfig(this)
     },
     computed: {
       ...mapGetters({usuario: 'getUsuario'})
@@ -186,38 +184,6 @@ import {mapGetters} from 'vuex'
   clear: both;
   z-index: 10;
 }
-
-/* Algolia */
-
-.algolia-autocomplete {
-  width: 100%;
-}
-.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
-  width: 100%;
-}
-.algolia-autocomplete .aa-hint {
-  color: #999;
-}
-.algolia-autocomplete .aa-dropdown-menu {
-  width: 100%;
-  background-color: #56402E;
-  border: 2px solid #EACF9B;
-  border-top: none;
-  color:#EACF9B;
-  font-family: claire;
-}
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
-  cursor: pointer;
-  padding: 5px 4px;
-}
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
-  background-color: rgba(255, 255, 255, .1);
-}
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
-  font-weight: bold;
-  font-style: normal;
-}
-
 </style>
 
 

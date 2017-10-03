@@ -6,7 +6,6 @@
     import FuncoesFirebaseDatabase from './../../funcoesGlobais/firebase/funcoesDatabase'
     import {mapGetters} from 'vuex'
 
-
     export default {
         firebase(){
             return {
@@ -24,6 +23,11 @@
             StPainelAmigos,
             StPainelProgressao
         },
+        data(){
+            return {
+                storageRef: null
+            }
+        },
         watch: {
             '$route.params.idUsuario'() {
                 this.$unbind('usuarioDaPag')
@@ -32,7 +36,7 @@
         },
         computed:{
              ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase', usuario: 'getUsuario',
-                            firebase: 'getFirebase'}),
+                            firebase: 'getFirebase', storage: 'getStorage'}),
             displayNome(){
                 var usuario = this.usuario, database = this.database
                 if(!usuario || !database || !this.usuarioDatabase || !this.usuarioDaPag){
@@ -83,7 +87,14 @@
                         bootbox.alert('Erro! Não foi possível remover a solicitação')
                         console.log(erro)
                     })
+            },
+            trocarFotoDePerfil(){
+                
             }
+        },
+        created(){
+            this.storageRef = this.storage.ref('/fotoPerfil/' + this.$route.params.idUsuario)
+            console.log('storageRef', this.storageRef)
         }
     }
 </script>
@@ -97,7 +108,7 @@
             <div class="row">
                 <div class="foto-sect text-center">
                     <div class="row">
-                        <i class="fa fa-user-circle foto-perfil" aria-hidden="true"></i>
+                        <i @click="trocarFotoDePerfil()" class="fa fa-user-circle foto-perfil" aria-hidden="true"></i>
                         <br>
                         <b>{{displayNome}}</b>
                     </div>
@@ -144,8 +155,6 @@
 </template>
 
 <style>
-
-
 
 .foto-sect{
   font-size: 30px;
