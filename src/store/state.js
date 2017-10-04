@@ -25,8 +25,8 @@ function setStatus(uid){
   const statusRef = firebase.database().ref("/usuario/"+uid+"/status")
   const usuarioRef = firebase.database().ref("/usuario/"+uid)
 
-  statusRef.onDisconnect().set('offline').then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef))
-  statusRef.set('online').then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef))
+  statusRef.onDisconnect().update('offline').then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef))
+  statusRef.update('online').then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef))
 
 }
 
@@ -40,9 +40,9 @@ EventBus.$on('cadastrarStatusNasFriendLists', userAtualRef => {
         usuarios.forEach(usuario => {
           console.log("usuario.val()",usuario.val())
           if(usuario.val().status){
-            amigo.ref.child('/status/').set(usuario.val().status)
+            amigo.ref.child('/status/').update(usuario.val().status)
           }else{
-            amigo.ref.child('/status/').set('offline')
+            amigo.ref.child('/status/').update('offline')
           }
         })
       })
