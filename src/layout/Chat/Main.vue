@@ -17,6 +17,15 @@ var vm = {
         this.$bindAsArray('usuarioConversas', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/conversas"))
       }
       this.$bindAsArray('conversas', this.database.ref("conversas"))
+    },
+    amigos(){
+      if(this.amigos){
+        this.amigosOnline = this.amigos.filter(amigo => amigo.status == 'online')
+        this.amigosOffline = this.amigos.filter(amigo => amigo.status == 'offline')
+        this.amigosOrdenado = this.amigosOnline.concat(this.amigosOffline)
+        console.log("this.amigosOrdenado", this.amigosOrdenado)
+
+      }
     }
   },
   data(){
@@ -25,8 +34,10 @@ var vm = {
       conversaSelecionada: null,
       chaveConversa: null,
       amigoSelecionado: null,
+      amigosOrdenado: [],
       amigos: null,
       amigosOnline:null,
+      amigosOffline:null,
       usuarioConversas: null,
       conversas: null
     }
@@ -52,18 +63,14 @@ var vm = {
       return isCriado
     },
     abrirChat(amigo){
-      console.log("amigo",amigo)
-      console.log("chave amigo",amigo.chave)
+
       if(!this.conversaJaExiste(amigo.chave)){
-        console.log("conversas", this.$firebaseRefs.conversas)
         var conversaRef = this.$firebaseRefs.conversas.push()
         this.chaveConversa = conversaRef.key
         this.database.ref("usuario/"+this.usuarioDatabase['.key']+"/conversas").push({"chave": this.chaveConversa, "outroUser": amigo.chave})
         this.database.ref("usuario/"+amigo.chave+"/conversas").push({"chave": this.chaveConversa, "outroUser": this.usuarioDatabase['.key']})
       }
-      console.log("conversasRef", conversaRef)
-      console.log("chaveconversa", this.chaveConversa)
-      console.log("conversas", this.$firebaseRefs.conversas.child(this.chaveConversa))
+
       this.conversaSelecionada = this.$firebaseRefs.conversas.child(this.chaveConversa)
       this.amigoSelecionado = amigo
       this.mostrarChat = !this.mostrarChat
@@ -81,12 +88,6 @@ var vm = {
       if(this.amigosOnline && this.amigosOnline != null){
         return this.amigosOnline.length
       }
-    },
-    ordenarPorStatus(){
-      this.amigosOnline = this.amigos.filter(amigo => amigo.status == 'online')
-      this.amigosOffline = this.amigos.filter(amigo => amigo.status == 'offline')
-      let amigos = this.amigosOnline.concat(this.amigosOffline)
-      return amigos
     }
   }
 }
@@ -95,15 +96,15 @@ export default vm
 </script>
 
 <template>
-<div v-if="usuarioDatabase" class="root">
+<div v-if="usuarioDatabase && amigosOrdenado.length>0" class="root">
   <div data-toggle="collapse" data-target="#corpo-friendlist" class="text-center friendlist-minimizado">
       Lista de Amigos
     <span class="badge">{{ getCountAmigosOnline }}</span>
   </div>
   <div id="corpo-friendlist" class="collapse">
     <div class="list-group">
-      <li v-for="amigo in ordenarPorStatus" class="item-lista list-group-item" @click="abrirChat(amigo)">
-          <i v-if="amigo.status == 'online'" class="fa fa-circle text-success" aria-hidden="true"></i> 
+      <li v-for="amigo in amigosOrdenado" class="item-lista list-group-item" @click="abrirChat(amigo)">
+          <i v-if="amigo.status == 'online'" class="fa fa-circle text-success" aria-hidden="true"></i>
           <i v-else-if="amigo.status == 'offline'" class="fa fa-circle text-danger" aria-hidden="true"></i>
           {{ amigo.nome }}
       </li>

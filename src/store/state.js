@@ -6,18 +6,30 @@ firebase.auth().onAuthStateChanged(usuario => {
   if(usuario){
     console.log('conectado')
     EventBus.$emit('usuarioConectado', usuario)
-    const statusRef = firebase.database().ref("/usuario/"+usuario.uid+"/status")
-    const usuarioRef = firebase.database().ref("/usuario/"+usuario.uid)   
-
-    statusRef.onDisconnect().set('offline').then(EventBus.$emit('cadastrarStatusNasFriendLists',usuarioRef)
-    )
-    statusRef.set('online').then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef)
-  )
+    setStatus(usuario.uid)
   } else{
     console.log('desconectado')
     EventBus.$emit('usuarioDesconectado')
   }
 })
+
+firebase.database().ref('.info/connected').on('value', snapshot => {
+  let currentUser = firebase.auth().currentUser
+  if(snapshot.val() && currentUser){
+    console.log("chave do usuario", currentUser.uid)
+    setStatus(currentUser.uid)
+  }
+})
+
+function setStatus(uid){
+  const statusRef = firebase.database().ref("/usuario/"+uid+"/status")
+  const usuarioRef = firebase.database().ref("/usuario/"+uid)
+
+  statusRef.onDisconnect().set('offline').then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef))
+  statusRef.set('online').then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef))
+
+}
+
 
 EventBus.$on('cadastrarStatusNasFriendLists', userAtualRef => {
   const chaveUsuario = userAtualRef.key
