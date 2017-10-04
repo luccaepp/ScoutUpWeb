@@ -62,17 +62,26 @@ export default vm
       <ul class="messages-container col-lg-10">
         <li class="message-box" v-for="msg in mensagens">
           <div :class="{'message-wrapper-direita' : ehDesseUsuario(msg), 'message-wrapper-esquerda' : !ehDesseUsuario(msg)}">
-            <div class="textoBox">
-              <div class="textoBox-body">{{msg.texto}}</div>
-              <div class="textoBox-footer">
-                <template v-if="ehDesseUsuario(msg)">
-                  <p class="horario">você - {{formatTS(msg.timeStamp)}}</p>
-                </template>
-                <template v-else>
-                  <p class="horario">{{formatTS(msg.timeStamp)}}</p>
-                </template>
+            <template v-if="ehDesseUsuario(msg)">
+              <div class="textoBox-direita">
+                <div class="textoBox-body">{{msg.texto}}</div>
+                <div class="textoBox-footer">
+                  <p class="horario horario-left">
+                    <span class="pull-left">você - {{formatTS(msg.timeStamp)}}</span>
+                  </p>
+                </div>
               </div>
-            </div>
+            </template>
+            <template v-else>
+              <div class="textoBox-esquerda">
+                <div class="textoBox-body">{{msg.texto}}</div>
+                  <div class="textoBox-footer">
+                    <p class="horario horario-right">
+                      <span class="pull-right">{{formatTS(msg.timeStamp)}}</span>
+                    </p>
+                  </div>
+                </div>
+            </template>
           </div>
         </li>
       </ul>
@@ -91,16 +100,31 @@ export default vm
 <style>
 .horario{
   display: flex;
-  align-self: flex-end;
   margin-left: 0px;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 0;
-  text-align: center;
+  font-size: 12px;
 }
-.textoBox{
-    display: row;
-    flex-flow: row;
-    flex-wrap: wrap;
+.horario-left{
+  align-self: flex-start;
+}
+.horario-right{
+  align-self: flex-end;
+}
+.textoBox-direita{
+  display: row;
+  flex-flow: row;
+  flex-wrap: wrap;
+  width: 200px;
+  float: left;
+}
+.textoBox-esquerda{
+  display: row;
+  flex-flow: row;
+  flex-wrap: wrap;
+  text-align: right;
+  width: 180px;
+  float: right;
 }
 .textoBox-body{
   align-self: flex-end;
@@ -108,12 +132,13 @@ export default vm
   flex-direction: column;
   justify-content: flex-end;
   word-break: break-word;
-  min-width: 10px;
-  max-width: 150px;
+  width: auto;
 }
 .textoBox-footer{
+  align-self: flex-end;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
   font-family: claire;
 }
 .avatar{
@@ -124,17 +149,7 @@ export default vm
   width: 25%;
   max-width: 25%;
 }
-.avatar > p > .fa{
-    font-size:90px;
-}
-.message-wrapper-esquerda > .avatar{
-  float: left;
-  margin-right: 20px;
-}
-.message-wrapper-direita > .avatar{
-  float: right;
-  margin-left: 60px;
-}
+
 .messages-container{
   height: 100%;
   width: 100%;
@@ -143,12 +158,19 @@ export default vm
 }
 
 .message-wrapper-esquerda, .message-wrapper-direita{
-  background-color: #56402E;
   color: #EACF9B;
   margin-top: 5px;
   padding: 10px;
   border-radius: 5px;
   display: flex;
+}
+
+.message-wrapper-esquerda{
+  background-color: #56402E;
+}
+
+.message-wrapper-direita{
+  background-color: #47723E;
 }
 
 .message-wrapper-esquerda::before{
@@ -160,8 +182,8 @@ export default vm
   left: -21px;
   position: relative;
   border-style: solid;
-  border-width: 0px 15px 15px 0px;
-  border-color: transparent #56402E transparent transparent;
+  border-width: 15px 15px 15px 15px;
+  border-color: #56402E transparent transparent transparent;
 }
 .message-wrapper-direita::after{
   box-sizing: border-box;
@@ -169,11 +191,11 @@ export default vm
   height: 0;
   content: "";
   top: -10px;
-  right: -48px;
+  left: 21px;
   position: relative;
   border-style: solid;
   border-width: 15px 15px 15px 15px;
-  border-color: #56402E transparent transparent transparent;
+  border-color: #47723E transparent transparent transparent;
 }
 </style>
 
