@@ -1,6 +1,6 @@
 <script>
   import StPainelCadastro from './../layout/Cadastro/PainelCadastro.vue'
-  import StPainelLogin from './../layout/Cadastro/PainelLogin.vue'
+  import StPainelLogin from './../layout/Login/PainelLogin.vue'
   import {EventBus} from './../eventBus'
   import FuncoesFirebaseAuth from './../funcoesGlobais/firebase/funcoesAuth'
   import FuncoesFirebaseDatabase from './../funcoesGlobais/firebase/funcoesDatabase'
@@ -19,13 +19,13 @@
       }
     },
     components: {
-      StPainelCadastro,
-      StPainelLogin
+      StPainelCadastro
     },
     computed: {
       ...mapGetters({database: 'getDatabase', firebase: 'getFirebase', auth: 'getAuth'})
     },
     methods: {
+
       cadastrarUsuarioComEmailESenha(usuario){
           //Criando Usuário no Firebase Auth
           this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then(snapshot => {
@@ -37,77 +37,25 @@
           })
 
       },
+
       perfil(idUsuario){
         this.$router.push('/usuarios/'+idUsuario)
       },
-      loginPersonalizado(provider, tipoUsuario){
-        this.auth.signInWithPopup(provider).then(resultado => {
-          //Se o usuário ainda não existe, crie ele
-          this.$bindAsArray('userExists', this.database.ref('/usuario/'+resultado.user.uid), null,
-           snap => {
-             if(!snap.exists()){
-              var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user, tipoUsuario)
-              if(!objUsuarioParaDatabase){
-                console.error('Erro: impossível montar todos os campos do usuário pelo provedor de autenticação')
-                throw 'Erro: impossível montar todos os campos do usuário pelo provedor de autenticação'
-              }
 
-              FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, objUsuarioParaDatabase, resultado.user.uid)
-           }
-           this.perfil(resultado.user.uid)
-        })
-
-
-          //Router manda pra tela de perfil
-
-        }).catch(erro => {
-          switch(erro.code){
-            case "auth/account-exists-with-different-credential": alert("O seu e-mail já está cadastrado em outro método de login. Tente novamente com outro provedor de autenticação.") ;break;
-          }
-          console.error("Algo deu errado... "+erro.code+" "+erro.message)
-        })
+      beforeCreate(){
+        document.body.className='cadastro'
       }
-    },
-    mounted(){
-      //Tratamentos do Bus
-      console.log(this.database, this.firebase, this.auth)
-      EventBus.$on('loginPersonalizado', data => {
-        this.database.goOnline()
-        var tipoLogin = data.tipoLogin, tipoUsuario = data.tipoUsuario
-        var provider = FuncoesFirebaseAuth.retornaProvider(tipoLogin, this.firebase.auth)
-        this.loginPersonalizado(provider, tipoUsuario)
-
-      })
-
-      EventBus.$on('login', data => {
-        this.database.goOnline()
-        this.auth.signInWithEmailAndPassword(data.email, data.senha).then(resultado => {
-          console.info(resultado)
-          this.perfil(data.key)
-        }).catch(erro => {
-          alert('Não foi possível autenticar o usuário. \nVerifique as as informações nos campos')
-          console.error(erro)
-        })
-      })
-
-    },
-    beforeCreate(){
-      document.body.className='cadastro'
     }
   }
-
-
 
 
 </script>
 
 
 <template>
-  <div class="container-fluid">
+  <div class="container container-main container-fluid">
   <st-painel-cadastro v-on:cadastrar="cadastrarUsuarioComEmailESenha">
   </st-painel-cadastro>
-  <st-painel-login>
-  </st-painel-login>
   </div>
 
 
@@ -138,12 +86,11 @@
   .panel-auth{
     padding-left: 0;
     padding-right: 0;
-    margin-top:100px;
+    margin-top: 60px;
     opacity: .92;
   }
 
-  .panel-body-cadastro, .panel-heading-cadastro,
-   .panel-body-login, .panel-heading-login{
+  .panel-body-cadastro, .panel-heading-cadastro{
     padding: 40px;
     padding-bottom: 0;
   }

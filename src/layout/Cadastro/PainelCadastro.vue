@@ -32,7 +32,7 @@
 </script>
 
 <template>
-    <div class="col-lg-5 col-lg-offset-1 panel panel-warning caixombra panel-auth">
+    <div class="col-lg-8 col-lg-offset-2 panel panel-warning caixombra panel-auth">
         <div class="panel-heading panel-heading-cadastro">
             <div class="row">
                 <div class="col-xs-6 col-xs-offset-3 img-container">
@@ -73,4 +73,3 @@
     margin-bottom: 0;
 }
 </style>
-

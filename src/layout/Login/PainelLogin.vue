@@ -3,22 +3,12 @@
     export default{
         data(){
             return {
-                txtEmail: '',
-                txtSenha: '',
-                radioText: ''
+                txtEmail: "",
+                txtSenha: "",
+                radioText: ""
             }
         },
         methods:{
-            loginPersonalizado(tipoLogin){
-                var tipoUsuario
-                if(this.radioText){
-                    tipoUsuario = this.radioText
-                } else{
-                    alert('Escolha o tipo de usuário: Escoteiro ou Escotista')
-                    return
-                }
-                EventBus.$emit('loginPersonalizado', {tipoLogin: tipoLogin, tipoUsuario: tipoUsuario})
-            },
             loginFacebook(){
                 this.loginPersonalizado('facebook')
             },
@@ -56,8 +46,8 @@
           <p class="text-left text-info">Login Usual</p>
           <input class="form-control" type="text" placeholder="Digite seu E-mail" v-model="txtEmail">
           <input type="password" class="form-control" placeholder="Digite sua Senha" v-model="txtSenha">
-        <hr>
-        <p class="text-left text-info">Login Personalizado</p>
+          <!--<hr>
+       <p class="text-left text-info">Login Personalizado</p>
         <form class="text-left col-xs-7">
             <span class="apenas">(Apenas se esta é sua primeira vez aqui)</span>
             <br>
@@ -68,7 +58,7 @@
             <label class="radio-inline" for="radioEscotistaLogin"><input type="radio" id="radioEscotistaLogin" name="radioUserLogin" value="escotista" v-model="radioText"> Escotista</label>
 
 
-        </form>
+        </form> -->
             <div class="pull-right">
                 <i class="fa fa-facebook-square" aria-hidden="true" @click="loginFacebook()"></i>
                 <i class="fa fa-google-plus-square" aria-hidden="true" @click="loginGoogle()"></i>
