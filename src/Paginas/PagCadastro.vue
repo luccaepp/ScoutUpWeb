@@ -25,7 +25,6 @@
       ...mapGetters({database: 'getDatabase', firebase: 'getFirebase', auth: 'getAuth'})
     },
     methods: {
-
       cadastrarUsuarioComEmailESenha(usuario){
           //Criando Usuário no Firebase Auth
           this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then(snapshot => {
@@ -37,25 +36,26 @@
           })
 
       },
-
       perfil(idUsuario){
         this.$router.push('/usuarios/'+idUsuario)
       },
-
       beforeCreate(){
         document.body.className='cadastro'
       }
-    }
   }
+
+
 
 
 </script>
 
 
 <template>
-  <div class="container container-main container-fluid">
+  <div class="container-fluid">
   <st-painel-cadastro v-on:cadastrar="cadastrarUsuarioComEmailESenha">
   </st-painel-cadastro>
+  <st-painel-login>
+  </st-painel-login>
   </div>
 
 
@@ -86,11 +86,12 @@
   .panel-auth{
     padding-left: 0;
     padding-right: 0;
-    margin-top: 60px;
+    margin-top:100px;
     opacity: .92;
   }
 
-  .panel-body-cadastro, .panel-heading-cadastro{
+  .panel-body-cadastro, .panel-heading-cadastro,
+   .panel-body-login, .panel-heading-login{
     padding: 40px;
     padding-bottom: 0;
   }
