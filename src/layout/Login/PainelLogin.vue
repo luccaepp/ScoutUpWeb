@@ -29,7 +29,7 @@
 </script>
 
 <template>
-    <div class="col-lg-5 panel panel-info caixombra panel-auth">
+    <div class="col-lg-8 col-lg-offset-2 panel panel-info caixombra panel-auth">
         <div class="panel-heading panel-heading-login">
             <div class="row">
                 <div class="col-xs-6 col-xs-offset-3 img-container">

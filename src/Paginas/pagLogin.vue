@@ -68,12 +68,11 @@ export default{
       document.body.className='login'
     }
   }
-}
 
 </script>
 
 <template>
-  <div class="container container-fluid">
+  <div class="container-fluid">
     <st-painel-login>
     </st-painel-login>
   </div>

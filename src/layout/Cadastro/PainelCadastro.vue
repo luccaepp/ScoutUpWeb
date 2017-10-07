@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="row">
-                <h2 class="col-xs-6 col-xs-offset-3 text-center" id="cad">Cadastre-se</h2>
+                <h2 class="col-xs-6 col-xs-offset-3 text-center" id="cad">CADASTRE-SE</h2>
             </div>
         </div>
     <div class="panel-body panel-body-cadastro">

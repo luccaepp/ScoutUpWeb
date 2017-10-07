@@ -1,11 +1,9 @@
 <script>
   import StPainelCadastro from './../layout/Cadastro/PainelCadastro.vue'
-  import StPainelLogin from './../layout/Login/PainelLogin.vue'
   import {EventBus} from './../eventBus'
   import FuncoesFirebaseAuth from './../funcoesGlobais/firebase/funcoesAuth'
   import FuncoesFirebaseDatabase from './../funcoesGlobais/firebase/funcoesDatabase'
   import { mapGetters } from 'vuex'
-
 
   export default {
     data(){
@@ -42,10 +40,8 @@
       beforeCreate(){
         document.body.className='cadastro'
       }
+    }
   }
-
-
-
 
 </script>
 
