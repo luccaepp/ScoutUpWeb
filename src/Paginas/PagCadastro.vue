@@ -72,7 +72,6 @@
       //Tratamentos do Bus
       console.log(this.database, this.firebase, this.auth)
       EventBus.$on('loginPersonalizado', data => {
-        this.database.goOnline()
         var tipoLogin = data.tipoLogin, tipoUsuario = data.tipoUsuario
         var provider = FuncoesFirebaseAuth.retornaProvider(tipoLogin, this.firebase.auth)
         this.loginPersonalizado(provider, tipoUsuario)
@@ -80,7 +79,6 @@
       })
 
       EventBus.$on('login', data => {
-        this.database.goOnline()
         this.auth.signInWithEmailAndPassword(data.email, data.senha).then(resultado => {
           console.info(resultado)
           this.perfil(data.key)

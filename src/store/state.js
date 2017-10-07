@@ -1,35 +1,38 @@
 import {EventBus} from './../eventBus'
 import firebase from './../funcoesGlobais/firebase/centralFirebase'
 
+const state = {
+  firebase: firebase,
+  auth: firebase.auth(),
+  database: firebase.database(),
+  storage: firebase.app().storage(),
+  usuario: null,
+  usuarioDatabase: null
+}
 
 firebase.auth().onAuthStateChanged(usuario => {
   if(usuario){
     console.log('conectado')
     EventBus.$emit('usuarioConectado', usuario)
-    setStatus(usuario.uid)
+    state.database.ref("/usuario/"+usuario.uid+"/status").set('online')
   } else{
     console.log('desconectado')
     EventBus.$emit('usuarioDesconectado')
   }
 })
 
-firebase.database().ref('.info/connected').on('value', snapshot => {
+const amOnline = firebase.database().ref('.info/connected')
+amOnline.on('value', snapshot => {
+  console.log("evento .info/connected emitido")
   let currentUser = firebase.auth().currentUser
   if(snapshot.val() && currentUser){
     console.log("chave do usuario", currentUser.uid)
-    setStatus(currentUser.uid)
+    const statusRef = firebase.database().ref("/usuario/"+currentUser.uid+"/status")
+    const usuarioRef = firebase.database().ref("/usuario/"+currentUser.uid)
+    statusRef.onDisconnect().set('offline').then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef))
+    statusRef.set('online').then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef))
   }
 })
-
-function setStatus(uid){
-  const statusRef = firebase.database().ref("/usuario/"+uid+"/status")
-  const usuarioRef = firebase.database().ref("/usuario/"+uid)
-
-  usuarioRef.onDisconnect().update({status: 'offline'}).then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef))
-  usuarioRef.update({status: 'online'}).then(EventBus.$emit('cadastrarStatusNasFriendLists', usuarioRef))
-
-}
-
 
 EventBus.$on('cadastrarStatusNasFriendLists', userAtualRef => {
   const chaveUsuario = userAtualRef.key
@@ -49,15 +52,5 @@ EventBus.$on('cadastrarStatusNasFriendLists', userAtualRef => {
     })
   })
 })
-
-
-const state = {
-  firebase: firebase,
-  auth: firebase.auth(),
-  database: firebase.database(),
-  storage: firebase.app().storage(),
-  usuario: null,
-  usuarioDatabase: null
-}
 
 export default state
