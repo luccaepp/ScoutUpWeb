@@ -61,8 +61,8 @@
         methods: {
             logout(){
                 console.log('deslogando')
-                this.$store.state.firebase.database().ref("/usuario/"+this.$store.state.auth.currentUser.uid+"/status").set('offline')
-                this.$store.state.auth.signOut()
+                this.$store.state.auth.signOut().then(()=>{
+                })
             }
         }
     }

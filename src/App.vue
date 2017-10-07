@@ -25,7 +25,8 @@ export default{
       console.log('commitando o mudar usuario')
       this.$store.commit('MUDAR_USUARIO', usuario || false)
       console.log(usuario.uid)
-      this.conectado = true   
+      this.conectado = true
+
     })
     EventBus.$on('usuarioDesconectado', () =>{
       var path = this.$route.path

@@ -10,11 +10,11 @@ const state = {
   usuarioDatabase: null
 }
 
+
 firebase.auth().onAuthStateChanged(usuario => {
   if(usuario){
     console.log('conectado')
     EventBus.$emit('usuarioConectado', usuario)
-    state.database.ref("/usuario/"+usuario.uid+"/status").set('online')
   } else{
     console.log('desconectado')
     EventBus.$emit('usuarioDesconectado')
