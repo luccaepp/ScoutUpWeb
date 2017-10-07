@@ -3,6 +3,7 @@
     import StTopBarPrototipo from './TopBarPrototipo.vue'
     import {EventBus} from './../../eventBus'
     import FuncoesFirebaseDatabase from '../../funcoesGlobais/firebase/funcoesDatabase'
+    import Status from './../../status/status'
 
     export default {
         firebase(){
@@ -61,8 +62,8 @@
         methods: {
             logout(){
                 console.log('deslogando')
-                this.$store.state.auth.signOut().then(()=>{
-                })
+                Status.atualizarStatus('offline')
+                this.$store.state.auth.signOut()
             }
         }
     }
