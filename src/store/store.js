@@ -29,6 +29,9 @@ const store = new VueX.Store({
         },
         getUsuarioDatabase(state){
             return state.usuarioDatabase
+        },
+        getFirestore(state){
+            return state.firestore
         }
     },
     actions: {

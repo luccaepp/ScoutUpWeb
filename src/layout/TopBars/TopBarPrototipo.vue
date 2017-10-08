@@ -1,12 +1,20 @@
 <script>
 import {mapGetters} from 'vuex'
+import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
   export default {
+    components: {
+      InputComAutocomplete
+    },
     data(){
       return {
-        hideTopBar: false
+        hideTopBar: false,
+        usuarioBuscado: null
       }
     },
-    mounted(){
+    watch: {
+      usuarioBuscado(){
+        
+      }
     },
     computed: {
       ...mapGetters({usuario: 'getUsuario'})
@@ -38,8 +46,7 @@ import {mapGetters} from 'vuex'
                 <ul id="navbar-right" class="nav navbar-nav navbar-right">
                     <li v-if="usuario"><form class="navbar-form">
                     <div class="input-group">
-                      <input id="inputPesquisarTopBar" type="text" class="form-control" 
-                        placeholder="Buscar Usuário">
+                      <input-com-autocomplete></input-com-autocomplete>
                       <div id="btnBoxSearchTopBar" class="input-group-btn">
                         <button class="btn btn-default">
                           <i class="glyphicon glyphicon-search"></i>

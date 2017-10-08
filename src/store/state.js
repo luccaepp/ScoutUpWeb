@@ -5,6 +5,7 @@ const state = {
   firebase: firebase,
   auth: firebase.auth(),
   database: firebase.database(),
+  firestore: firebase.firestore(),
   storage: firebase.app().storage(),
   usuario: null,
   usuarioDatabase: null
