@@ -1,13 +1,18 @@
 <script>
 export default {
-  props: ['opcoes']
+  props: ['opcoes'],
+  methods: {
+      clique(){
+          console.log('clique')
+      }
+  }
 }
 </script>
 
 <template>
   <div class="box-autocomplete">
-      <div v-for="opcao in opcoes" class="list-group-item">
-          {{opcao.nome}}
+      <div @mousedown="$emit('opcaoSelecionada', opcao)" v-for="opcao in opcoes" class="list-group-item">
+          {{opcao.data.nome}}
       </div>
   </div>
 </template>

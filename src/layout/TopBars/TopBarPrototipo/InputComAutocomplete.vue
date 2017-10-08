@@ -11,19 +11,34 @@ export default {
   data(){
       return {
           usuarioBuscado: '',
-          opcoes: []
+          opcoes: [],
+          focused: false
       }
   },
   watch: {
       usuarioBuscado(){
+        if(!this.usuarioBuscado){
+            this.opcoes = []
+            return
+        }
         let self = this
         this.firestore.collection('usuario').where('nome', '>=', toTitleCase(this.usuarioBuscado)).where('nome', '<', toTitleCase(comProximaLetra(this.usuarioBuscado))).get().then(snap =>{
             self.opcoes = []
             snap.forEach(usuario => {
-                self.opcoes.push(usuario.data())
-                console.log('pushou', comProximaLetra(self.usuarioBuscado))
+                self.opcoes.push({chave: usuario.id, data: usuario.data()})
+                console.log('pushou', usuario)
             })
         })
+      }
+  },
+  methods: {
+      blured(){
+          this.opcoes = []
+      },
+      irParaPerfil(usuario){
+        this.opcoes = []
+        this.usuarioBuscado = ''
+        this.$router.push('/usuarios/'+usuario.chave)
       }
   }
 }
@@ -38,8 +53,8 @@ function comProximaLetra(my_string){
 
 <template>
     <div class="root">
-        <input type="text" class="form-control" v-model="usuarioBuscado"
+        <input @blur="blured" type="text" class="form-control" v-model="usuarioBuscado"
         placeholder="Buscar Usuário">
-        <box-opcoes :opcoes="opcoes" v-if="opcoes.length != 0"></box-opcoes>
+        <box-opcoes @opcaoSelecionada="irParaPerfil" :opcoes="opcoes"></box-opcoes>
     </div>
 </template>
