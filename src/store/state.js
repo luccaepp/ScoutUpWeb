@@ -1,11 +1,14 @@
 import {EventBus} from './../eventBus'
 import firebase from './../funcoesGlobais/firebase/centralFirebase'
 
+
+
 const state = {
+
   firebase: firebase,
   auth: firebase.auth(),
-  database: firebase.database(),
   firestore: firebase.firestore(),
+  database: firebase.firestore(),
   storage: firebase.app().storage(),
   usuario: null,
   usuarioDatabase: null

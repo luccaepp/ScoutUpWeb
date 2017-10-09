@@ -13,10 +13,10 @@ var vm = {
   watch:{
     usuarioDatabase() {
       if(this.usuarioDatabase){
-        this.$bindAsArray('amigos', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/amigos"))
-        this.$bindAsArray('usuarioConversas', this.database.ref("/usuario/"+this.usuarioDatabase['.key']+"/conversas"))
+        this.$bindAsArray('amigos', this.database.collection("/usuario/"+this.usuarioDatabase['.key']+"/amigos"))
+        this.$bindAsArray('usuarioConversas', this.database.collection("/usuario/"+this.usuarioDatabase['.key']+"/conversas"))
       }
-      this.$bindAsArray('conversas', this.database.ref("conversas"))
+      this.$bindAsArray('conversas', this.database.collection("conversas"))
     },
     amigos(){
       if(this.amigos){

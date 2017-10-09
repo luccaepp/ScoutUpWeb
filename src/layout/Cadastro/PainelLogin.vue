@@ -10,14 +10,14 @@
         },
         methods:{
             loginPersonalizado(tipoLogin){
-                var tipoUsuario
+                var tipo
                 if(this.radioText){
-                    tipoUsuario = this.radioText
+                    tipo = this.radioText
                 } else{
                     alert('Escolha o tipo de usuário: Escoteiro ou Escotista')
                     return
                 }
-                EventBus.$emit('loginPersonalizado', {tipoLogin: tipoLogin, tipoUsuario: tipoUsuario})
+                EventBus.$emit('loginPersonalizado', {tipoLogin: tipoLogin, tipo: tipo})
             },
             loginFacebook(){
                 this.loginPersonalizado('facebook')

@@ -25,12 +25,24 @@
     computed: {
       ...mapGetters({database: 'getDatabase', firebase: 'getFirebase', auth: 'getAuth'})
     },
+
     methods: {
       cadastrarUsuarioComEmailESenha(usuario){
-          //Criando Usuário no Firebase Auth
           this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then(snapshot => {
-            //Criando Usuário na Database
-            FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, usuario, snapshot.uid)
+            usuario.senha = null
+
+            var newUser = {
+            tipo: usuario.tipo,
+            nome: usuario.nome,
+            email: usuario.email,
+            grupo: null,
+            sessao: null,
+            patrulha: null,
+            status: 'online'
+                    }
+
+
+            FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, newUser, snapshot.uid)
             this.perfil(snapshot.uid)
           }).catch((erro) => {
             console.warn("Algo deu errado... "+erro.code+" "+erro.message)
@@ -38,27 +50,43 @@
 
       },
       perfil(idUsuario){
-        this.$router.push('/usuarios/'+idUsuario)
+        this.$router.push('/usuario/'+idUsuario)
       },
-      loginPersonalizado(provider, tipoUsuario){
-        this.auth.signInWithPopup(provider).then(resultado => {
-          //Se o usuário ainda não existe, crie ele
-          this.$bindAsArray('userExists', this.database.ref('/usuario/'+resultado.user.uid), null,
-           snap => {
-             if(!snap.exists()){
-              var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user, tipoUsuario)
-              if(!objUsuarioParaDatabase){
-                console.error('Erro: impossível montar todos os campos do usuário pelo provedor de autenticação')
-                throw 'Erro: impossível montar todos os campos do usuário pelo provedor de autenticação'
-              }
+      loginPersonalizado(provider, tipo){
 
-              FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, objUsuarioParaDatabase, resultado.user.uid)
-           }
-           this.perfil(resultado.user.uid)
-        })
+        this.auth.signInWithPopup(provider).then(snapshot => {
+
+          var user = snapshot.user
+          var nome, email;
+
+          if (user != null) {
+            user.providerData.forEach(function (profile) {
+              console.log("Sign-in provider: "+profile.providerId);
+              console.log("  Provider-specific UID: "+profile.uid);
+              nome = profile.displayName;
+              email = profile.email;
+              console.log("  Photo URL: "+profile.photoURL);
+            });
+          }
 
 
-          //Router manda pra tela de perfil
+          var usuarioConsulta = FuncoesFirebaseDatabase.consultarUsuarioNaDatabase(this.database, user.uid)
+
+          if(usuarioConsulta != null){
+
+            var newUser = {
+            tipo: tipo,
+            nome: nome,
+            email: email,
+            grupo: null,
+            sessao: null,
+            patrulha: null,
+            status: 'online'
+            }
+            FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, newUser, snapshot.user.uid)
+
+          }
+            this.perfil(snapshot.user.uid)
 
         }).catch(erro => {
           switch(erro.code){
@@ -67,14 +95,15 @@
           console.error("Algo deu errado... "+erro.code+" "+erro.message)
         })
       }
+
     },
+
     mounted(){
       //Tratamentos do Bus
-      console.log(this.database, this.firebase, this.auth)
       EventBus.$on('loginPersonalizado', data => {
-        var tipoLogin = data.tipoLogin, tipoUsuario = data.tipoUsuario
+        var tipoLogin = data.tipoLogin, tipo = data.tipo
         var provider = FuncoesFirebaseAuth.retornaProvider(tipoLogin, this.firebase.auth)
-        this.loginPersonalizado(provider, tipoUsuario)
+        this.loginPersonalizado(provider, tipo)
 
       })
 
