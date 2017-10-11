@@ -1,7 +1,7 @@
 <script>
   import StPainelCadastro from './../layout/Cadastro/PainelCadastro.vue'
   import StPainelLogin from './../layout/Cadastro/PainelLogin.vue'
-  import {EventBus} from './../eventBus'
+  import { EventBus } from './../eventBus'
   import FuncoesFirebaseAuth from './../funcoesGlobais/firebase/funcoesAuth'
   import FuncoesFirebaseDatabase from './../funcoesGlobais/firebase/funcoesDatabase'
   import { mapGetters } from 'vuex'

@@ -1,9 +1,10 @@
 <script>
-  import {EventBus} from './eventBus'
+  import { EventBus } from './eventBus'
   import FuncoesFirebaseDatabase from './funcoesGlobais/firebase/funcoesDatabase'
   import StTopBarDeslogado from './layout/TopBars/TopBarDeslogado.vue'
   import StTopBarLogado from './layout/TopBars/TopBarLogado.vue'
   import Chat from './layout/Chat/Main.vue'
+  import { mapGetters } from 'vuex'
 
 
 export default{
@@ -33,13 +34,23 @@ export default{
       this.conectado = false
      if (this.pathsPermitidos.indexOf(path) == -1) {
           this.$router.replace('/cadastro')
-        }    
+        }
     })
   },
   created(){
     this.firebase.messaging().requestPermission()
       .then(() => console.info('Permissão concedida'))
       .catch(warn => console.warn('Permissão negada', warn))
+  },
+  computed: {
+    ...mapGetters({usuarioDatabase: 'getUsuarioDatabase'})
+  },
+  watch: {
+    usuarioDatabase(){
+      if(this.usuarioDatabase['.key']){
+        EventBus.$emit('usuarioDatabasePreenchido', this.usuarioDatabase)
+      }
+    }
   }
 }
 

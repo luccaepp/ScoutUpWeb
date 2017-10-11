@@ -6,6 +6,7 @@ const status = {
   ,
   atualizarOnConnected(){
     firebase.database().ref('.info/connected').on('value', snapshot => {
+        console.log('.info/connected', snapshot.val())
         this.atualizarStatus(snapshot.val() ? 'online' : 'offline')
     })
   },
@@ -14,14 +15,15 @@ const status = {
     userRef.update({status}).then(EventBus.$emit('atualizarStatusNasFriendLists', userRef))
   },
   atualizarOnDisconnected(){
-    const userRef = firebase.database().ref("/usuario/"+this.userId)    
+    const userRef = firebase.database().ref("/usuario/"+this.userId)
     userRef.onDisconnect().update({status: 'offline'}).then(EventBus.$emit('atualizarStatusNasFriendLists', userRef))
   }
 }
 
-firebase.auth().onAuthStateChanged(user =>{
+EventBus.$on('usuarioDatabasePreenchido', user =>{
   if(user){
-    status.userId = user.uid
+    console.log("zemphone")
+    status.userId = user['.key']
     status.atualizarOnConnected()
     status.atualizarOnDisconnected()
   }

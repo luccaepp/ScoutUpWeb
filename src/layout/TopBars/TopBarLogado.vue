@@ -21,7 +21,7 @@
                 if(!this.$store.state.usuarioDatabase){
                     return 'Carregando...'
                 }
-                
+
                 return this.$store.state.usuarioDatabase.nome
             },
             retornaLinkGrupo(){
@@ -35,7 +35,7 @@
                     return '/cadastroNaArea'
                 }
             },
-            retornaLinkSecao(){       
+            retornaLinkSecao(){
                 if(!this.usuarioDatabase){
                     return this.$route.path
                 }
@@ -63,6 +63,7 @@
             logout(){
                 console.log('deslogando')
                 Status.atualizarStatus('offline')
+                this.$store.state.database.goOffline()
                 this.$store.state.auth.signOut()
             }
         }
@@ -78,7 +79,7 @@
                 <li><router-link :to="retornaLinkGrupo"><i class="fa fa-building" aria-hidden="true"></i> Grupo</router-link></li>
                 <li><router-link :to="retornaLinkSecao"><i class="fa fa-object-group" aria-hidden="true"></i> Seção</router-link></li>
                 <li><router-link :to="retornaLinkPatrulha"><i class="fa fa-users" aria-hidden="true"></i> Patrulha</router-link></li>
-            </ul>                                    
+            </ul>
         </li>
         <li>
             <router-link to="/atividades" id="a2"><i class="fa fa-free-code-camp" aria-hidden="true"></i> Atividades</router-link>
@@ -86,8 +87,8 @@
     </ul>
     <template slot="lis-login">
         <li><router-link :to="'/usuarios/'+usuario.uid"><span class="glyphicon glyphicon-user"></span> {{displayUsuario}}</router-link></li>
-        <li><a href="#" @click.prevent="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>       
+        <li><a href="#" @click.prevent="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
     </template>
     </st-top-bar-prototipo>
-    
+
 </template>
