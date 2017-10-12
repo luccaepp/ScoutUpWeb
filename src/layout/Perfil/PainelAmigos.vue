@@ -1,6 +1,10 @@
 <script>
 import {mapGetters} from 'vuex'
+import ItemAmigo from './PainelAmigos/ItemAmigo.vue'
 var vm = {
+    components: {
+        ItemAmigo
+    },
     data(){
         return {
             exibir: 'amigos'
@@ -70,12 +74,7 @@ export default vm
         </div>
         <div class="panel-body">
             <ul v-if="exibir == 'amigos'" class="list-group list-inline text-center list-amigos">
-                <li v-for="amigo in amigos" class="list-group-item list-group-item-warning col-lg-3">
-                    <i class="fa fa-user-circle foto-amigos" aria-hidden="true"></i>
-                    <h4 class="list-group-item-heading">
-                        <router-link class="text-warning" :to="'/usuarios/'+amigo.chave">{{amigo.nome}}</router-link>
-                    </h4>
-                </li>
+                <item-amigo v-for="amigo in amigos" :amigo="amigo"></item-amigo>
             </ul>
             <ul v-else-if="exibir == 'solicitacoes'" class="list-group list-amigos">
                 <li v-for="solicitacao in usuarioDatabase.solicitacoesDeAmizade" class="list-group-item list-group-item-warning">

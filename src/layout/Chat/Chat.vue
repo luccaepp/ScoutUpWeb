@@ -10,7 +10,8 @@ var vm = {
   },
     data(){
     return{
-      txtMensagem: "",
+      txtMensagem: '',
+      srcFoto: ''
     }
   },
   props:['conversaRef', 'amigo'],
@@ -54,12 +55,16 @@ var vm = {
   },
   computed:{
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
-                            firebase: 'getFirebase'}),
+                            firebase: 'getFirebase', storage: 'getStorage'}),
     getMensagens(){
       this.$firebaseRefs.mensagens.once('child_added').then( () => this.scrollToBottom())
       return this.mensagens
     }
   },
+  created(){
+    //Pegando a foto de perfil do amigo
+    this.storage.ref('/fotoPerfil/' + this.amigo.chave).getDownloadURL().then(url => this.srcFoto = url, erro => this.srcFoto = '')
+  }
 }
 
 export default vm
@@ -68,7 +73,8 @@ export default vm
 <template>
   <div class="panel" v-if="usuarioDatabase">
     <div class="panel-heading">
-      <i class="fa fa-user-circle" aria-hidden="true"></i>
+      <i v-if="!srcFoto" class="fa fa-user-circle fotoPerfilAmigo" aria-hidden="true"></i>
+      <img class="fotoPerfilAmigo" v-else :src="srcFoto" alt="Foto de perfil do amigo">
       {{amigo.nome}}
       <button @click="$emit('fecharChat')" type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
@@ -112,6 +118,17 @@ export default vm
 </template>
 
 <style>
+
+img.fotoPerfilAmigo{
+  width: 35px;
+  height: 35px;
+  border-radius: 30px;
+}
+
+i.fotoPerfilAmigo{
+  font-size: 35px;
+}
+
 .horario{
   display: flex;
   margin-left: 0px;
