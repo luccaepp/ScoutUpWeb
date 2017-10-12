@@ -3,12 +3,18 @@ import {mapGetters} from 'vuex'
 var vm = {
   firebase(){
     return {
-      grupos: this.database.ref('/grupo/')
+      grupos: {
+        source: this.database.ref('/grupo/'),
+        readyCallback(snap){
+          if(!snap.exists()) this.naoExistemGrupos = true
+        }
+      }
     }
   },
   data(){
     return {
-      busca: ''
+      busca: '',
+      naoExistemGrupos: false
     }
   },
   computed: {
@@ -24,6 +30,9 @@ var vm = {
       })
       console.log('filtrado', filtrado)
       return filtrado
+    },
+    ehEscotista(){
+      
     }
   },
   methods: {
@@ -41,29 +50,38 @@ export default vm
 
 <template>
   <div class="panel panel-grupos">
-    <div class="panel-heading">
-      Solicite a Inscrição no Grupo
-    </div>
-    <table class="table table-grupos text-center">
-        <thead>
-            <tr>
-                <th class="text-center">Grupo</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="grupo in listaFiltrada" @click="selecionarGrupo(grupo)">
-                <td>{{grupo.nome}}</td>
-            </tr>
-        </tbody>
+    <template v-if="naoExistemGrupos">
+      <div class="panel-heading text-center nao-ha">
+        Não há nenhum grupo cadastrado
+      </div>
+    </template>
+    <template v-else>
+      <div class="panel-heading">
+        Solicite a Inscrição no Grupo
+      </div>
+      <table class="table table-grupos text-center">
+          <thead>
+              <tr>
+                  <th class="text-center">Grupo</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr v-if="!grupos.length"><td>Carregando...</td></tr>
+              <tr v-else v-for="grupo in listaFiltrada" @click="selecionarGrupo(grupo)">
+                  <td>{{grupo.nome}}</td>
+              </tr>
+          </tbody>
 
-    </table>
-    <div class="panel-footer">
-      <div class="row">
-        <div class="col-xs-4 pull-right">
-          <input v-model="busca" class="form-control" type="text" placeholder="Busque um grupo...">
+      </table>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-xs-4 pull-right">
+            <input v-model="busca" class="form-control" type="text" placeholder="Busque um grupo...">
+          </div>
         </div>
       </div>
-    </div>
+    </template>
+
   </div>
 </template>
 

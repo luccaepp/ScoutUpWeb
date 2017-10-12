@@ -25,7 +25,7 @@ import {mapGetters} from 'vuex'
           grupoSelecionado(grupo){
             console.log(grupo)
             this.grupoAtual = grupo
-            if(this.secoesAtuais.length){
+            if(this.secoesAtuais){
               this.$unbind('secoesAtuais')
             }
             this.$bindAsArray('secoesAtuais', this.database.ref('/grupo/'+grupo['.key']+'/secoes'))
@@ -45,7 +45,7 @@ import {mapGetters} from 'vuex'
         <div class="row" v-else>
             <div class="col-xs-12">
               <st-panel-grupos v-if="!secoesAtuais" @grupoSelecionado="grupoSelecionado"></st-panel-grupos>
-              <st-panel-secoes v-else-if="secoesAtuais" :secoesAtuais="secoesAtuais" :grupo="grupoAtual"></st-panel-secoes>
+              <st-panel-secoes v-else-if="secoesAtuais" @voltar="$unbind('secoesAtuais')" :secoesAtuais="secoesAtuais" :grupo="grupoAtual"></st-panel-secoes>
             </div>
         </div>
     </div>
@@ -54,6 +54,10 @@ import {mapGetters} from 'vuex'
 
 
 <style>
+.nao-ha{
+  font-family: claire;
+  font-size: 40px;
+}
 table.table-grupos, .panel-grupos > .panel-body{
     color:#eacf9b;
     background-color:#56402E;
