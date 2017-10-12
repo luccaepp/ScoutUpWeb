@@ -4,11 +4,13 @@ import Routes from './routes'
 import App from './App.vue'
 import store from './store/store'
 import VueFire from 'vuefire'
+
 //EventCalendar
 import vueEventCalendar from 'vue-event-calendar'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
-import VueCarousel from 'vue-carousel';
+//Carousel
+import VueCarousel from 'vue-carousel'
 
 Vue.use(VueGoogleMaps, {
   load: {

@@ -6,6 +6,8 @@
     import FuncoesFirebaseDatabase from './../../funcoesGlobais/firebase/funcoesDatabase'
     import {mapGetters} from 'vuex'
 
+    import LeitorIMG from '../../funcoesGlobais/DOM/LeitorIMG'
+
     export default {
         firebase(){
             return {
@@ -25,7 +27,8 @@
         },
         data(){
             return {
-                storageRef: null
+                storageRef: null,
+                srcFoto: ''
             }
         },
         watch: {
@@ -76,6 +79,10 @@
                     console.log(erro)
                 })
             },
+            atualizarFotoDePerfil(){
+                let self = this
+                this.storageRef.getDownloadURL().then(url => self.srcFoto = url, erro => console.log('Sem foto de perfil'))
+            },
             cancelarSolicitacao(){
                 var ref = this.database.ref('/usuario/'+this.usuarioDaPag['.key']+'/solicitacoesDeAmizade/')
                 ref
@@ -89,12 +96,13 @@
                     })
             },
             trocarFotoDePerfil(){
-                
+                let input = LeitorIMG.buildLeitor(this)
+                input.click()
             }
         },
         created(){
             this.storageRef = this.storage.ref('/fotoPerfil/' + this.$route.params.idUsuario)
-            console.log('storageRef', this.storageRef)
+            this.atualizarFotoDePerfil()
         }
     }
 </script>
@@ -108,7 +116,8 @@
             <div class="row">
                 <div class="foto-sect text-center">
                     <div class="row">
-                        <i @click="trocarFotoDePerfil()" class="fa fa-user-circle foto-perfil" aria-hidden="true"></i>
+                        <i v-if="!srcFoto" @click="trocarFotoDePerfil()" class="fa fa-user-circle foto-perfil" aria-hidden="true"></i>
+                        <img v-else @click="trocarFotoDePerfil()" class="foto-perfil" :src="srcFoto">
                         <br>
                         <b>{{displayNome}}</b>
                     </div>
@@ -129,16 +138,6 @@
             <div class="row">
                 <st-painel-informacoes :ehDessePerfil="ehDessePerfil" :usuarioDaPag = "usuarioDaPag"
                     :displayNome="displayNome"></st-painel-informacoes>
-            </div>
-            <div v-if="ehDessePerfil" class="row">
-                <div class="col-lg-2 col-lg-offset-10">
-                    <button class="btn btn-warning">
-                        Editar
-                    </button>
-                    <button class="btn btn-primary disabled">
-                        Salvar
-                    </button>
-                </div>
             </div>
             <div class="row">
                 <div class="wrapper col-lg-11 col-lg-offset-1">
@@ -163,9 +162,19 @@
 
 }
 
-.foto-perfil{
+i.foto-perfil{
   font-size: 210px;
-  cursor: pointer;
+}
+
+.foto-perfil{
+    cursor: pointer;
+}
+
+img.foto-perfil{
+    width: 210px;
+    height: 210px;
+    border-radius: 150px;
+    background-color: transparent;
 }
 
 .foto-amigos{

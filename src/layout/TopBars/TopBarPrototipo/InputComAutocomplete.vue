@@ -46,8 +46,8 @@ export default {
 function toTitleCase(str){
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
-function comProximaLetra(my_string){
-    return my_string.substring(0,my_string.length-1)+String.fromCharCode(my_string.charCodeAt(my_string.length-1)+1)
+function comProximaLetra(string){
+    return string.substring(0,string.length-1)+String.fromCharCode(string.charCodeAt(string.length-1)+1)
 }
 </script>
 

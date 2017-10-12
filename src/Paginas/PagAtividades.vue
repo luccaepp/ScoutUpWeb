@@ -21,9 +21,9 @@ export default {
 </script>
 
 <template>
-    <div v-if="usuarioDatabase && !usuarioDatabase.grupo" class="container-fluid">
+    <div v-if="usuarioDatabase && !usuarioDatabase.grupo" class="container container-main">
         <div class="row">
-            <h1>Você precisa de um grupo para ter acesse às Atividades.</h1>
+            <h1 class="text-center err">Você precisa de um grupo para ter acesso às Atividades...</h1>
         </div>
     </div>
     <div v-else class="container-fluid">
@@ -68,6 +68,10 @@ span.titEvento{
   font-size: 18px;
   line-height: 1.33;
   border-radius: 25px;
+}
+.err{
+    font-family: claire;
+    color: #EACF9B;
 }
 </style>
 
