@@ -63,7 +63,6 @@ var vm = {
       return isCriado
     },
     abrirChat(amigo){
-
       if(!this.conversaJaExiste(amigo.chave)){
         var conversaRef = this.$firebaseRefs.conversas.push()
         this.chaveConversa = conversaRef.key
@@ -75,6 +74,7 @@ var vm = {
       this.amigoSelecionado = amigo
       this.mostrarChat = !this.mostrarChat
     }
+    
   },
   computed: {
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',

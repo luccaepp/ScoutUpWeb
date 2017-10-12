@@ -14,7 +14,16 @@ var vm = {
     }
   },
   props:['conversaRef', 'amigo'],
+  mounted(){
+    this.scrollToBottom()
+  },
   methods:{
+    scrollToBottom() {
+      var caixaMensagens = document.getElementById('caixa-mensagens')
+      if(caixaMensagens){
+        caixaMensagens.scrollTop = caixaMensagens.scrollHeight - caixaMensagens.clientHeight;
+      }
+    },
     enviarMensagem(){
       if(!this.txtMensagem)
         return
@@ -32,6 +41,7 @@ var vm = {
     carregarMensagens(){
       this.conversaRef.off()
       this.conversaRef.on('child_added', snapshot =>{
+        console.log("isso aqui nunca é chamado ne")
         this.mensagens.push(snapshot)
       })
     },
@@ -44,8 +54,12 @@ var vm = {
   },
   computed:{
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
-                            firebase: 'getFirebase'})
-  }
+                            firebase: 'getFirebase'}),
+    getMensagens(){
+      this.scrollToBottom()
+      return this.mensagens
+    }
+  },
 
 }
 export default vm
@@ -59,8 +73,8 @@ export default vm
       <button @click="$emit('fecharChat')" type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="panel-body">
-      <ul class="messages-container col-lg-10">
-        <li class="message-box" v-for="msg in mensagens">
+      <ul id="caixa-mensagens" class="messages-container col-lg-10">
+        <li class="message-box" v-for="msg in getMensagens">
           <div :class="{'message-wrapper-direita' : ehDesseUsuario(msg), 'message-wrapper-esquerda' : !ehDesseUsuario(msg)}">
             <template v-if="ehDesseUsuario(msg)">
               <div class="textoBox-direita">
