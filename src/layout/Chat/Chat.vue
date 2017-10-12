@@ -56,12 +56,12 @@ var vm = {
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
                             firebase: 'getFirebase'}),
     getMensagens(){
-      this.scrollToBottom()
+      this.$firebaseRefs.mensagens.once('child_added').then( () => this.scrollToBottom())
       return this.mensagens
     }
   },
-
 }
+
 export default vm
 </script>
 
