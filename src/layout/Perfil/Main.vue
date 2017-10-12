@@ -35,6 +35,7 @@
             '$route.params.idUsuario'() {
                 this.$unbind('usuarioDaPag')
                 this.$bindAsObject('usuarioDaPag', this.database.ref('/usuario/'+this.$route.params.idUsuario))
+                this.atualizarFotoDePerfil()
             }
         },
         computed:{
@@ -80,6 +81,9 @@
                 })
             },
             atualizarFotoDePerfil(){
+                console.log('nem aqui')
+                this.storageRef = this.storage.ref('/fotoPerfil/' + this.$route.params.idUsuario)
+                console.log('atualizarFotoDePerfil()', this.storageRef)
                 let self = this
                 this.storageRef.getDownloadURL().then(url => self.srcFoto = url, erro => console.log('Sem foto de perfil'))
             },
@@ -96,12 +100,13 @@
                     })
             },
             trocarFotoDePerfil(){
-                let input = LeitorIMG.buildLeitor(this)
-                input.click()
+                if(this.ehDessePerfil){
+                    let input = LeitorIMG.buildLeitor(this)
+                    input.click()
+                }
             }
         },
         created(){
-            this.storageRef = this.storage.ref('/fotoPerfil/' + this.$route.params.idUsuario)
             this.atualizarFotoDePerfil()
         }
     }
