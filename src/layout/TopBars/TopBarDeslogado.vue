@@ -17,10 +17,13 @@
             <router-link to="/o-projeto" id="a1" class="a">O Projeto</router-link>
         </li>
         <li>
-            <router-link to="sobre-nos" id="a2" class="a">Sobre Nós</router-link>
+            <router-link to="/sobre-nos" id="a2" class="a">Sobre Nós</router-link>
         </li>
         <li>
-            <a href="#" id="a3" class="a">Contato</a>
+            <router-link to="/" id="a3" class="a">Contato</router-link>
+        </li>
+        <li>
+            <router-link to="/guia-usuario" id="a4" class="a">Guia do Usuário</router-link>
         </li>
       </ul>
       <template slot="lis-login">

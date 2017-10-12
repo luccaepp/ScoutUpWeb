@@ -10,54 +10,59 @@ import PagAtividades from './Paginas/PagAtividades.vue'
 import PagOProjeto from './Paginas/PagOProjeto.vue'
 import PagSobreNos from './Paginas/PagSobreNos.vue'
 import PagLogin from './Paginas/PagLogin.vue'
+import PagGuiaUsuario from './Paginas/PagGuiaUsuario.vue'
 
 export default [
     {
-        path: "/",
-        component: PagInicial
+      path: "/",
+      component: PagInicial
     },
     {
-        path: "/cadastro",
-        component: PagCadastro
+      path: "/cadastro",
+      component: PagCadastro
     },
     {
-        path: "/login",
-        component: PagLogin
+      path: "/login",
+      component: PagLogin
     },
     {
-        path: "/usuarios/:idUsuario",
-        component: PagPerfil
+      path: "/usuarios/:idUsuario",
+      component: PagPerfil
     },
     {
-        path: "/cadastroNaArea",
-        component: PagCadastroNaArea
+      path: "/cadastroNaArea",
+      component: PagCadastroNaArea
     },
     {
       path: "/cadastrarGrupo",
       component: PagCadastrarGrupo
     },
     {
-        path: "/grupos/:id",
-        component: PagAreaGrupo
+      path: "/grupos/:id",
+      component: PagAreaGrupo
     },
     {
-        path: "/grupos/:idGrupo/secoes/:idSecao",
-        component: PagAreaSecao
+      path: "/grupos/:idGrupo/secoes/:idSecao",
+      component: PagAreaSecao
     },
     {
-        path: "/grupos/:idGrupo/secoes/:idSecao/patrulhas/:idPatrulha",
-        component: PagAreaPatrulha
+      path: "/grupos/:idGrupo/secoes/:idSecao/patrulhas/:idPatrulha",
+      component: PagAreaPatrulha
     },
     {
-        path: '/atividades',
-        component: PagAtividades
+      path: '/atividades',
+      component: PagAtividades
     },
     {
-        path: '/o-projeto',
-        component: PagOProjeto
+      path: '/o-projeto',
+      component: PagOProjeto
     },
     {
-        path: '/sobre-nos',
-        component: PagSobreNos
+      path: '/sobre-nos',
+      component: PagSobreNos
+    },
+    {
+      path: '/guia-usuario',
+      component: PagGuiaUsuario
     }
 ]

@@ -23,22 +23,23 @@ import {mapGetters} from 'vuex'
               <nav class="navbar navbar-inverse meu-navbar navbar-fixed-top col-lg-10 col-lg-offset-1 caixombra">
 
               <div class="navbar-header">
-                  <router-link to="/"><div class="navbar-brand" id="logo"></div></router-link>                      
+                  <router-link to="/"><div class="navbar-brand" id="logo"></div></router-link>
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggleado">
                     <span class="sr-only">Botão de Toggle</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                   </button>
               </div>
-                                
+
               <div class="collapse navbar-collapse col-lg-6" id="toggleado">
                   <slot name="lis-navbar"></slot>
-                </div> 
+                </div>
                 <ul id="navbar-right" class="nav navbar-nav navbar-right">
                     <li v-if="usuario"><form class="navbar-form">
                     <div class="input-group">
-                      <input id="inputPesquisarTopBar" type="text" class="form-control" 
+                      <input id="inputPesquisarTopBar" type="text" class="form-control"
                         placeholder="Buscar Usuário">
                       <div id="btnBoxSearchTopBar" class="input-group-btn">
                         <button class="btn btn-default">
@@ -131,7 +132,7 @@ import {mapGetters} from 'vuex'
   background-color:#56402E;
   border-radius: 4px;
   border-color: #56402E;
-  
+
 }
 
 .dropdown-menu{
@@ -154,7 +155,7 @@ import {mapGetters} from 'vuex'
 .meu-navbar .navbar-nav > li > a {
     color: #eacf9b !important;
     font-size: 17px;
-    
+
 }
 
 .caixombra{
@@ -185,5 +186,3 @@ import {mapGetters} from 'vuex'
   z-index: 10;
 }
 </style>
-
-
