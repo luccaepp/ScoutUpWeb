@@ -85,7 +85,7 @@
                 this.storageRef = this.storage.ref('/fotoPerfil/' + this.$route.params.idUsuario)
                 console.log('atualizarFotoDePerfil()', this.storageRef)
                 let self = this
-                this.storageRef.getDownloadURL().then(url => self.srcFoto = url, erro => console.log('Sem foto de perfil'))
+                this.storageRef.getDownloadURL().then(url => self.srcFoto = url, erro => this.srcFoto = '')
             },
             cancelarSolicitacao(){
                 var ref = this.database.ref('/usuario/'+this.usuarioDaPag['.key']+'/solicitacoesDeAmizade/')
