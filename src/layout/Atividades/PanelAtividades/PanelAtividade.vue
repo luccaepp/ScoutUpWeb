@@ -3,6 +3,7 @@ import formatadorDeTimeStamp from '../../../funcoesGlobais/timeStamp/timeStamp'
 import PanelConvidados from '../PanelCadastrarAtividades/PanelConvidados.vue'
 import TiposAtividade from '../../../constantes/Atividades/tiposAtividade'
 import ModalMateriais from './PanelAtividade/ModalMateriais.vue'
+import Validador from '../PanelCadastrarAtividades/Validador'
 
 export default {
   props: ['event'],
@@ -40,6 +41,37 @@ export default {
     remover(){
         this.$emit('remover', this.event.atividade)
     },
+    alterar(){
+        let self = this
+        bootbox.confirm('Você tem certeza que quer alterar a atividade?', querAlterar => {
+            if(!querAlterar) return
+            
+            //Primeiro passo: definir todos os campos da atividade
+            let titulo, tipo, termino, participantes, materiais, local, inicio
+
+            //Segundo passo: pegar os novos valores desses campos e colocar dentro de um objeto atividade
+            let atividadeAlterada = {
+                titulo: self.txtTitulo,
+                tipo: self.tipoDaAtividadeEdit,
+                termino: self.datetimeFinal,
+                participantes: self.participantesEdit,
+                materiais: self.materiaisEdit,
+                local: self.lugar,
+                inicio: self.datetimeInicial
+            }
+
+            //Terceiro passo: validando os campos
+            if(!Validador.validar(atividadeAlterada)){
+                console.log('mó zuada essa tua atividade hein')
+                return
+            }
+
+            //Quarto passo: deixa que o PanelAtividades cuida de você
+            self.$emit('alterarAtividade', {atividadeAlterada: atividadeAlterada, atividadeAtual: self.event.atividade})
+        })
+
+
+    },
     setPlace(lugarSelecionado){
         this.lugar = {
             lat: lugarSelecionado.geometry.location.lat(),
@@ -48,6 +80,12 @@ export default {
     },
     atualizarParticipantes(part){
         this.participantesEvent = part
+    },
+    removerMaterialEdit(material){
+        this.materiaisEdit.splice(this.materiaisEdit.indexOf(material), 1)
+    },
+    adicionarMaterialEdit(material){
+        this.materiaisEdit.push(material)
     }
   },
   watch: {
@@ -172,7 +210,10 @@ export default {
                     <td>Materiais Necessários</td>
                     <td>
                         <template v-if="editando">
-                            <li v-for="material in materiaisEdit" class="list-group-item">
+                            <li class="list-group-item list-group-item-default" v-if="materiaisEdit.length == 0">
+                                Nenhum Material :(
+                            </li>
+                            <li v-else v-for="material in materiaisEdit" class="list-group-item">
                                 {{material}}
                             </li>
                             <button v-if="editando" class="btn btn-warning pull-right" data-toggle="modal" data-target="#modalAlterarMateriaisAtividade">
@@ -204,14 +245,14 @@ export default {
                     <button @click="editando = false" class="btn btn-danger btn-space">
                         <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
-                    <button class="btn btn-success">
+                    <button @click="alterar()" class="btn btn-success">
                         <i class="fa fa-check" aria-hidden="true"></i>
                     </button>
                 </template>
             </div>
         </div>
     </div>
-    <modal-materiais :materiais="materiaisEdit"></modal-materiais>
+    <modal-materiais @adicionarMaterial="adicionarMaterialEdit" @removerMaterial="removerMaterialEdit" :materiais="materiaisEdit"></modal-materiais>
 </div>
 </template>
 
