@@ -65,7 +65,9 @@ export default vm
                     <router-link :to="'/grupos/'+grupoDoUsuarioDaPag['.key']">{{grupoDoUsuarioDaPag.nome}}</router-link>
                 </p>
                 <p v-else-if="!ehDessePerfil">Nenhum grupo adicionado...</p>
-                <p v-else><a href="#" @click.prevent="vaParaGrupo">Adicionar um grupo...</a></p>
+                <!-- É desse perfil -->
+                <p v-else-if="!usuarioDaPag.solicitacaoDeEntradaEmSecao"><a href="#" @click.prevent="vaParaGrupo">Adicionar um grupo...</a></p>
+                <p v-else class="text-warning">{{usuarioDaPag.solicitacaoDeEntradaEmSecao.nomeGrupo}} (Não Confirmado)</p>
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Seção:</h4>
@@ -75,7 +77,8 @@ export default vm
                 <p v-else-if="!ehDessePerfil">
                     Nenhuma seção adicionada...
                 </p>
-                <p v-else><a href="#" @click.prevent="vaParaGrupo">Adicionar uma sessão...</a></p>
+                <p v-else-if="!usuarioDaPag.solicitacaoDeEntradaEmSecao"><a href="#" @click.prevent="vaParaGrupo">Adicionar uma sessão...</a></p>
+                <p v-else class="text-warning">{{usuarioDaPag.solicitacaoDeEntradaEmSecao.nome}} (Não confirmado)</p>
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">E-mail:</h4>

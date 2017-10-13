@@ -28,7 +28,7 @@
                 if(!this.usuarioDatabase){
                     return this.$route.path
                 }
-                var grupo = this.usuarioDatabase.grupo
+                let grupo = this.usuarioDatabase.grupo
                 if(grupo){
                     return '/grupos/'+grupo
                 } else{
@@ -39,7 +39,7 @@
                 if(!this.usuarioDatabase){
                     return this.$route.path
                 }
-                var secao = this.usuarioDatabase.secao
+                let secao = this.usuarioDatabase.secao
                 if(this.retornaLinkGrupo == '/cadastroNaArea' || !secao){
                     return '/cadastroNaArea'
                 }
@@ -49,7 +49,7 @@
                 if(!this.usuarioDatabase){
                     return this.$route.path
                 }
-                var patrulha = this.usuarioDatabase.patrulha
+                let patrulha = this.usuarioDatabase.patrulha
                 if(this.retornaLinkSecao == 'cadastroNaArea'){
                     return 'cadastroNaArea'
                 }

@@ -37,10 +37,11 @@ var vm = {
                     solicitacaoDeEntradaEmSecao: {
                         nome: secao.nome,
                         chaveSecao: secao['.key'],
-                        chaveGrupo: this.grupo['.key']
+                        chaveGrupo: this.grupo['.key'],
+                        nomeGrupo: this.grupo.nome
                     }
                 })
-            })
+            }).then(() => this.$router.replace('/usuarios/'+this.usuarioDatabase['.key']))
         }
     }
 }
