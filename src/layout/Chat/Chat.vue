@@ -8,10 +8,16 @@ var vm = {
       mensagens: this.conversaRef
     }
   },
-  created(){
-      this.cadastrarCountMensagensNaoLidas()
-      this.chatRevelado = true
-      console.log("CHAT REVELADO", this.chatRevelado)
+  watch:{
+    mensagens:{
+      deep: true,
+      handler(newValue){
+        console.log("escutei a mudanca")
+          this.scrollToBottom()
+          this.marcarMensagensComoLidas()
+          this.zerarContadorDeMensagensNaoLidas()
+      }
+    }
   },
   destroyed(){
       this.chatRevelado = false
@@ -19,31 +25,35 @@ var vm = {
   },
   data(){
     return{
+      mensagens:[],
       txtMensagem: "",
       chatRevelado: false
     }
   },
   props:['conversaRef', 'amigo'],
   methods:{
+    zerarContadorDeMensagensNaoLidas(){
+    this.database.ref("usuario/"+this.usuarioDatabase['.key']).child('/amigos/')
+      .orderByChild('chave').equalTo(this.amigo.chave).once('child_added').then(
+      snapshot =>{
+          snapshot.ref.update({countMensagensNaoLidas: 0})
+      })
+    },
     fecharChat(){
       this.chatRevelado = false
     },
     cadastrarCountMensagensNaoLidas(){
-      var counter = 0
-      this.$firebaseRefs.mensagens.orderByChild('chave').equalTo(this.amigo.chave).once('child_added')
-      .then(childsnap => {
-          console.log('roger')
-          if(!childsnap.val().lida){
-            counter++
-          }
-        })
-    this.database.ref("usuario/"+this.usuarioDatabase['.key']).child('/amigos/')
-    .orderByChild('chave').equalTo(this.amigo.chave).once('child_added').then(
-      
+    this.database.ref("usuario/"+this.amigo.chave).child('/amigos/')
+    .orderByChild('chave').equalTo(this.usuarioDatabase['.key']).once('child_added').then(
     snapshot =>{
       console.log('armando')
-      snapshot.ref.update({countMensagensNaoLidas: counter})
-    })
+      console.log("blaablal",snapshot.val().countMensagensNaoLidas)
+      if(snapshot.val().countMensagensNaoLidas >= 0){
+        snapshot.ref.update({countMensagensNaoLidas: snapshot.val().countMensagensNaoLidas + 1})
+      }else{
+        snapshot.ref.update({countMensagensNaoLidas: 0})
+      }
+      })
     },
     scrollToBottom() {
       var caixaMensagens = document.getElementById('caixa-mensagens')
@@ -61,17 +71,19 @@ var vm = {
           timeStamp: this.firebase.database.ServerValue.TIMESTAMP
       }
       this.conversaRef.push(mensagem)
+      this.cadastrarCountMensagensNaoLidas()
       this.mensagem = ''
       this.txtMensagem = ''
     },
     marcarMensagensComoLidas(){
-      this.$firebaseRefs.mensagens.orderByChild('chave').equalTo(this.amigo.chave).once('child_added')
-      .then((childsnap) => {
-          console.log('jonas')
-          if(!childsnap.val().lida){
+      this.$firebaseRefs.mensagens.orderByChild('chave').equalTo(this.amigo.chave).once('value')
+      .then(snap => {
+        snap.forEach(childsnap =>{
+           if(!childsnap.val().lida){
             childsnap.ref.update({lida:true})
           }
         })
+      })
     },
     ehDesseUsuario(msg){
       return msg.chave == this.usuarioDatabase['.key']
@@ -82,17 +94,9 @@ var vm = {
   },
   computed:{
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
-                            firebase: 'getFirebase'}),
-    getMensagens(){
-      this.$firebaseRefs.mensagens.once('child_added').then(() => {
-        this.scrollToBottom()
-      })
-      console.log("CHAT REVELADO NO COMPUTED", this.chatRevelado)
-      this.marcarMensagensComoLidas()
-      // this.cadastrarCountMensagensNaoLidas()
-      return this.mensagens
-    }
+                            firebase: 'getFirebase'})
   }
+  
 }
 
 export default vm
@@ -107,7 +111,7 @@ export default vm
     </div>
     <div class="panel-body">
       <ul id="caixa-mensagens" class="messages-container col-lg-10">
-        <li class="message-box" v-for="msg in getMensagens">
+        <li class="message-box" v-for="msg in mensagens">
           <div :class="{'message-wrapper-direita' : ehDesseUsuario(msg), 'message-wrapper-esquerda' : !ehDesseUsuario(msg)}">
             <template v-if="ehDesseUsuario(msg)">
               <div class="textoBox-direita">

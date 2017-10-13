@@ -23,7 +23,6 @@ var vm = {
         this.amigosOnline = this.amigos.filter(amigo => amigo.status == 'online')
         this.amigosOffline = this.amigos.filter(amigo => amigo.status == 'offline')
         this.amigosOrdenado = this.amigosOnline.concat(this.amigosOffline)
-        this.amigosOrdenado = [this.amigosOrdenado[0]]
         console.log("this.amigosOrdenado", this.amigosOrdenado)
 
       }
@@ -107,7 +106,7 @@ export default vm
           <i v-if="amigo.status == 'online'" class="fa fa-circle text-success" aria-hidden="true"></i>
           <i v-else-if="amigo.status == 'offline'" class="fa fa-circle text-danger" aria-hidden="true"></i>
           {{ amigo.nome }}
-      <span v-if="amigo.countMensagensNaoLidas == 0 || !amigo.countMensagensNaoLidas" class="badge">{{amigo.countMensagensNaoLidas}}</span>
+      <span v-if="amigo.countMensagensNaoLidas != 0" class="badge">{{amigo.countMensagensNaoLidas}}</span>
       </li>
   </div>
   </div>
