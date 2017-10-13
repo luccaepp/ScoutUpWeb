@@ -4,23 +4,25 @@
         data(){
             return {
                 txtEmail: "",
-                txtSenha: "",
-                radioText: ""
+                txtSenha: ""
             }
         },
         methods:{
-            loginFacebook(){
-                this.loginPersonalizado('facebook')
-            },
-            loginTwitter(){
-                this.loginPersonalizado('twitter')
-            },
-            loginGoogle(){
-                this.loginPersonalizado('google')
-            },
-            login(){
-                EventBus.$emit('login', {email: this.txtEmail, senha: this.txtSenha})
-            }
+          loginPersonalizado(tipoLogin){
+            this.$emit('loginPersonalizado', tipoLogin)
+          }
+          loginFacebook(){
+            this.loginPersonalizado('facebook')
+          },
+          loginTwitter(){
+            this.loginPersonalizado('twitter')
+          },
+          loginGoogle(){
+            this.loginPersonalizado('google')
+          },
+          login(){
+            EventBus.$emit('login', {email: this.txtEmail, senha: this.txtSenha})
+          }
         },
         mounted(){
             $( "#radioEscoteiroLogin" ).trigger("click");

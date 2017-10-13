@@ -1,6 +1,7 @@
 <script>
 
 import StPainelLogin from './../layout/Login/PainelLogin.vue'
+import StPainelTipoUsuario from './../layout/Login/PainelTipoUsuario.vue'
 import {EventBus} from './../eventBus'
 import FuncoesFirebaseAuth from './../funcoesGlobais/firebase/funcoesAuth'
 import FuncoesFirebaseDatabase from './../funcoesGlobais/firebase/funcoesDatabase'
@@ -10,6 +11,7 @@ export default{
 
   data(){
     return {
+      isEscolhendoTipo: false,
       userExists: []
     }
   },
@@ -19,7 +21,8 @@ export default{
     }
   },
   components: {
-    StPainelLogin
+    StPainelLogin,
+    StPainelTipoUsuario
   },
   computed: {
     ...mapGetters({database: 'getDatabase', firebase: 'getFirebase', auth: 'getAuth'})
@@ -71,10 +74,12 @@ export default{
 
 </script>
 
-<template>
+<template v-if="isEscolhendoTipo">
   <div class="container-fluid">
-    <st-painel-login>
+    <st-painel-login @loginPersonalizado>
     </st-painel-login>
+    <st-painel-tipo-usuario>
+    </st-painel-tipo-usuario>
   </div>
 </template>
 
