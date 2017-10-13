@@ -95,7 +95,6 @@ var vm = {
   },
   computed:{
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
-<<<<<<< HEAD
                             firebase: 'getFirebase', storage: 'getStorage'}),
     getMensagens(){
       this.$firebaseRefs.mensagens.once('child_added').then( () => this.scrollToBottom())
@@ -106,11 +105,6 @@ var vm = {
     //Pegando a foto de perfil do amigo
     this.storage.ref('/fotoPerfil/' + this.amigo.chave).getDownloadURL().then(url => this.srcFoto = url, erro => this.srcFoto = '')
   }
-=======
-                            firebase: 'getFirebase'})
-  }
-  
->>>>>>> chat-alteracoes
 }
 
 export default vm
