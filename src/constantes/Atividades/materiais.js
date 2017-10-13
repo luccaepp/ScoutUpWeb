@@ -4,6 +4,5 @@ export default [
                 'Lona',
                 'Material de Sapa',
                 'Material de Lenha',
-                'Material Cartográfico',
-                'Outros'
+                'Material Cartográfico'
                 ]

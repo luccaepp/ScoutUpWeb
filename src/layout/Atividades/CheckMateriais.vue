@@ -15,6 +15,14 @@ export default {
           this.$emit('atualizarMateriaisSelecionados', this.materiaisSelecionados)
       }
   },
+  methods: {
+      selectOutros(evento){
+          let checked = evento.target.checked
+          if(checked) this.$emit('outrosSelecionado')
+          else this.$emit('outrosNaoSelecionado')
+
+      }
+  },
   created(){
       if(this.selecaoDefault) this.materiaisSelecionados = this.selecaoDefault
   }
@@ -30,7 +38,10 @@ export default {
                 <input type="checkbox" :value="material" v-model="materiaisSelecionados">
                 {{material}}
             </label>
-            
         </template>
+        <label class="checkbox-inline">
+            <input @change="selectOutros" type="checkbox">
+             Outros
+        </label>
     </div>
 </template>

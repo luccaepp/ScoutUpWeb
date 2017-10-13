@@ -33,7 +33,8 @@ var vm = {
             return false
         },
         ehEscotistaDoGrupo(){
-            return this.usuarioDatabase.tipo == 'escotista' && this.usuarioDatabase.grupo.key == this.grupo.key
+            console.log('ehEscotistaDoGrupo', this.usuarioDatabase)
+            return this.usuarioDatabase.tipo == 'escotista' && this.usuarioDatabase.grupo == this.grupo['.key']
         }
     }
 }

@@ -33,7 +33,8 @@ export default {
             txtTitulo: '',
             dateTimeInicial: '',
             dateTimeFinal: '',
-            participantes: ''
+            participantes: '',
+            outrosSelecionado: false
         }
     },
     methods: {
@@ -59,7 +60,10 @@ export default {
             //Valorização dos atributos da atividade
             titulo = this.txtTitulo
             tipo = this.tipoDaAtividade == 'Outro' ? this.tipoEspecificadoAtividade : this.tipoDaAtividade
-            materiais = this.materiaisSelecionados.concat(this.materiaisAdicionados)
+
+            if(this.outrosSelecionado) materiais = this.materiaisSelecionados.concat(this.materiaisAdicionados)
+            else materiais = this.materiaisSelecionados
+
             inicio = new Date(this.dateTimeInicial).getTime()
             termino = new Date(this.dateTimeFinal).getTime()
             local = this.centro
@@ -149,9 +153,10 @@ export default {
                     </div>
                 </div>
                 <div class="row">
-                    <check-materiais @atualizarMateriaisSelecionados="atualizarMateriaisSelecionados"></check-materiais>
+                    <check-materiais @outrosSelecionado="outrosSelecionado = true" @outrosNaoSelecionado="outrosSelecionado = false" 
+                                     @atualizarMateriaisSelecionados="atualizarMateriaisSelecionados"></check-materiais>
                 </div>
-                <template v-if="materiaisSelecionados.indexOf('Outros') != -1">
+                <template v-if="outrosSelecionado">
                     <div class="row">
                         <label>Adicione Materiais: </label>
                     </div>
