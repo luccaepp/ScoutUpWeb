@@ -8,17 +8,54 @@ var vm = {
       mensagens: this.conversaRef
     }
   },
-    data(){
+  watch:{
+    mensagens:{
+      deep: true,
+      handler(newValue){
+        console.log("escutei a mudanca")
+          this.scrollToBottom()
+          this.marcarMensagensComoLidas()
+          this.zerarContadorDeMensagensNaoLidas()
+      }
+    }
+  },
+  destroyed(){
+      this.chatRevelado = false
+      console.log("CHAT DESREVELADO", this.chatRevelado)
+  },
+  data(){
     return{
       txtMensagem: '',
-      srcFoto: ''
+      srcFoto: '',
+      mensagens:[],
+      chatRevelado: false
     }
   },
   props:['conversaRef', 'amigo'],
-  mounted(){
-    this.scrollToBottom()
-  },
   methods:{
+    zerarContadorDeMensagensNaoLidas(){
+    this.database.ref("usuario/"+this.usuarioDatabase['.key']).child('/amigos/')
+      .orderByChild('chave').equalTo(this.amigo.chave).once('child_added').then(
+      snapshot =>{
+          snapshot.ref.update({countMensagensNaoLidas: 0})
+      })
+    },
+    fecharChat(){
+      this.chatRevelado = false
+    },
+    cadastrarCountMensagensNaoLidas(){
+    this.database.ref("usuario/"+this.amigo.chave).child('/amigos/')
+    .orderByChild('chave').equalTo(this.usuarioDatabase['.key']).once('child_added').then(
+    snapshot =>{
+      console.log('armando')
+      console.log("blaablal",snapshot.val().countMensagensNaoLidas)
+      if(snapshot.val().countMensagensNaoLidas >= 0){
+        snapshot.ref.update({countMensagensNaoLidas: snapshot.val().countMensagensNaoLidas + 1})
+      }else{
+        snapshot.ref.update({countMensagensNaoLidas: 0})
+      }
+      })
+    },
     scrollToBottom() {
       var caixaMensagens = document.getElementById('caixa-mensagens')
       if(caixaMensagens){
@@ -34,16 +71,19 @@ var vm = {
           texto: this.txtMensagem.trim(),
           timeStamp: this.firebase.database.ServerValue.TIMESTAMP
       }
-
       this.conversaRef.push(mensagem)
+      this.cadastrarCountMensagensNaoLidas()
       this.mensagem = ''
       this.txtMensagem = ''
     },
-    carregarMensagens(){
-      this.conversaRef.off()
-      this.conversaRef.on('child_added', snapshot =>{
-        console.log("isso aqui nunca é chamado ne")
-        this.mensagens.push(snapshot)
+    marcarMensagensComoLidas(){
+      this.$firebaseRefs.mensagens.orderByChild('chave').equalTo(this.amigo.chave).once('value')
+      .then(snap => {
+        snap.forEach(childsnap =>{
+           if(!childsnap.val().lida){
+            childsnap.ref.update({lida:true})
+          }
+        })
       })
     },
     ehDesseUsuario(msg){
@@ -55,6 +95,7 @@ var vm = {
   },
   computed:{
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
+<<<<<<< HEAD
                             firebase: 'getFirebase', storage: 'getStorage'}),
     getMensagens(){
       this.$firebaseRefs.mensagens.once('child_added').then( () => this.scrollToBottom())
@@ -65,6 +106,11 @@ var vm = {
     //Pegando a foto de perfil do amigo
     this.storage.ref('/fotoPerfil/' + this.amigo.chave).getDownloadURL().then(url => this.srcFoto = url, erro => this.srcFoto = '')
   }
+=======
+                            firebase: 'getFirebase'})
+  }
+  
+>>>>>>> chat-alteracoes
 }
 
 export default vm
@@ -80,7 +126,7 @@ export default vm
     </div>
     <div class="panel-body">
       <ul id="caixa-mensagens" class="messages-container col-lg-10">
-        <li class="message-box" v-for="msg in getMensagens">
+        <li class="message-box" v-for="msg in mensagens">
           <div :class="{'message-wrapper-direita' : ehDesseUsuario(msg), 'message-wrapper-esquerda' : !ehDesseUsuario(msg)}">
             <template v-if="ehDesseUsuario(msg)">
               <div class="textoBox-direita">

@@ -36,7 +36,6 @@ EventBus.$on('atualizarStatusNasFriendLists', userAtualRef => {
     amigos.forEach(amigo => {
       usuariosRef.orderByKey().equalTo(amigo.val().chave).on('value',usuarios =>{
         usuarios.forEach(usuario => {
-          console.log("usuario.val()",usuario.val())
           if(usuario.val().status){
             amigo.ref.update({ status: usuario.val().status })
           }else{
