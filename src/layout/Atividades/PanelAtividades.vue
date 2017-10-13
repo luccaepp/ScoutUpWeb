@@ -53,6 +53,9 @@ export default {
                         let atividadeEmSi = snap.val()
                         if(!atividadeEmSi) return
                         atividadeEmSi.chave = snap.key
+                        //Caso essa atividade já tenha sido inserida
+                        if(vm.atividades.filter(ativ => ativ.chave == snap.key).length != 0) return
+
                         vm.atividades.push(atividadeEmSi)
                     })
                     if(vm.mapAtividadesGrupo.length == i) vm.atividadesCarregadas = true
@@ -69,6 +72,9 @@ export default {
                     vm.database.ref('atividade').child(map.chaveAtividade).on('value', snap => {
                         let atividadeEmSi = snap.val()
                         atividadeEmSi.chave = snap.key
+                        //Caso essa atividade já tenha sido inserida
+                        if(vm.atividades.filter(ativ => ativ.chave == snap.key).length != 0) return
+                                              
                         vm.atividades.push(atividadeEmSi)
                     })
                     if(this.mapAtividadesSecao.length == i) vm.atividadesCarregadas = true
@@ -76,10 +82,10 @@ export default {
             }
         },
         atividades(){
-                this.eventos.length = 0
+                console.log('atividades', this.atividades)
+                this.eventos = []
                 this.atividades.forEach(atividade => {
                     let data = formatadorDeTimeStamp.retornaTimeStampSoDateUSA(atividade.inicio)
-                    // console.log('atividade', atividade)
                     this.eventos.push({
                         date: data,
                         title: atividade.titulo,
