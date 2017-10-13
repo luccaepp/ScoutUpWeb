@@ -8,16 +8,43 @@ var vm = {
       mensagens: this.conversaRef
     }
   },
-    data(){
+  created(){
+      this.cadastrarCountMensagensNaoLidas()
+      this.chatRevelado = true
+      console.log("CHAT REVELADO", this.chatRevelado)
+  },
+  destroyed(){
+      this.chatRevelado = false
+      console.log("CHAT DESREVELADO", this.chatRevelado)
+  },
+  data(){
     return{
       txtMensagem: "",
+      chatRevelado: false
     }
   },
   props:['conversaRef', 'amigo'],
-  mounted(){
-    this.scrollToBottom()
-  },
   methods:{
+    fecharChat(){
+      this.chatRevelado = false
+    },
+    cadastrarCountMensagensNaoLidas(){
+      var counter = 0
+      this.$firebaseRefs.mensagens.orderByChild('chave').equalTo(this.amigo.chave).once('child_added')
+      .then(childsnap => {
+          console.log('roger')
+          if(!childsnap.val().lida){
+            counter++
+          }
+        })
+    this.database.ref("usuario/"+this.usuarioDatabase['.key']).child('/amigos/')
+    .orderByChild('chave').equalTo(this.amigo.chave).once('child_added').then(
+      
+    snapshot =>{
+      console.log('armando')
+      snapshot.ref.update({countMensagensNaoLidas: counter})
+    })
+    },
     scrollToBottom() {
       var caixaMensagens = document.getElementById('caixa-mensagens')
       if(caixaMensagens){
@@ -33,17 +60,18 @@ var vm = {
           texto: this.txtMensagem.trim(),
           timeStamp: this.firebase.database.ServerValue.TIMESTAMP
       }
-
       this.conversaRef.push(mensagem)
       this.mensagem = ''
       this.txtMensagem = ''
     },
-    carregarMensagens(){
-      this.conversaRef.off()
-      this.conversaRef.on('child_added', snapshot =>{
-        console.log("isso aqui nunca é chamado ne")
-        this.mensagens.push(snapshot)
-      })
+    marcarMensagensComoLidas(){
+      this.$firebaseRefs.mensagens.orderByChild('chave').equalTo(this.amigo.chave).once('child_added')
+      .then((childsnap) => {
+          console.log('jonas')
+          if(!childsnap.val().lida){
+            childsnap.ref.update({lida:true})
+          }
+        })
     },
     ehDesseUsuario(msg){
       return msg.chave == this.usuarioDatabase['.key']
@@ -56,10 +84,15 @@ var vm = {
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
                             firebase: 'getFirebase'}),
     getMensagens(){
-      this.$firebaseRefs.mensagens.once('child_added').then( () => this.scrollToBottom())
+      this.$firebaseRefs.mensagens.once('child_added').then(() => {
+        this.scrollToBottom()
+      })
+      console.log("CHAT REVELADO NO COMPUTED", this.chatRevelado)
+      this.marcarMensagensComoLidas()
+      // this.cadastrarCountMensagensNaoLidas()
       return this.mensagens
     }
-  },
+  }
 }
 
 export default vm

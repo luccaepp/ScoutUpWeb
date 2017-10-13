@@ -23,6 +23,7 @@ var vm = {
         this.amigosOnline = this.amigos.filter(amigo => amigo.status == 'online')
         this.amigosOffline = this.amigos.filter(amigo => amigo.status == 'offline')
         this.amigosOrdenado = this.amigosOnline.concat(this.amigosOffline)
+        this.amigosOrdenado = [this.amigosOrdenado[0]]
         console.log("this.amigosOrdenado", this.amigosOrdenado)
 
       }
@@ -69,7 +70,6 @@ var vm = {
         this.database.ref("usuario/"+this.usuarioDatabase['.key']+"/conversas").push({"chave": this.chaveConversa, "outroUser": amigo.chave})
         this.database.ref("usuario/"+amigo.chave+"/conversas").push({"chave": this.chaveConversa, "outroUser": this.usuarioDatabase['.key']})
       }
-
       this.conversaSelecionada = this.$firebaseRefs.conversas.child(this.chaveConversa)
       this.amigoSelecionado = amigo
       this.mostrarChat = !this.mostrarChat
@@ -107,6 +107,7 @@ export default vm
           <i v-if="amigo.status == 'online'" class="fa fa-circle text-success" aria-hidden="true"></i>
           <i v-else-if="amigo.status == 'offline'" class="fa fa-circle text-danger" aria-hidden="true"></i>
           {{ amigo.nome }}
+      <span v-if="amigo.countMensagensNaoLidas == 0 || !amigo.countMensagensNaoLidas" class="badge">{{amigo.countMensagensNaoLidas}}</span>
       </li>
   </div>
   </div>
