@@ -38,7 +38,8 @@ var vm = {
                         nome: secao.nome,
                         chaveSecao: secao['.key'],
                         chaveGrupo: this.grupo['.key'],
-                        nomeGrupo: this.grupo.nome
+                        nomeGrupo: this.grupo.nome,
+                        chaveSolicitacao: resultado.key
                     }
                 })
             }).then(() => this.$router.replace('/usuarios/'+this.usuarioDatabase['.key']))
