@@ -33,7 +33,8 @@ var vm = {
                     solicitacaoDeEntradaEmSecao: {
                         nome: secao.nome,
                         chaveSecao: secao['.key'],
-                        chaveGrupo: this.grupo['.key']
+                        chaveGrupo: this.grupo['.key'],
+                        chaveSolicitacao: resultado.key
                     }
                 })
             })
