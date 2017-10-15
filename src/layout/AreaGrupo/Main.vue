@@ -33,7 +33,7 @@ var vm = {
             return false
         },
         ehEscotistaDoGrupo(){
-            console.log('ehEscotistaDoGrupo', this.usuarioDatabase)
+            console.log('ehEscotistaDoGrupo', this.usuarioDatabase.tipo)
             return this.usuarioDatabase.tipo == 'escotista' && this.usuarioDatabase.grupo == this.grupo['.key']
         }
     }

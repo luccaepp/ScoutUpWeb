@@ -24,6 +24,6 @@ export default {
             return false
         }
 
-        return {nome: nome, email: email, tipoUsuario: tipoUsuario}
+        return {nome: nome, email: email, tipo: tipoUsuario}
   }
 }
