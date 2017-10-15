@@ -96,7 +96,7 @@ export default {
   watch: {
     participantesEvent(){
         if(this.participantesEvent)
-            this.participantesEdit = this.participantesEvent
+            this.participantesEdit = clone(this.participantesEvent)
     },
     localEvent(){
         if(this.localEvent){
@@ -115,6 +115,10 @@ export default {
       this.txtTitulo = this.event.atividade.titulo
       this.materiaisEdit = this.event.atividade.materiais
   }
+}
+
+function clone(obj){
+    return obj
 }
 </script>
 
@@ -204,7 +208,7 @@ export default {
                 <tr>
                     <td>Participantes</td>
                     <td v-if="editando">
-                        <panel-convidados @atualizarParticipantes="atualizarParticipantes" :convidados-props="participantesEdit"></panel-convidados>
+                        <panel-convidados @atualizarParticipantes="atualizarParticipantes" :convidadosProps="participantesEdit"></panel-convidados>
                     </td>
                     <td v-else>
                         <li v-for="part in event.atividade.participantes" class="list-group-item list-group-item-info">
