@@ -4,6 +4,8 @@ import PanelConvidados from '../PanelCadastrarAtividades/PanelConvidados.vue'
 import TiposAtividade from '../../../constantes/Atividades/tiposAtividade'
 import ModalMateriais from './PanelAtividade/ModalMateriais.vue'
 import Validador from '../PanelCadastrarAtividades/Validador'
+import DateTimeTools from '../../../funcoesGlobais/timeStamp/dateTime'
+import { mapGetters } from 'vuex'
 
 export default {
   props: ['event'],
@@ -53,11 +55,11 @@ export default {
             let atividadeAlterada = {
                 titulo: self.txtTitulo,
                 tipo: self.tipoDaAtividadeEdit,
-                termino: self.datetimeFinal,
+                termino: new Date(self.datetimeFinal).getTime(),
                 participantes: self.participantesEdit,
                 materiais: self.materiaisEdit,
                 local: self.lugar,
-                inicio: self.datetimeInicial
+                inicio: new Date(self.datetimeInicial).getTime()
             }
 
             //Terceiro passo: validando os campos
@@ -66,8 +68,8 @@ export default {
                 return
             }
 
-            //Quarto passo: deixa que o PanelAtividades cuida de você
-            self.$emit('alterarAtividade', {atividadeAlterada: atividadeAlterada, atividadeAtual: self.event.atividade})
+            //Quarto passo: manda pra BD
+            self.database.ref('/atividade/'+self.event.atividade.chave).update(atividadeAlterada).then(snap => self.editando = false)
         })
 
 
@@ -88,6 +90,9 @@ export default {
         this.materiaisEdit.push(material)
     }
   },
+  computed: {
+      ...mapGetters({database: 'getDatabase'})
+  },
   watch: {
     participantesEvent(){
         if(this.participantesEvent)
@@ -103,8 +108,9 @@ export default {
       /* Valores padrão dos inputs de atualização */
       this.participantesEvent = this.event.atividade.participantes
       this.localEvent = this.event.atividade.local
-      this.datetimeInicial = this.event.atividade.inicio
-      this.datetimeFinal = this.event.atividade.termino
+      console.log('assim', DateTimeTools.padraoInput(this.event.atividade.inicio))
+      this.datetimeInicial = DateTimeTools.padraoInput(this.event.atividade.inicio)
+      this.datetimeFinal = DateTimeTools.padraoInput(this.event.atividade.termino)
       this.tipoDaAtividadeEdit = this.event.atividade.tipo
       this.txtTitulo = this.event.atividade.titulo
       this.materiaisEdit = this.event.atividade.materiais

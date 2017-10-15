@@ -10,7 +10,6 @@ export default {
     },
     retornaTimeStampSoDateUSA(timeStamp){
         var br = this.retornaTimeStampFormatadoSoDate(timeStamp)
-        console.log('br', br)
         return br.substring(6, 10) + '/' + br.substring(3, 5) + '/' + br.substring(0, 2)
     },
     strUSAParaBR(usa){

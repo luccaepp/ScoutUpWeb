@@ -33,11 +33,6 @@ export default {
                     self.database.ref('/atividade/'+atividade.chave).remove()
                 }
             })
-        },
-        alterarAtividade(bundle){
-            let self = this
-            self.database.ref('/atividade/'+bundle.atividadeAtual.chave).update(bundle.atividadeAlterada)
-
         }
     },
     computed: {
@@ -110,9 +105,9 @@ export default {
         <vue-event-calendar :events="eventos">
             <template scope="props">
                 <!-- RAIZ -->
-                <div>
+                <div class="row">
                     <div v-for="(event, index) in props.showEvents" class="event-item">
-                        <panel-atividade @alterarAtividade="alterarAtividade" @remover="remover" :event="event"></panel-atividade>
+                        <panel-atividade @remover="remover" :event="event"></panel-atividade>
                     </div>
                 </div>
             </template>
