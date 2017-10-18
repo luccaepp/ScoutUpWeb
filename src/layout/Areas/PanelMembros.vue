@@ -1,10 +1,12 @@
 <script>
 import {mapGetters} from 'vuex'
 import StPanelSelecionarMembroSecao from './PanelMembros/PanelSelecionarMembroSecao.vue'
+import StPanelAdicionarMembroNaSecao from './PanelMembros/PanelAdicionarMembroNaSecao.vue'
 var vm = {
     props: ['area', 'tipoArea', 'ehEscotistaDaArea', 'secaoPatrulha'],
     components: {
-        StPanelSelecionarMembroSecao
+        StPanelSelecionarMembroSecao,
+        StPanelAdicionarMembroNaSecao
     },
     data(){
         return {
@@ -17,7 +19,7 @@ var vm = {
         }
     },
     computed: {
-        ...mapGetters({database: 'getDatabase'}),
+        ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
         exibirMembros(){
             if(this.area && this.membros){
                 return true
@@ -42,7 +44,17 @@ var vm = {
                 return false
             }
         }
-    }
+    },
+    created(){
+        if(this.tipoArea == 'secao' && this.ehEscotistaDaArea) {
+          this.$bindAsArray('convitesDaSecao', this.database.ref('grupo')
+                                                            .child(this.usuarioDatabase.grupo)
+                                                            .child('secoes')
+                                                            .child(this.area['.key'])
+                                                            .child('solicitacoes')
+                                                          )
+      }
+  }
 }
 export default vm
 </script>
@@ -54,19 +66,24 @@ export default vm
         </div>
         <div class="panel-body">
             <ul v-if="exibirMembros" class="list-group">
+                <!-- Esse <li> é pra adicionar membros na seção -->
+                <li v-if="ehEscotistaDaArea && tipoArea=='secao' && convitesDaSecao.length != 0">
+                  <st-panel-adicionar-membro-na-secao :secao="area" :convites="convitesDaSecao"></st-panel-adicionar-membro-na-secao>
+                </li>
                 <li v-for="membro in membros" class="list-group-item list-group-item-warning">
-                    <i class="fa fa-user-circle" aria-hidden="true"></i> 
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
                     {{membro.nome}}
                 </li>
+                <!-- Esse <li> serve apenas para o panelMembros da Área de Patrulha -->
                 <li v-if="ehEscotistaDaArea && tipoArea=='patrulha'" class="list-group-item list-group-item-warning">
-                    <span v-if="!adicionandoMembrosPatrulha" @click="adicionandoMembrosPatrulha = true" 
+                    <span v-if="!adicionandoMembrosPatrulha" @click="adicionandoMembrosPatrulha = true"
                         id="addMembrosPatrulha"><i class="fa fa-plus text-success" aria-hidden="true"></i> Adicionar Membros</span>
-                    <st-panel-selecionar-membro-secao @pararDeExibir="adicionandoMembrosPatrulha = false" :membrosAtuais="membros" 
+                    <st-panel-selecionar-membro-secao @pararDeExibir="adicionandoMembrosPatrulha = false" :membrosAtuais="membros"
                         v-if="adicionandoMembrosPatrulha" :secao="secaoPatrulha" :patrulha="area">
                     </st-panel-selecionar-membro-secao>
                 </li>
             </ul>
-            
+
         </div>
     </div>
 </template>
@@ -74,6 +91,11 @@ export default vm
 <style scoped>
 .fa-user-circle{
     font-size: 18px;
+}
+::-webkit-scrollbar-thumb {
+  background: #EACF9B;
+  border: 22px none #ffffff;
+  border-radius: 50px;
 }
 </style>
 <style>
