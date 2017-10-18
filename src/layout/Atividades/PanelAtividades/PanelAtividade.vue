@@ -34,7 +34,7 @@ export default {
     },
     /* Define o "to" do router-link */
     to(part){
-        return part.tipo == 'grupo' 
+        return part.tipo == 'grupo'
                 ? '/grupos/' + part.chave
                 : part.tipo == 'secao'
                     ? '/grupos/'+part.chaveGrupo+'/secoes/'+part.chave
@@ -47,7 +47,7 @@ export default {
         let self = this
         bootbox.confirm('Você tem certeza que quer alterar a atividade?', querAlterar => {
             if(!querAlterar) return
-            
+
             //Primeiro passo: definir todos os campos da atividade
             let titulo, tipo, termino, participantes, materiais, local, inicio
 
@@ -147,7 +147,7 @@ function clone(obj){
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th colspan="2">Informações</th>                                                                                        
+                    <th colspan="2">Informações</th>
                 </tr>
             </thead>
             <tbody>
@@ -182,7 +182,7 @@ function clone(obj){
                             :center="event.atividade.local"
                             :zoom="14"
                             map-type-id="hybrid"
-                            style="width: 290px; height: 260px"
+                            class="mapa"
                             v-if="!editando"
                             >
                                 <gmap-marker v-if="event.atividade.local && !editando"
@@ -270,6 +270,17 @@ function clone(obj){
 .select-tipos-atividade{
     margin-top: 5px;
 }
+.mapa{
+  height: 260px;
+  width: 290px;
+}
+
+@media(max-width: 768px){
+  .mapa{
+    height: 300px;
+    width: 200px;
+  }
+}
 </style>
 
 
@@ -278,5 +289,3 @@ function clone(obj){
     margin-right: 5px;
 }
 </style>
-
-

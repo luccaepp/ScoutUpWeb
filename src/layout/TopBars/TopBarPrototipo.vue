@@ -13,7 +13,7 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
     },
     watch: {
       usuarioBuscado(){
-        
+
       }
     },
     computed: {
@@ -28,10 +28,10 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
       <!-- NAVBAR -->
         <transition name="hideTopBar">
           <div key="header" v-if="!hideTopBar" class="header">
-              <nav class="navbar navbar-inverse meu-navbar navbar-fixed-top col-lg-10 col-lg-offset-1 caixombra">
+              <nav class="navbar navbar-inverse meu-navbar navbar-fixed-top col-lg-10 col-xs-12 col-lg-offset-1 caixombra">
 
               <div class="navbar-header">
-                  <router-link to="/"><div class="navbar-brand" id="logo"></div></router-link>                      
+                  <router-link to="/"><div class="navbar-brand" id="logo"></div></router-link>
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggleado">
                     <span class="sr-only">Botão de Toggle</span>
                     <span class="icon-bar"></span>
@@ -39,10 +39,10 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
                     <span class="icon-bar"></span>
                   </button>
               </div>
-                                
+
               <div class="collapse navbar-collapse col-lg-6" id="toggleado">
                   <slot name="lis-navbar"></slot>
-                </div> 
+                </div>
                 <ul id="navbar-right" class="nav navbar-nav navbar-right">
                     <li v-if="usuario"><form class="navbar-form">
                     <div class="input-group">
@@ -89,6 +89,7 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
   color: #EACF9B;
   top: 50px;
   cursor: pointer;
+
 }
 
 @media(max-width: 1238px){
@@ -106,9 +107,20 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
 
 @media(max-width: 768px){
     .fa-chevron-circle-up{
-      font-size: 90px;
       top: 235px;
       right: 30px;
+      border-color: #56402E;
+      border-style: solid;
+      display: inline-block;
+      border-radius: 300px;
+      box-shadow: 0px 0px 2px #888;
+      width: 80px;
+      height: 80px;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 90px;
   }
 }
 </style>
@@ -138,7 +150,7 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
   background-color:#56402E;
   border-radius: 4px;
   border-color: #56402E;
-  
+
 }
 
 .dropdown-menu{
@@ -161,7 +173,7 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
 .meu-navbar .navbar-nav > li > a {
     color: #eacf9b !important;
     font-size: 17px;
-    
+
 }
 
 .caixombra{
@@ -192,5 +204,3 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
   z-index: 10;
 }
 </style>
-
-

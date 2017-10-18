@@ -74,7 +74,7 @@ export default {
                         atividadeEmSi.chave = snap.key
                         //Caso essa atividade já tenha sido inserida
                         if(vm.atividades.filter(ativ => ativ.chave == snap.key).length != 0) return
-                                              
+
                         vm.atividades.push(atividadeEmSi)
                     })
                     if(this.mapAtividadesSecao.length == i) vm.atividadesCarregadas = true
@@ -101,7 +101,7 @@ export default {
 }
 </script>
 <template>
-    <div class="container">
+    <div class="container panel-atividades">
         <vue-event-calendar :events="eventos">
             <template scope="props">
                 <!-- RAIZ -->
@@ -120,7 +120,7 @@ export default {
                     </button>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
 
 
@@ -134,6 +134,12 @@ export default {
 .btn-mais:hover{
     opacity: 1;
 }
+@media(max-width: 768px) {
+  .panel-atividades{
+    margin-top: 100px;
+  }
+}
+
 </style>
 
 <style scoped>

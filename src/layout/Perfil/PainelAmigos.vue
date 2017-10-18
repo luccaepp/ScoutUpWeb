@@ -93,10 +93,10 @@ export default vm
         </div>
         <div class="panel-footer">
             <div class="btn-toolbar">
-                <button @click="exibir = 'amigos'" class="btn btn-warning">
+                <button @click="exibir = 'amigos'" class="btn btn-warning form-control btnAmigos">
                     ({{numAmigos}}) Amigos
                 </button>
-                <button @click="exibir = 'solicitacoes'" v-if="ehDessePerfil" class="btn btn-primary">
+                <button @click="exibir = 'solicitacoes'" v-if="ehDessePerfil" class="btn btn-primary form-control">
                     ({{numSolicitacoes}}) Solicitações
                 </button>
             </div>
@@ -107,6 +107,9 @@ export default vm
 <style scoped>
     .check-x > .btn{
         font-size: 12px;
+    }
+    .btnAmigos{
+      margin-bottom: 1px;
     }
 </style>
 

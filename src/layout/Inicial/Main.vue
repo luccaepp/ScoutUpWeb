@@ -28,7 +28,7 @@ import { Carousel, Slide } from 'vue-carousel';
             </div>
           </div>
           <div class="row">
-            <carousel paginationActiveColor="#B9C159" paginationColor="#EACF9B" :navigationPrevLabel="previousLabel" :navigationNextLabel="nextLabel" :perPage="1" 
+            <carousel paginationActiveColor="#B9C159" paginationColor="#EACF9B" :navigationPrevLabel="previousLabel" :navigationNextLabel="nextLabel" :perPage="1"
                       :navigationEnabled="true">
               <!-- SLIDE -->
               <slide>
@@ -69,12 +69,12 @@ import { Carousel, Slide } from 'vue-carousel';
               <!-- SLIDE -->
               <slide>
                 <div class="col-xs-12 col-md-4 col-md-offset-1">
-                  <div class="col-xs-6 col-xs-offset-3"> 
+                  <div class="col-xs-6 col-xs-offset-3">
                     <div class="markt col-xs-10 col-xs-offset-1">
                       <i class="fa fa-share-alt icone" aria-hidden="true"></i>
                       <p>Compartilhe <br> com o <br> seu Grupo</p>
                     </div>
-                  </div>                
+                  </div>
                 </div>
                 <div class="col-xs-12 col-md-5 col-md-offset-1">
                     <div class="well">
@@ -178,6 +178,16 @@ import { Carousel, Slide } from 'vue-carousel';
   #scout_image{
     width: 350px;
     height: 200px;
+  }
+
+  @media(max-width: 767px){
+    #scout_image{
+      width: 200px;
+      height: 100px;
+    }
+    .markt-box{
+      margin-top: -200px;
+    }
   }
 
 </style>
