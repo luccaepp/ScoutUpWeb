@@ -8,6 +8,14 @@
         },
         beforeCreate(){
             document.body.className = 'home'
+        },
+        created(){
+            EventBus.$on('usuarioDaPagExiste', usuarioDaPagExiste => {
+                console.log('usuarioDaPagExiste pagPerfil', usuarioDaPagExiste)
+                if(!usuarioDaPagExiste){
+                    this.$router.go(-1)
+                }
+            })
         }
     }
 

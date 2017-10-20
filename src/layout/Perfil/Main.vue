@@ -7,6 +7,12 @@
     import {mapGetters} from 'vuex'
 
     import LeitorIMG from '../../funcoesGlobais/DOM/LeitorIMG'
+    
+const readyCallbackUsuarioDaPag = function(snap){
+                    console.log('usuarioDaPagExiste main', snap.exists())
+                    EventBus.$emit('usuarioDaPagExiste', snap.exists())
+                        console.log('usuario da pag', this.usuarioDaPag)
+                    }
 
     export default {
         firebase(){
@@ -14,9 +20,7 @@
                 usuarioDaPag: {
                     source: this.database.ref('/usuario/'+this.$route.params.idUsuario),
                     asObject: true,
-                    readyCallback(){
-                        console.log('usuario da pag', this.usuarioDaPag)
-                    }
+                    readyCallback: readyCallbackUsuarioDaPag
                 }
             }
         },
@@ -28,13 +32,14 @@
         data(){
             return {
                 storageRef: null,
-                srcFoto: ''
+                srcFoto: '',
+                usuarioDaPagExiste: false
             }
         },
         watch: {
             '$route.params.idUsuario'() {
                 this.$unbind('usuarioDaPag')
-                this.$bindAsObject('usuarioDaPag', this.database.ref('/usuario/'+this.$route.params.idUsuario))
+                this.$bindAsObject('usuarioDaPag', this.database.ref('/usuario/'+this.$route.params.idUsuario), null, readyCallbackUsuarioDaPag)
                 this.atualizarFotoDePerfil()
             }
         },
