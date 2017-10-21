@@ -142,7 +142,7 @@ function clone(obj){
             <span class="pull-right">{{usaBR(event.date)}}</span>
         </template>
     </div>
-    <div class="panel-body">
+    <div class="panel-body atividade-body">
         <!-- Tabela de informações específicas -->
         <table class="table table-striped">
             <thead>
@@ -176,8 +176,8 @@ function clone(obj){
                     </td>
                 </tr>
                 <tr>
-                    <td>Local</td>
-                    <td>
+                    <td class="local">Local</td>
+                    <td colspan="2">
                         <gmap-map
                             :center="event.atividade.local"
                             :zoom="14"
@@ -195,7 +195,7 @@ function clone(obj){
                                 :center="lugar"
                                 :zoom="14"
                                 map-type-id="hybrid"
-                                style="width: 290px; height: 260px"
+                                class="mapa"
                                 >
                                 <gmap-marker :position="lugar">
                                 </gmap-marker>
@@ -278,9 +278,17 @@ function clone(obj){
 @media(max-width: 768px){
   .mapa{
     height: 300px;
-    width: 200px;
+    width: 100%;
+  }
+  td.local{
+    display: none;
+  }
+  .atividade-body{
+    padding-left: 0;
+    padding-right: 0;
   }
 }
+
 </style>
 
 

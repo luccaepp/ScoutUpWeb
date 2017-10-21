@@ -36,7 +36,7 @@ export default vm
             <ul class="list-group">
                 <!-- Caso nenhum grupo tenha sido carregado ainda -->
                 <span v-if="!grupo" class="text-info">
-                    Carregando...
+                    <i class="fa fa-spinner fa-spin"></i>
                 </span>
                 <!-- Caso o grupo tenha sido carregado e tenha seções cadastradas -->
                 <template v-else-if="grupo.secoes">

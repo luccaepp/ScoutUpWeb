@@ -75,9 +75,9 @@ export default{
   }
 }
 @media(min-width: 769px){
-.router{
-  margin-top:15vh;
-}
+  .router{
+    margin-top:15vh;
+  }
 }
 
 .container-main{

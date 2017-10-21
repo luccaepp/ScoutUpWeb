@@ -20,7 +20,7 @@ export default {
 <template>
     <li class="list-group-item list-group-item-warning col-lg-3">
         <i v-if="!srcFoto" class="fa fa-user-circle fotoPerfilAmigo" aria-hidden="true"></i>
-        <img v-else :src="srcFoto" alt="Foto de perfil do amigo" class="fotoPerfilAmigo">
+        <img v-else :src="srcFoto" alt="Foto de perfil do amigo" class="fotoPerfilAmigo img-circle">
         <h4 class="list-group-item-heading">
             <router-link class="text-warning" :to="'/usuarios/'+amigo.chave">{{amigo.nome}}</router-link>
         </h4>

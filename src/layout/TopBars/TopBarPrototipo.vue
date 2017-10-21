@@ -44,16 +44,18 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
                   <slot name="lis-navbar"></slot>
                 </div>
                 <ul id="navbar-right" class="nav navbar-nav navbar-right">
-                    <li v-if="usuario"><form class="navbar-form">
-                    <div class="input-group">
-                      <input-com-autocomplete></input-com-autocomplete>
-                      <div id="btnBoxSearchTopBar" class="input-group-btn">
-                        <button class="btn btn-default">
-                          <i class="glyphicon glyphicon-search"></i>
-                        </button>
+                    <li v-if="usuario">
+                      <form class="navbar-form">
+                      <div class="input-group">
+                        <input-com-autocomplete></input-com-autocomplete>
+                        <div id="btnBoxSearchTopBar" class="input-group-btn">
+                          <button class="btn btn-default">
+                            <i class="glyphicon glyphicon-search"></i>
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </form></li>
+                    </form>
+                  </li>
                     <slot name="lis-login">
                     </slot>
                   </ul>

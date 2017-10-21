@@ -63,7 +63,7 @@ export default vm
             <ul class="list-group">
                 <!-- Caso a seção não tenha sido carregada ainda -->
                 <span v-if="!secao" class="text-primary">
-                    Carregando...
+                    <i class="fa fa-spinner fa-spin"></i>
                 </span>
                 <!-- Caso a seção tenha sido carregada e tenha patrulhas para mostrar -->
                 <template v-else-if="patrulhas.length">

@@ -120,7 +120,7 @@ const readyCallbackUsuarioDaPag = function(snap){
 <template>
     <div class="container container-main">
         <div v-if="!usuarioDaPag || !usuario || !usuarioDatabase" class="row text-center">
-            <h1 class="carregando">CARREGANDO...</h1>
+            <h1 class="carregando"><i class="fa fa-spinner fa-spin"></i></h1>
         </div>
         <template v-else>
             <div class="row">

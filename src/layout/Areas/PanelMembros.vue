@@ -62,7 +62,7 @@ export default vm
 <template>
     <div class="panel panel-warning">
         <div class="panel-heading">
-            <i data-v-e3b292f8="" aria-hidden="true" class="fa fa-user-circle"></i> Membros
+            <i aria-hidden="true" class="fa fa-user-circle"></i> Membros
         </div>
         <div class="panel-body">
             <ul v-if="exibirMembros" class="list-group">

@@ -44,9 +44,9 @@ export default vm
 
 <template>
 
-    <div class="container area" v-else>
+    <div class="container area">
         <div v-if="!usuarioDatabase || !usuarioDatabase.grupo">
-            <h1 class="text-center carregando">CARREGANDO...</h1>
+            <h1 class="text-center carregando"><i class="fa fa-spinner fa-spin"></i></h1>
         </div>
         <div v-else>
             <div class="row">
@@ -61,14 +61,14 @@ export default vm
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-10 col-xs-offset-1">
-                    <div class="col-xs-6 membros-box">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                    <div class="col-xs-12 col-sm-6 membros-box">
                         <div class="row">
                             <st-panel-membros :ehEscotistaDaArea="ehEscotistaDoGrupo" class="panel-eq-height" 
                                 tipoArea="grupo" :area="getGrupo"></st-panel-membros>
                         </div>
                     </div>
-                    <div class="col-xs-6 sessoes-box">
+                    <div class="col-xs-12 col-sm-6 sessoes-box">
                         <div class="row">
                             <st-panel-sessoes class="panel-eq-height" :ehEscotistaDoGrupo="ehEscotistaDoGrupo" 
                                 :grupo="getGrupo"></st-panel-sessoes>
@@ -82,12 +82,15 @@ export default vm
     </div>
 </template>
 <style scoped>
-.membros-box{
-    right:10px;
+@media(min-width: 768px){
+    .membros-box{
+        right:10px;
+    }
+    .sessoes-box{
+        left:10px;
+    }
 }
-.sessoes-box{
-    left:10px;
-}
+
 .area{
   background-color: rgba(86,64,46, .5);
   border-radius: 10px;

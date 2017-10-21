@@ -66,7 +66,7 @@ export default vm
               </tr>
           </thead>
           <tbody>
-              <tr v-if="!grupos.length"><td>Carregando...</td></tr>
+              <tr v-if="!grupos.length"><td><i class="fa fa-spinner fa-spin"></i></td></tr>
               <tr v-else v-for="grupo in listaFiltrada" @click="selecionarGrupo(grupo)">
                   <td>{{grupo.nome}}</td>
               </tr>

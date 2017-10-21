@@ -39,7 +39,7 @@ import {mapGetters} from 'vuex'
     <div class="container container-main">
         <div class="row" v-if="!usuarioDatabase">
             <div class="col-xs-12">
-                <h1 class="carregando text-center">CARREGANDO...</h1>
+                <h1 class="carregando text-center"><i class="fa fa-spinner fa-spin"></i></h1>
             </div>
         </div>
         <div class="row" v-else>

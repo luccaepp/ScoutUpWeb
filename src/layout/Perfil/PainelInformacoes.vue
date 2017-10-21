@@ -84,7 +84,7 @@ export default vm
                 <h4 class="list-group-item-heading">E-mail:</h4>
                 <p class="list-group-item-text">
                     <span v-if="usuarioDaPag">{{usuarioDaPag.email}}</span>
-                    <span v-else>Carregando...</span>
+                    <span v-else><i class="fa fa-spinner fa-spin"></i></span>
                 </p>
                 </li>
             </ul>
@@ -92,3 +92,11 @@ export default vm
         </div>
     </div>
 </template>
+
+<style scoped>
+@media(max-width: 768px){
+    li.list-group-item-info{
+        padding: 15px;
+    }
+}
+</style>

@@ -104,7 +104,7 @@ export default vm
 <template>
    <div class="container area">
         <div v-if="!usuarioDatabase || !usuarioDatabase.grupo || !patrulha || !getGrupo || !getSecao || !getPatrulha">
-            <h1 class="text-center carregando">CARREGANDO...</h1>
+            <h1 class="text-center carregando"><i class="fa fa-spinner fa-spin"></i></h1>
         </div>
         <div v-else>
             <div class="row">

@@ -21,6 +21,14 @@ export default vm
 </template>
 
 <style>
+@media(max-height: 768px){
+    .titulo{
+        font-size: 50px!important;
+    }
+    .nav-esc{
+        margin-top: 35px;
+    }
+}
 .nav-esc > a{
     color:#eacf9b!important;
     text-decoration: underline;
