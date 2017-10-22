@@ -32,9 +32,12 @@ var vm = {
             }
             return false
         },
+        ehDesseGrupo(){
+            return this.usuarioDatabase.grupo == this.grupo['.key']
+        },
         ehEscotistaDoGrupo(){
             console.log('ehEscotistaDoGrupo', this.usuarioDatabase.tipo)
-            return this.usuarioDatabase.tipo == 'escotista' && this.usuarioDatabase.grupo == this.grupo['.key']
+            return this.usuarioDatabase.tipo == 'escotista' && this.ehDesseGrupo
         }
     }
 }
@@ -57,7 +60,7 @@ export default vm
             </div>
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1">
-                    <st-panel-informacoes :area="getGrupo"></st-panel-informacoes>
+                    <st-panel-informacoes :ehDessaArea="ehDesseGrupo" :ehEscotistaDaArea="ehEscotistaDoGrupo" :area="getGrupo"></st-panel-informacoes>
                 </div>
             </div>
             <div class="row">

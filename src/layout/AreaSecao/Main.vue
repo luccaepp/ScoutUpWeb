@@ -54,6 +54,10 @@ var vm = {
                 //O usuário não é dessa seção
                 return false
             }
+            if(!this.usuarioDatabase.secao){
+                //O usuário não tem uma seção
+                return false
+            }
             //A chave da seção do usuário é igual a chave da seção sendo exibida?
             if(this.usuarioDatabase.secao.chave == this.getSecao['.key']){
                 //O usuário é dessa seção
@@ -71,6 +75,15 @@ var vm = {
             }
             return true
         }
+    },
+    methods: {
+        desinscreverse(){
+            bootbox.confirm(
+                'Você tem certeza que deseja sair dessa seção?', confirmacao => {
+                    if(!confirmacao) return
+                    this.database.ref('usuario').child(this.usuarioDatabase['.key']).child('secao').remove()
+                })
+        }
     }
 }
 export default vm
@@ -86,7 +99,7 @@ export default vm
                 <st-cabecalho-secao :secao="getSecao" :grupo="getGrupo"></st-cabecalho-secao>
             </div>
             <div class="row">
-                <st-panel-informacoes :area="getSecao"></st-panel-informacoes>
+                <st-panel-informacoes @desinscreverse="desinscreverse()" :ehDessaArea="ehDessaSecao" :ehEscotistaDaArea="ehEscotistaDessaSecao" :area="getSecao"></st-panel-informacoes>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">

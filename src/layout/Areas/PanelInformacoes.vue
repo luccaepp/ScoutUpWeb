@@ -2,7 +2,7 @@
 import { mapGetters } from 'vuex'
 import FormatadorDeTimeStamp from '../../funcoesGlobais/timeStamp/timeStamp'
 var vm = {
-    props: ['area'],
+    props: ['area', 'ehEscotistaDaArea', 'ehDessaArea'],
     computed: {
         ...mapGetters({usuarioDatabase: 'getUsuarioDatabase'})
     },
@@ -30,6 +30,8 @@ export default vm
                 <h3 v-if="area.cidade && area.estado">
                     <i class="fa fa-map-marker" aria-hidden="true"></i> CIDADE: {{area.cidade}} / {{area.estado}}
                 </h3>
+                <button @click="$emit('excluirArea')" v-if="ehEscotistaDaArea" class="btn btn-danger pull-left"><i class="fa fa-trash" aria-hidden="true"></i> Excluir Área</button>
+                <button @click="$emit('desinscreverse')" v-if="ehDessaArea" class="btn btn-danger pull-left"><i class="fa fa-chain-broken" aria-hidden="true"></i> Desinscrever-se</button>
             </div>
         </div>
     </div>
@@ -52,5 +54,9 @@ export default vm
 }
 .info-escrita > h3{
     font-family: claire, cursive, sans-serif;
+}
+.btn-danger{
+    margin-left: 2px;
+    margin-bottom: 2px;
 }
 </style>

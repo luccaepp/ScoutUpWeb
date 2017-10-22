@@ -16,7 +16,8 @@ var vm = {
     },
     data(){
         return {
-            patrulha: ''
+            patrulha: '',
+            membros: []
         }
     },
     firebase(){
@@ -95,6 +96,17 @@ var vm = {
         pathParaPatrulha(){
             return '/grupo/'+this.$route.params.idGrupo+'/secoes/'+this.getSecao['.key']+'/patrulhas/'+this.getPatrulha['.key']
         }
+    },
+    methods: {
+        desinscreverse(){
+            bootbox.confirm('Você tem certeza que quer sair dessa patrulha?', confirmacao => {
+                if(!confirmacao) return
+                this.database.ref('usuario').child(this.usuarioDatabase['.key']).child('patrulha').remove()
+            })
+        },
+        atualizarMembros(m){
+            this.membros = m
+        }
     }
 }
 
@@ -111,10 +123,10 @@ export default vm
                 <st-cabecalho-patrulha :secao="getSecao" :grupo="getGrupo" :patrulha="getPatrulha"></st-cabecalho-patrulha>
             </div>
             <div class="row">
-                <st-panel-informacoes :area="getPatrulha"></st-panel-informacoes>
+                <st-panel-informacoes @desinscreverse="desinscreverse()" :ehDessaArea="ehDessaPatrulha" :ehEscotistaDaArea="ehEscotistaDaPatrulha" :area="getPatrulha"></st-panel-informacoes>
             </div>
             <div class="row">
-                <st-panel-membros :secaoPatrulha="getSecao" :ehEscotistaDaArea="ehEscotistaDaPatrulha" :area="getPatrulha" 
+                <st-panel-membros @membrosAtualizados="atualizarMembros" :secaoPatrulha="getSecao" :ehEscotistaDaArea="ehEscotistaDaPatrulha" :area="getPatrulha" 
                     tipoArea="patrulha"></st-panel-membros>
             </div>
             <div v-if="ehDessaPatrulha" class="row">

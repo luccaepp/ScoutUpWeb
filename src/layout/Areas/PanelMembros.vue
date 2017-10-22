@@ -10,7 +10,8 @@ var vm = {
     },
     data(){
         return {
-            adicionandoMembrosPatrulha: false
+            adicionandoMembrosPatrulha: false,
+            membros: ''
         }
     },
     firebase(){
@@ -43,6 +44,11 @@ var vm = {
                 }
                 return false
             }
+        }
+    },
+    watch: {
+        membros(){
+            this.$emit('membrosAtualizados', this.membros)
         }
     },
     created(){

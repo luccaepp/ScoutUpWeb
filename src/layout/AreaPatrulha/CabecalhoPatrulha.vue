@@ -20,7 +20,8 @@ export default vm
                 <i aria-hidden="true" class="fa fa-users"></i> <span>{{patrulha.nome}}</span>
             </router-link>
         </span>
-        <p class="text-center titulo col-xs-12"><i aria-hidden="true" class="fa fa-users"></i>
+        <p class="text-center titulo col-xs-12">
+            <i aria-hidden="true" class="fa fa-users"></i>
              <br> 
              <span>{{patrulha.nome}}</span>
         </p>
@@ -29,7 +30,7 @@ export default vm
 
 </template>
 
-<style>
+<style scoped>
 .nav-esc > a{
     color:#eacf9b!important;
     text-decoration: underline;
@@ -41,5 +42,10 @@ export default vm
 }
 .text-verdinho, .text-verdinho:active, .text-verdinho:hover{
     color:#B9C159;
+}
+@media(max-height: 768px){
+    .titulo{
+        font-size: 50px!important;
+    }
 }
 </style>
