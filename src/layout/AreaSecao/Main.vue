@@ -87,6 +87,17 @@ var vm = {
                     if(!confirmacao) return
                     this.database.ref('usuario').child(this.usuarioDatabase['.key']).child('secao').remove()
                 })
+        },
+        excluirSecao(){
+            bootbox.confirm('Você tem certeza que quer excluir essa seção?', quer => {
+                if(!quer) return
+                if(!this.secao){
+                    bootbox.alert('Erro ao tentar excluir a seção. Nenhuma seção encontrada...')
+                    return
+                }
+
+                this.$firebaseRefs.secao.remove()
+            })
         }
     }
 }
@@ -103,7 +114,7 @@ export default vm
                 <st-cabecalho-secao :secao="getSecao" :grupo="getGrupo"></st-cabecalho-secao>
             </div>
             <div class="row">
-                <st-panel-informacoes @desinscreverse="desinscreverse()" :ehDessaArea="ehDessaSecao" :ehEscotistaDaArea="ehEscotistaDessaSecao" :area="getSecao"></st-panel-informacoes>
+                <st-panel-informacoes @excluirArea="excluirSecao()" @desinscreverse="desinscreverse()" :ehDessaArea="ehDessaSecao" :ehEscotistaDaArea="ehEscotistaDessaSecao" :area="getSecao"></st-panel-informacoes>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
