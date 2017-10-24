@@ -2,16 +2,71 @@
 import { mapGetters } from 'vuex'
 var vm = {
     props: ['grupo', 'secao'],
+    data(){
+        return {
+            enviandoSolicitacao: false,
+            excluindoSolicitacao: false
+        }
+    },
     computed: {
-        ...mapGetters({usuarioDatabase: 'getUsuarioDatabase'}),
+        ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase', firebase: 'getFirebase'}),
         ehDoGrupo(){
             if(this.usuarioDatabase.grupo == this.grupo['.key']) return true
             return false
         },
         ehDaSecao(){
             if(!this.usuarioDatabase || !this.usuarioDatabase.secao) return false
-            if(this.usuarioDatabase.secao.chave == this.secao.chave) return true
+            if(this.usuarioDatabase.secao.chave == this.secao['.key']) return true
             return false
+        },
+        solicitacaoEnviada(){
+            return this.usuarioDatabase.solicitacaoDeEntradaEmSecao
+        },
+        refSolicitacoes(){
+            return this.database.ref('grupo').child(this.grupo['.key'])
+                                             .child('secoes')
+                                             .child(this.secao['.key'])
+                                             .child('solicitacoes')
+        }
+    },
+    methods: {
+        enviarSolicitacaoDeEntrada(){
+            let self = this
+            this.enviandoSolicitacao = true
+            this.refSolicitacoes.push({
+                usuario: {
+                    nome: this.usuarioDatabase.nome,
+                    chave: this.usuarioDatabase['.key']
+                },
+                timeStamp: this.firebase.database.ServerValue.TIMESTAMP
+            }).then(resultado => {
+                console.log('Solicitação Enviada', resultado)
+                self.database.ref('/usuario/'+this.usuarioDatabase['.key']).update({
+                    solicitacaoDeEntradaEmSecao: {
+                        nome: self.secao.nome,
+                        chaveSecao: self.secao['.key'],
+                        chaveGrupo: self.grupo['.key'],
+                        nomeGrupo: self.grupo.nome,
+                        chaveSolicitacao: resultado.key
+                    }
+                }).then(resultado2 => self.enviandoSolicitacao = false)
+            }).catch(err => self.enviandoSolicitacao = false)
+        },
+        cancelarSolicitacao(){
+            this.excluindoSolicitacao = true
+            let self = this
+            console.log()
+            this.refSolicitacoes.orderByChild('usuario/chave')
+                                .equalTo(self.usuarioDatabase['.key'])
+                                .once('value', snap => {snap.ref.remove();console.log('snap', snap.val())})
+                                .then(resultado => {
+                                    self.database.ref('usuario')
+                                                 .child(self.usuarioDatabase['.key'])
+                                                 .child('solicitacaoDeEntradaEmSecao')
+                                                 .remove()
+                                })
+                                .then(snap2 => self.excluindoSolicitacao = false)
+                                .catch(snapC => self.excluindoSolicitacao = false)
         }
     }
 }
@@ -33,7 +88,16 @@ export default vm
              <span>{{secao.nome}}</span>
         </p>
         <p>
-            <button v-if="ehDoGrupo && !ehDaSecao" class="btn btn-info">Enviar Solicitação de Entrada</button>
+            <template v-if="ehDoGrupo && !ehDaSecao && !enviandoSolicitacao">
+                <button @click="enviarSolicitacaoDeEntrada()" v-if="!solicitacaoEnviada" class="btn btn-info">
+                    Enviar Solicitação de Entrada
+                </button>
+                <button @click="cancelarSolicitacao()" v-else-if="!excluindoSolicitacao" class="btn btn-danger">
+                    <i class="fa fa-times" aria-hidden=""></i>
+                    Cancelar Solicitação
+                </button>
+            </template>
+
         </p>
     </div>
 
