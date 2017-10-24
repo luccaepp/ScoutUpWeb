@@ -66,10 +66,19 @@ var vm = {
             return false
         },
         ehEscotistaDaPatrulha(){
-            if(!this.ehDessaPatrulha){
+            if(!this.secao || !this.grupo) return false
+
+            if(!this.usuarioDatabase.secao){
+                //O usuário não tem uma seção
                 return false
             }
-            return this.usuarioDatabase.tipo == 'escotista'
+            //A chave da seção do usuário é igual a chave da seção sendo exibida?
+            if(this.usuarioDatabase.secao.chave == this.getSecao['.key']){
+                //O usuário é dessa seção
+                return true
+            }
+            //O usuário não é dessa seção
+            return false
         },
         //GETTERS DE ÁREAS
         getGrupo(){

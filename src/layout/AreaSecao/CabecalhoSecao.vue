@@ -27,6 +27,10 @@ var vm = {
                                              .child('secoes')
                                              .child(this.secao['.key'])
                                              .child('solicitacoes')
+        },
+        temSecao(){
+            if(this.usuarioDatabase.secao) return true
+            return false
         }
     },
     methods: {
@@ -88,7 +92,7 @@ export default vm
              <span>{{secao.nome}}</span>
         </p>
         <p>
-            <template v-if="ehDoGrupo && !ehDaSecao && !enviandoSolicitacao">
+            <template v-if="ehDoGrupo && !ehDaSecao && !enviandoSolicitacao && !temSecao">
                 <button @click="enviarSolicitacaoDeEntrada()" v-if="!solicitacaoEnviada" class="btn btn-info">
                     Enviar Solicitação de Entrada
                 </button>

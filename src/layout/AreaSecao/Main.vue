@@ -63,6 +63,10 @@ var vm = {
                 //O usuário é dessa seção
                 return true
             }
+            if(this.usuarioDatabase['.key'] == this.getSecao.criador.chave){
+                //O usuário criou essa seção
+                return true
+            }
             //O usuário não é dessa seção
             return false
         },

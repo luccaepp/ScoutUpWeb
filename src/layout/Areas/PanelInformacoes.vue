@@ -4,7 +4,10 @@ import FormatadorDeTimeStamp from '../../funcoesGlobais/timeStamp/timeStamp'
 var vm = {
     props: ['area', 'ehEscotistaDaArea', 'ehDessaArea'],
     computed: {
-        ...mapGetters({usuarioDatabase: 'getUsuarioDatabase'})
+        ...mapGetters({usuarioDatabase: 'getUsuarioDatabase'}),
+        ehCriador(){
+            return this.area.criador.chave == this.usuarioDatabase['.key']
+        }
     },
     methods: {
         retornaTimeStampFormatado(timeStamp){
@@ -31,7 +34,7 @@ export default vm
                     <i class="fa fa-map-marker" aria-hidden="true"></i> CIDADE: {{area.cidade}} / {{area.estado}}
                 </h3>
                 <button @click="$emit('excluirArea')" v-if="ehEscotistaDaArea" class="btn btn-danger pull-left"><i class="fa fa-trash" aria-hidden="true"></i> Excluir Área</button>
-                <button @click="$emit('desinscreverse')" v-if="ehDessaArea" class="btn btn-danger pull-left"><i class="fa fa-chain-broken" aria-hidden="true"></i> Desinscrever-se</button>
+                <button @click="$emit('desinscreverse')" v-if="ehDessaArea && !ehCriador" class="btn btn-danger pull-left"><i class="fa fa-chain-broken" aria-hidden="true"></i> Desinscrever-se</button>
             </div>
         </div>
     </div>
