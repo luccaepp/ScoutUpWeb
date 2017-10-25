@@ -39,6 +39,19 @@ var vm = {
             console.log('ehEscotistaDoGrupo', this.usuarioDatabase.tipo)
             return this.usuarioDatabase.tipo == 'escotista' && this.ehDesseGrupo
         }
+    },
+    methods: {
+      excluirGrupo(){
+        let self = this
+        bootbox.confirm('Você tem certeza que quer excluir esse grupo?', querExcluir => {
+          if(!querExcluir) return
+          self.database.ref('grupo')
+                       .child(this.usuarioDatabase.grupo)
+                       .remove()
+                       .then(snapRm => self.$router.replace('/usuarios/'+this.usuarioDatabase['.key']))
+        })
+
+      }
     }
 }
 
@@ -60,20 +73,20 @@ export default vm
             </div>
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1">
-                    <st-panel-informacoes :ehDessaArea="ehDesseGrupo" :ehEscotistaDaArea="ehEscotistaDoGrupo" :area="getGrupo"></st-panel-informacoes>
+                    <st-panel-informacoes @excluirArea="excluirGrupo" :ehDessaArea="ehDesseGrupo" :ehEscotistaDaArea="ehEscotistaDoGrupo" :area="getGrupo"></st-panel-informacoes>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                     <div class="col-xs-12 col-sm-6 membros-box">
                         <div class="row">
-                            <st-panel-membros :ehEscotistaDaArea="ehEscotistaDoGrupo" class="panel-eq-height" 
+                            <st-panel-membros :ehEscotistaDaArea="ehEscotistaDoGrupo" class="panel-eq-height"
                                 tipoArea="grupo" :area="getGrupo"></st-panel-membros>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 sessoes-box">
                         <div class="row">
-                            <st-panel-sessoes class="panel-eq-height" :ehEscotistaDoGrupo="ehEscotistaDoGrupo" 
+                            <st-panel-sessoes class="panel-eq-height" :ehEscotistaDoGrupo="ehEscotistaDoGrupo"
                                 :grupo="getGrupo"></st-panel-sessoes>
                         </div>
                     </div>

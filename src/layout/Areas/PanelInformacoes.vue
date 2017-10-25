@@ -26,7 +26,7 @@ export default vm
             <div class="info-escrita col-xs-12 text-center">
                 <h3><i class="fa fa-pencil" aria-hidden="true"></i> NOME: <span>{{area.nome}}</span></h3>
                 <h3><i class="fa fa-calendar" aria-hidden="true"></i> DATA DE CRIAÇÃO: <span>{{retornaTimeStampFormatado(area.timeStamp)}}</span></h3>
-                <h3><i class="fa fa-hand-o-up" aria-hidden="true"></i> CRIADOR: 
+                <h3><i class="fa fa-hand-o-up" aria-hidden="true"></i> CRIADOR:
                     <span v-if="area.criador">{{area.criador.nome}}</span>
                     <span v-else><i class="fa fa-spinner fa-spin"></i></span>
                 </h3>

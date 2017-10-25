@@ -89,14 +89,14 @@ var vm = {
                 })
         },
         excluirSecao(){
+          let self = this
             bootbox.confirm('Você tem certeza que quer excluir essa seção?', quer => {
                 if(!quer) return
                 if(!this.secao){
                     bootbox.alert('Erro ao tentar excluir a seção. Nenhuma seção encontrada...')
                     return
                 }
-
-                this.$firebaseRefs.secao.remove()
+                this.$firebaseRefs.secao.remove().then(snapR => self.$router.replace('/usuarios/'+self.usuarioDatabase['.key']))
             })
         }
     }
@@ -120,7 +120,7 @@ export default vm
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                     <div class="col-xs-12 col-sm-6 membros-box">
                         <div class="row">
-                            <st-panel-membros :ehEscotistaDaArea="ehEscotistaDessaSecao" :area="getSecao" tipoArea="secao" 
+                            <st-panel-membros :ehEscotistaDaArea="ehEscotistaDessaSecao" :area="getSecao" tipoArea="secao"
                                 class="panel-eq-height"></st-panel-membros>
                         </div>
                     </div>
