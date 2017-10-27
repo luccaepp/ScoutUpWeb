@@ -24,6 +24,7 @@
         },
         methods: {
             cadastrarGrupo(){
+                let self = this
                 this.$firebaseRefs.grupos.push({
                     nome: this.txtNome.replace(/\b\w/g, l => l.toUpperCase()),
                     estado: this.estadoSelecionado.nome,
@@ -37,7 +38,7 @@
                     this.retornaDatabase.ref('/usuario/'+this.retornaUsuarioDatabase['.key']).update({
                         grupo: snapshot.key
                     })
-                })
+                }).then(result => self.$router.replace('/usuarios/'+this.$store.state.usuarioDatabase['.key']))
             }
         },
         watch: {
