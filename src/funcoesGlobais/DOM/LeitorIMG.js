@@ -1,20 +1,17 @@
-export default {
-    input: null,
-    buildLeitor(comp){
-        let storageRef = comp.storageRef
-        if(!this.input){
-            this.input = document.createElement('input')
-            this.input.type = 'file';
-            this.input.multiple = false
-            this.input.accept = "image/*"
+import criadores from './LeitorIMG/criadores'
 
-            let self = this
-            this.input.addEventListener('change', mudanca => {
-                let arquivo = mudanca.target.files[0]
-                storageRef.put(arquivo).then(resultado => comp.atualizarFotoDePerfil())
-            })
-        }
-        
-        return this.input
+let leitor = {
+    inputs: new Map(),
+    buildLeitorFoto(callback){
+        return genericBuild(callback, criadores.criarInputIMG)
     }
 }
+
+function genericBuild(callback, criador){
+    if(!leitor.inputs.get(callback)){
+        leitor.inputs.set(callback, criador(callback))
+    }
+    return leitor.inputs.get(callback)
+}
+
+export default leitor

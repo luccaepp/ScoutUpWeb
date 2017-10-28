@@ -105,8 +105,10 @@ const readyCallbackUsuarioDaPag = function(snap){
                     })
             },
             trocarFotoDePerfil(){
+                let self = this
                 if(this.ehDessePerfil){
-                    let input = LeitorIMG.buildLeitor(this)
+                    let input = LeitorIMG.buildLeitorFoto(mudanca => self.storageRef.put(mudanca.target.files[0])
+                                                                                    .then(resultado => self.atualizarFotoDePerfil()))
                     input.click()
                 }
             }

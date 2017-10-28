@@ -94,10 +94,10 @@ export default vm
         <div class="panel-footer">
             <div class="btn-toolbar">
                 <button @click="exibir = 'amigos'" class="btn btn-warning form-control btnAmigos">
-                    ({{numAmigos}}) Amigos
+                    <span class="badge">{{numAmigos}}</span> Amigos
                 </button>
                 <button @click="exibir = 'solicitacoes'" v-if="ehDessePerfil" class="btn btn-primary form-control">
-                    ({{numSolicitacoes}}) Solicitações
+                    <span class="badge">{{numSolicitacoes}}</span> Solicitações
                 </button>
             </div>
         </div>

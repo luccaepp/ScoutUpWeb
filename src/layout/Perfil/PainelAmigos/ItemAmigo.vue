@@ -13,6 +13,10 @@ export default {
   },
   created(){
       this.storage.ref('/fotoPerfil/' + this.amigo.chave).getDownloadURL().then(url => this.srcFoto = url, erro => this.srcFoto = '')
+      console.log('created router', this.$router)
+  },
+  watch: {
+
   }
 }
 </script>

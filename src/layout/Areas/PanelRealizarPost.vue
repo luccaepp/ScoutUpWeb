@@ -1,16 +1,19 @@
 <script>
 import {mapGetters} from 'vuex'
 import {EventBus} from '../../eventBus'
+import leitorIMG from '../../funcoesGlobais/DOM/LeitorIMG'
+
 var vm = {
     props: ['pathParaArea'],
     data(){
         return {
             conteudo: '',
-            titulo: ''
+            titulo: '',
+            srcs: []
         }
     },
     computed: {
-        ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', firebase: 'getFirebase', database: 'getDatabase'})
+        ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', firebase: 'getFirebase', database: 'getDatabase', storage: 'getStorage'})
     },
     methods: {
         publicar(){
@@ -43,6 +46,25 @@ var vm = {
                 console.log('Erro ao realizao o post: ', erro)
             })
             console.log(post)
+        },
+        adicionarFotos(){
+            let input = leitorIMG.buildLeitorFoto(this.onFotoAdicionada)
+            input.multiple = true
+            input.click()
+        },
+        onFotoAdicionada(mudanca){
+            let arquivos = mudanca.target.files,
+                base64Arquivos = []           
+            console.log('arquivos', arquivos)
+            Array.from(arquivos).forEach(arquivo => {
+                let reader = new FileReader()
+                reader.onloadend = event => {
+                    this.srcs.push(event.target.result)
+                }
+                reader.readAsDataURL(arquivo)
+                
+
+            })
         }
     }
 }
@@ -63,11 +85,22 @@ export default vm
             <div class="form-group">
                 <label for="txtPost" id="labelTxtPost">Conteúdo</label>
                 <textarea placeholder="Ex: Olá, tudo bem com vocês?" v-model="conteudo" id="txtPost" class="form-control" cols="30" rows="5"></textarea>
-            </div>                       
+            </div>
+            <div class="panel panel-info panel-fotos">
+                <div class="panel-heading">
+                    <i data-v-4210859e="" aria-hidden="true" class="fa fa-picture-o"></i>
+                    Fotos
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-12" v-for="src in srcs" :key="src">
+                        <img class="imgASerAdicionada" :src="src" alt="Imagem a ser adicionada">
+                    </div>
+                </div>
+            </div>                   
         </div>
         <div class="panel-footer panel-footer-realizar">
             <div class="btn-toolbar pull-right">
-                <button class="btn btn-primary"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
+                <button @click="adicionarFotos()" class="btn btn-primary"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
                 <button class="btn btn-info"><i class="fa fa-paperclip" aria-hidden="true"></i></button>
                 <input class="btn btn-success" type="button" value="Publicar" @click="publicar()">
                 
@@ -87,5 +120,10 @@ textarea#txtPost{
 label#labelTituloNovoPost, label#labelTxtPost{
     font-size: 30px;
     color: #B9C159;
+}
+.imgASerAdicionada{
+    width: 100px;
+    height: 100px;
+    display: inline;
 }
 </style>

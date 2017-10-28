@@ -66,8 +66,12 @@ export default vm
                 </p>
                 <p v-else-if="!ehDessePerfil">Nenhum grupo adicionado...</p>
                 <!-- É desse perfil -->
-                <p v-else-if="!usuarioDaPag.solicitacaoDeEntradaEmSecao"><a href="#" @click.prevent="vaParaGrupo">Adicionar um grupo...</a></p>
-                <p v-else class="text-warning">{{usuarioDaPag.solicitacaoDeEntradaEmSecao.nomeGrupo}} (Não Confirmado)</p>
+                <p v-else-if="!usuarioDaPag.solicitacaoDeEntradaEmSecao">
+                    <a class="addd" href="#" @click.prevent="vaParaGrupo">Adicionar um grupo...</a>
+                </p>
+                <p v-else class="text-warning">
+                    {{usuarioDaPag.solicitacaoDeEntradaEmSecao.nomeGrupo}} (Não Confirmado)
+                </p>
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Seção:</h4>
@@ -79,6 +83,9 @@ export default vm
                 </p>
                 <p v-else-if="!usuarioDaPag.solicitacaoDeEntradaEmSecao"><a href="#" @click.prevent="vaParaGrupo">Adicionar uma sessão...</a></p>
                 <p v-else class="text-warning">{{usuarioDaPag.solicitacaoDeEntradaEmSecao.nome}} (Não confirmado)</p>
+                </li>
+                <li v-if="usuarioDatabase.tipo == 'escoteiro'" class="list-group-item list-group-item-info">
+                    <h4 class="list-group-item-heading">Patrulha: </h4>
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">E-mail:</h4>

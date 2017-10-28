@@ -73,17 +73,37 @@
 <template>
     <st-top-bar-prototipo>
         <ul slot="lis-navbar" class="nav navbar-nav list-inline">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-object-ungroup" aria-hidden="true"></i> Minhas Áreas <span class="caret"></span></a>
-                <ul class="dropdown-menu caixombra">
-                <li><router-link :to="retornaLinkGrupo"><i class="fa fa-building" aria-hidden="true"></i> Grupo</router-link></li>
-                <li><router-link :to="retornaLinkSecao"><i class="fa fa-object-group" aria-hidden="true"></i> Seção</router-link></li>
-                <li><router-link :to="retornaLinkPatrulha"><i class="fa fa-users" aria-hidden="true"></i> Patrulha</router-link></li>
-            </ul>
-        </li>
-        <li>
-            <router-link to="/atividades" id="a2"><i class="fa fa-free-code-camp" aria-hidden="true"></i> Atividades</router-link>
-        </li>
+        <template v-if="usuarioDatabase">
+            <template v-if="usuarioDatabase.grupo">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-object-ungroup" aria-hidden="true"></i> Minhas Áreas <span class="caret"></span></a>
+                        <ul class="dropdown-menu caixombra">
+                        <li><router-link :to="retornaLinkGrupo"><i class="fa fa-building" aria-hidden="true"></i> Grupo</router-link></li>
+                        <li v-if="usuarioDatabase.secao"><router-link :to="retornaLinkSecao"><i class="fa fa-object-group" aria-hidden="true"></i> Seção</router-link></li>
+                        <li v-if="usuarioDatabase.patrulha"><router-link :to="retornaLinkPatrulha"><i class="fa fa-users" aria-hidden="true"></i> Patrulha</router-link></li>
+                    </ul>
+                </li>
+                <li>
+                    <router-link to="/atividades" id="a2"><i class="fa fa-free-code-camp" aria-hidden="true"></i> Atividades</router-link>
+                </li>
+            </template>
+            <template v-else>
+                <li>
+                    <router-link to="/o-projeto" id="a1" class="a">O Projeto</router-link>
+                </li>
+                <li>
+                    <router-link to="sobre-nos" id="a2" class="a">Sobre Nós</router-link>
+                </li>
+                <li>
+                    <a href="#" id="a3" class="a">Contato</a>
+                </li>
+            </template>
+        </template>
+        <template v-else>
+            <div class="spin-box">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>  
+        </template>
     </ul>
     <template slot="lis-login">
         <li><router-link :to="'/usuarios/'+usuario.uid"><span class="glyphicon glyphicon-user"></span> {{displayUsuario}}</router-link></li>
@@ -92,3 +112,19 @@
     </st-top-bar-prototipo>
 
 </template>
+
+<style scoped>
+.dropdown-menu > li:hover{
+    background-color: black!important;
+}
+.fa-spinner{
+    color: #E1CF9B;
+    font-size: 40px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+.spin-box{
+    text-align: center;
+}
+</style>
+
