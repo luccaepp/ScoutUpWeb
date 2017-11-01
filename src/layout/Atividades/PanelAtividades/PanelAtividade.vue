@@ -91,7 +91,10 @@ export default {
     }
   },
   computed: {
-      ...mapGetters({database: 'getDatabase'})
+      ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
+      ehEscotista(){
+        return this.usuarioDatabase.tipo == 'escotista'
+      }
   },
   watch: {
     participantesEvent(){
@@ -240,7 +243,7 @@ function clone(obj){
             </tbody>
         </table>
     </div>
-    <div class="panel-footer">
+    <div v-if="ehEscotista" class="panel-footer">
         <div class="btn-toolbar" role="toolbar">
             <div class="pull-right">
                 <template v-if="!editando">
