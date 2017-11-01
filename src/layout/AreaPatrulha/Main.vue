@@ -72,6 +72,7 @@ var vm = {
                 //O usuário não tem uma seção
                 return false
             }
+            if(this.usuarioDatabase.tipo != 'escotista') return false
             //A chave da seção do usuário é igual a chave da seção sendo exibida?
             if(this.usuarioDatabase.secao.chave == this.getSecao['.key']){
                 //O usuário é dessa seção
@@ -135,7 +136,7 @@ export default vm
                 <st-panel-informacoes @desinscreverse="desinscreverse()" :ehDessaArea="ehDessaPatrulha" :ehEscotistaDaArea="ehEscotistaDaPatrulha" :area="getPatrulha"></st-panel-informacoes>
             </div>
             <div class="row">
-                <st-panel-membros @membrosAtualizados="atualizarMembros" :secaoPatrulha="getSecao" :ehEscotistaDaArea="ehEscotistaDaPatrulha" :area="getPatrulha" 
+                <st-panel-membros @membrosAtualizados="atualizarMembros" :secaoPatrulha="getSecao" :ehEscotistaDaArea="ehEscotistaDaPatrulha" :area="getPatrulha"
                     tipoArea="patrulha"></st-panel-membros>
             </div>
             <div v-if="ehDessaPatrulha" class="row">
@@ -148,7 +149,7 @@ export default vm
                 <st-posts-panel :ehDessaArea="ehDessaPatrulha" :area="getPatrulha" :pathParaArea="pathParaPatrulha"></st-posts-panel>
             </div>
         </div>
-   </div> 
+   </div>
 </template>
 
 <style>
