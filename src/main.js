@@ -4,6 +4,9 @@ import Routes from './routes'
 import App from './App.vue'
 import store from './store/store'
 import VueFire from 'vuefire'
+import { VueMasonryPlugin } from 'vue-masonry';
+
+Vue.use(VueMasonryPlugin)
 
 //EventCalendar
 import vueEventCalendar from 'vue-event-calendar'
@@ -15,10 +18,10 @@ import VueCarousel from 'vue-carousel'
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyA22BiH17slvEAGl8q8hN4oBTDa6_lcKPM',
-    libraries: 'places' // This is required if you use the Autocomplete plugin 
-    // OR: libraries: 'places,drawing' 
-    // OR: libraries: 'places,drawing,visualization' 
-    // (as you require) 
+    libraries: 'places' // This is required if you use the Autocomplete plugin
+    // OR: libraries: 'places,drawing'
+    // OR: libraries: 'places,drawing,visualization'
+    // (as you require)
   }
 })
 
