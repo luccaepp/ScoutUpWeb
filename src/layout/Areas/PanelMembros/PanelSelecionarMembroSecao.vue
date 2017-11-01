@@ -8,7 +8,10 @@ var vm = {
         }
     },
     computed: {
-        ...mapGetters({database: 'getDatabase'})
+        ...mapGetters({database: 'getDatabase'}),
+        escoteirosMembrosSecao(){
+          return this.membrosSecao.filter(val => val.tipo == 'escoteiro')
+        }
     },
     data(){
         return {
@@ -27,7 +30,7 @@ var vm = {
         selecionarMembro(membroSelecionado, evento){
             const item_success = 'list-group-item-success',
                 item = 'list-group-item', item_info = 'list-group-item-info'
-            
+
             if(this.itensSelecionados.includes(membroSelecionado)){
                 this.itensSelecionados.splice(this.itensSelecionados.indexOf(membroSelecionado), 1)
                 evento.target.className = item + ' ' + item_info
@@ -50,15 +53,15 @@ export default vm
 <template>
     <div class="panel panel-info">
         <div class="panel-heading">
-            <i class="fa fa-crosshairs" aria-hidden="true"></i> 
+            <i class="fa fa-crosshairs" aria-hidden="true"></i>
             Selecione Membros
         </div>
         <div class="panel-body">
             <ul class="list-group">
-                <template v-for="membro in membrosSecao">
-                    <li v-if="contemMembro(membro) && !membro.patrulha" @click="selecionarMembro(membro, $event)" 
+                <template v-for="membro in escoteirosMembrosSecao">
+                    <li v-if="contemMembro(membro) && !membro.patrulha" @click="selecionarMembro(membro, $event)"
                         class="list-group-item list-group-item-info">
-                        <i aria-hidden="true" class="fa fa-user-circle"></i> 
+                        <i aria-hidden="true" class="fa fa-user-circle"></i>
                         {{membro.nome}}
                     </li>
                 </template>
