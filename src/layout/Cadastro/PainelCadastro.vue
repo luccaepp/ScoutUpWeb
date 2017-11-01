@@ -13,7 +13,7 @@
             cadastrar(){
                 if(this.camposValidos()){
 
-                    this.$emit('cadastrar', {nome: this.txtNome, email: this.txtEmail, senha: this.txtSenha, tipoUsuario: this.radioText})
+                    this.$emit('cadastrar', {nome: this.txtNome, email: this.txtEmail, senha: this.txtSenha, tipo: this.radioText})
                 } else{
                     alert('Preencha todos os campos corretamente para se cadastrar')
                 }
@@ -73,4 +73,3 @@
     margin-bottom: 0;
 }
 </style>
-

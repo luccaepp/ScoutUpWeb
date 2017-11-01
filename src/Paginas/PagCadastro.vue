@@ -30,7 +30,7 @@
           //Criando Usuário no Firebase Auth
           this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then(snapshot => {
             //Criando Usuário na Database
-            FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this.database, usuario, snapshot.uid)
+            FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this, usuario, snapshot.uid)
             this.perfil(snapshot.uid)
           }).catch((erro) => {
             console.warn("Algo deu errado... "+erro.code+" "+erro.message)
@@ -103,7 +103,7 @@
 
 <template>
   <div class="container-fluid">
-  <st-painel-cadastro v-on:cadastrar="cadastrarUsuarioComEmailESenha">
+  <st-painel-cadastro @cadastrar="cadastrarUsuarioComEmailESenha">
   </st-painel-cadastro>
   <st-painel-login>
   </st-painel-login>
