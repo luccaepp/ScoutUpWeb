@@ -31,6 +31,10 @@ var vm = {
                         : null
                      :null
 
+        },
+        limiteAtingido(){
+          console.log('limite', this.comentariosLimitados.length, this.limitAtual)
+          return this.comentariosLimitados.length < this.limitAtual
         }
     }
 }
@@ -52,7 +56,7 @@ export default vm
                         :comentario="comentario"></st-comentario-box>
                 </div>
             </div>
-            <span @click="limitAtual += 5" class="pull-right text-verdinho mostrar">Mostrar mais...</span>
+            <span v-if="!limiteAtingido" @click="limitAtual += 5" class="pull-right text-verdinho mostrar">Mostrar mais...</span>
             <span v-if="limitAtual > 3" @click="limitAtual = 3"
                   class="pull-right text-verdinho mostrar">Mostrar menos...</span>
         </div>
