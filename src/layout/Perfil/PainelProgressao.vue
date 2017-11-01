@@ -1,8 +1,18 @@
 <script>
 import StConquista from './PainelProgressao/Conquista.vue'
+
+const urlINI = '../../assets/icones_progressao/'
+
 export default {
   components: {
     StConquista
+  },
+  data(){
+    return {
+      imgs: [
+        urlINI + 'esporte.png'
+      ]
+    }
   }
 }
 </script>
@@ -13,9 +23,10 @@ export default {
             <i class="fa fa-trophy" aria-hidden="true"></i> Mural da Progressão
         </div>
         <div class="panel-body">
+          <h5 class="text-center">Especialidades</h5>
             <div v-masonry transition-duration="1s" item-selector=".item">
-              <div v-masonry-tile class="item" v-for="item in 6">
-                <st-conquista class="gutter-wrap"></st-conquista>
+              <div v-masonry-tile class="item" v-for="url in imgs">
+                <st-conquista :urlIMG="url" class="gutter-wrap"></st-conquista>
               </div>
             </div>
 
