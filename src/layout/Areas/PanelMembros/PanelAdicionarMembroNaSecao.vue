@@ -16,7 +16,7 @@ export default {
   methods: {
     aceitarConvite(convite){
       let self = this
-      this.getRefdoUsuarioDoConvite(convite).update({
+      this.getRefDoUsuarioDoConvite(convite).update({
         grupo: this.usuarioDatabase.grupo,
         secao: {
           chave: this.secao['.key'],
@@ -26,12 +26,12 @@ export default {
     },
     removerConvite(convite){
       let self = this
-      this.getRefdoUsuarioDoConvite(convite)
+      this.getRefDoUsuarioDoConvite(convite)
           .child('solicitacaoDeEntradaEmSecao')
           .remove()
           .then(rmSnap => self.refSolicitacoesDaSecao.child(convite['.key']).remove())
     },
-    getRefdoUsuarioDoConvite(conv){
+    getRefDoUsuarioDoConvite(conv){
       return this.database.ref('usuario').child(conv.usuario.chave)
     }
   }
@@ -48,12 +48,12 @@ export default {
       <div class="list-group">
         <div v-for="convite in convites" :key="convite['.key']" class="list-group-item list-group-item-info">
           <div class="row">
- 
+
             <div class="flexboxinvitador">
               <span class="nomeInvitador">
                 {{convite.usuario.nome}}
               </span>
-              <button class="btn btn-danger">
+              <button class="btn btn-danger" @click="removerConvite(convite)">
                 <i class="fa fa-times" aria-hidden="true"></i>
               </button>
               <button class="btn btn-success" @click="aceitarConvite(convite)">
