@@ -78,7 +78,7 @@ export default vm
                 </li>
                 <li v-for="membro in membros" class="list-group-item list-group-item-warning">
                     <i class="fa fa-user-circle" aria-hidden="true"></i>
-                    {{membro.nome}}
+                    <router-link class="text-warning" :to="'/usuarios/'+membro['.key']">{{membro.nome}}</router-link>
                 </li>
                 <!-- Esse <li> serve apenas para o panelMembros da Área de Patrulha -->
                 <li v-if="ehEscotistaDaArea && tipoArea=='patrulha'" class="list-group-item list-group-item-warning">
