@@ -92,8 +92,11 @@ export default vm
                     Fotos
                 </div>
                 <div class="panel-body">
-                    <div class="col-xs-12" v-for="src in srcs" :key="src">
+                    <div class="col-xs-6 col-sm-2 col-lg-1 wrap-img-post" v-for="src in srcs" :key="src">
                         <img class="imgASerAdicionada" :src="src" alt="Imagem a ser adicionada">
+                        <button class="btn btn-danger btn-rem">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
             </div>                   
@@ -125,5 +128,20 @@ label#labelTituloNovoPost, label#labelTxtPost{
     width: 100px;
     height: 100px;
     display: inline;
+}
+.wrap-img-post{
+    margin-right: 30px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-rem{
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    border-radius: 500px;
+    z-index: 30;
+    outline: none!important;
 }
 </style>
