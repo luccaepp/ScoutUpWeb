@@ -122,7 +122,6 @@ export default vm
         <div class="panel-footer panel-footer-realizar">
             <div class="btn-toolbar pull-right">
                 <button @click="adicionarFotos()" class="btn btn-primary"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
-                <button class="btn btn-info"><i class="fa fa-paperclip" aria-hidden="true"></i></button>
                 <input class="btn btn-success" type="button" value="Publicar" @click="publicar()">
                 
             </div>
