@@ -1,20 +1,26 @@
 <script>
 import StConquista from './PainelProgressao/Conquista.vue'
+import StModalProgressao from './PainelProgressao/ModalProgressao.vue'
+
 import ImagensEspecialidades from './PainelProgressao/imagensEspecialidades'
 import ImagensEspecial from './PainelProgressao/imagensEspecial'
 
+
 export default {
   components: {
-    StConquista
+    StConquista,
+    StModalProgressao
   },
   data(){
     return {
       imgsEspecialidades: ImagensEspecialidades,
-      imgsEspecial: ImagensEspecial
+      imgsEspecial: ImagensEspecial,
+      itemAtivo: ''
     }
   },
   methods: {
     mostrarProgressao(nome){
+      this.itemAtivo = nome
       console.log(nome)
     }
   }
@@ -40,7 +46,7 @@ export default {
                 <st-conquista @mostrarProgressao="mostrarProgressao" :infoIMG="infoIMG" class="gutter-wrap"></st-conquista>
               </div>
             </div>
-
+            <st-modal-progressao :itemAtivo="itemAtivo"></st-modal-progressao>
         </div>
     </div>
 </template>
