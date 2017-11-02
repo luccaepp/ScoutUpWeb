@@ -152,7 +152,7 @@ const readyCallbackUsuarioDaPag = function(snap){
                     :displayNome="displayNome"></st-painel-informacoes>
             </div>
             <div class="row">
-                <div class="wrapper col-lg-11 col-lg-offset-1">
+                <div class="wrapper col-sm-10 col-xs-12 col-sm-offset-1">
                     <st-painel-amigos :ehDessePerfil="ehDessePerfil" :usuarioDaPag="usuarioDaPag">
                     </st-painel-amigos>
                     <st-painel-progressao>

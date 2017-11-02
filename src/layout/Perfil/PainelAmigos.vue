@@ -68,7 +68,7 @@ var vm = {
 export default vm
 </script>
 <template>
-    <div class="panel panel-warning painel-amigos col-lg-5 painel-fix-padding">
+    <div class="panel panel-warning painel-amigos col-xs-12 painel-fix-padding">
         <div class="panel-heading">
             <i class="fa fa-users" aria-hidden="true"></i> Amigos
         </div>

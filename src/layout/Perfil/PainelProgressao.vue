@@ -1,7 +1,7 @@
 <script>
 import StConquista from './PainelProgressao/Conquista.vue'
-
-const urlINI = '../../assets/icones_progressao/'
+import ImagensEspecialidades from './PainelProgressao/imagensEspecialidades'
+import ImagensEspecial from './PainelProgressao/imagensEspecial'
 
 export default {
   components: {
@@ -9,24 +9,35 @@ export default {
   },
   data(){
     return {
-      imgs: [
-        urlINI + 'esporte.png'
-      ]
+      imgsEspecialidades: ImagensEspecialidades,
+      imgsEspecial: ImagensEspecial
+    }
+  },
+  methods: {
+    mostrarProgressao(nome){
+      console.log(nome)
     }
   }
 }
 </script>
 
 <template>
-    <div class="panel panel-primary painel-progressao col-lg-5 col-lg-offset-1 painel-fix-padding">
+    <div class="panel panel-primary painel-progressao col-xs-12 painel-fix-padding">
         <div class="panel-heading">
             <i class="fa fa-trophy" aria-hidden="true"></i> Mural da Progressão
         </div>
         <div class="panel-body">
-          <h5 class="text-center">Especialidades</h5>
-            <div v-masonry transition-duration="1s" item-selector=".item">
-              <div v-masonry-tile class="item" v-for="url in imgs">
-                <st-conquista :urlIMG="url" class="gutter-wrap"></st-conquista>
+          <h4 class="text-center">Especialidades</h4>
+            <div v-masonry fit-width="true" transition-duration="1s" item-selector=".itemES">
+              <div v-masonry-tile class="itemES" v-for="infoIMG in imgsEspecialidades">
+                <st-conquista @mostrarProgressao="mostrarProgressao" :borda="true" :infoIMG="infoIMG" class="gutter-wrap"></st-conquista>
+              </div>
+            </div>
+
+            <h4 class="text-center">Interesse Especial</h4>
+            <div v-masonry fit-width="true" transition-duration="1s" item-selector=".itemE">
+              <div v-masonry-tile class="itemE" v-for="infoIMG in imgsEspecial">
+                <st-conquista @mostrarProgressao="mostrarProgressao" :infoIMG="infoIMG" class="gutter-wrap"></st-conquista>
               </div>
             </div>
 
@@ -45,5 +56,8 @@ export default {
     .gutter-wrap{
       margin-left: 5px;
       margin-top: 5px;
+    }
+    .panel-body{
+      overflow: scroll;
     }
 </style>
