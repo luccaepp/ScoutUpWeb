@@ -2,6 +2,7 @@
 import {mapGetters} from 'vuex'
 import {EventBus} from '../../eventBus'
 import leitorIMG from '../../funcoesGlobais/DOM/LeitorIMG'
+import ConversorBase64File from '../../funcoesGlobais/IMG/ConvertBase64ToFile'
 
 var vm = {
     props: ['pathParaArea'],
@@ -17,6 +18,8 @@ var vm = {
     },
     methods: {
         publicar(){
+            let self = this
+
             if(!this.conteudo || !this.titulo){
                 bootbox.alert('Preencha todos os campos do Post')
                 return
@@ -40,9 +43,21 @@ var vm = {
             }
             //Cadastrando o Post na base de dados
             this.database.ref(this.pathParaArea+'/posts/').push(post).then(result => {
+                //Limpando campos
                 this.titulo = ''
                 this.conteudo = ''
-            }).catch(erro => {
+                //Enviando Imagens
+                let i = 0
+                self.srcs.forEach(src => {
+                    i++
+                    let file = ConversorBase64File(src, 'file '+i)
+                    self.storage.ref('post').child(result.key).child('file '+i).put(file)
+                })
+                
+            }).then(() => {
+                self.srcs = []
+            })
+            .catch(erro => {
                 console.log('Erro ao realizao o post: ', erro)
             })
             console.log(post)
