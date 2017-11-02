@@ -65,6 +65,9 @@ var vm = {
                 
 
             })
+        },
+        removerImagem(index){
+            this.srcs.splice(index, 1)
         }
     }
 }
@@ -92,9 +95,9 @@ export default vm
                     Fotos
                 </div>
                 <div class="panel-body">
-                    <div class="col-xs-6 col-sm-2 col-lg-1 wrap-img-post" v-for="src in srcs" :key="src">
+                    <div class="col-xs-6 col-sm-2 col-lg-1 wrap-img-post" v-for="(src, index) in srcs" :key="src">
                         <img class="imgASerAdicionada" :src="src" alt="Imagem a ser adicionada">
-                        <button class="btn btn-danger btn-rem">
+                        <button @click="removerImagem(index)" class="btn btn-danger btn-rem">
                             <i class="fa fa-times" aria-hidden="true"></i>
                         </button>
                     </div>
