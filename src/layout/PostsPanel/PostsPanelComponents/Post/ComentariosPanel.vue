@@ -33,6 +33,9 @@ var vm = {
 
         },
         limiteAtingido(){
+            if(!this.comentariosLimitados){
+                return false
+            }
           console.log('limite', this.comentariosLimitados.length, this.limitAtual)
           return this.comentariosLimitados.length < this.limitAtual
         }

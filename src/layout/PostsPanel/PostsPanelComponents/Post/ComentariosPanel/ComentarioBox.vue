@@ -1,7 +1,11 @@
 <script>
 import FormatadorDeTimeStamp from '../../../../../funcoesGlobais/timeStamp/timeStamp'
+import StDropdownOpcoesComentario from './DropdownOpcoesComentario.vue'
 import {mapGetters} from 'vuex'
 var vm = {
+    components:{
+        StDropdownOpcoesComentario
+    },
     props: ['comentario', 'pathParaOPost'],
     methods: {
         retornaTimeStampFormatado(timeStamp){
@@ -86,6 +90,11 @@ var vm = {
                         : 0 
                     : 0
             return result
+        },
+        pathParaOComentario(){
+            if(this.comentario){
+                return this.pathParaOPost+'/comentarios/'+this.comentario.chave
+            }
         }
     }
 }
@@ -101,7 +110,9 @@ export default vm
                 <i class="fa fa-user-circle foto-comment col-xs-2 col-sm-1" aria-hidden="true"></i>
                 <!-- Painel Comentário  -->
                 <div class="panel panel-comment col-xs-9 col-xs-offset-1 col-sm-offset-1">
+                    
                     <div class="panel-heading">
+                        <st-dropdown-opcoes-comentario v-if="usuarioDatabase['.key'] == comentario.usuarioGerador.chave" :pathParaOComentario="pathParaOComentario"></st-dropdown-opcoes-comentario>
                         <strong>{{comentario.usuarioGerador.nome}}</strong> 
                         <span class="text-muted">{{retornaTimeStampFormatado(comentario.timeStamp)}}</span>
                         <div class="pull-right">
