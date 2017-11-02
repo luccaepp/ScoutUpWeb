@@ -47,11 +47,14 @@ var vm = {
                 this.titulo = ''
                 this.conteudo = ''
                 //Enviando Imagens
-                let i = 0
                 self.srcs.forEach(src => {
-                    i++
-                    let file = ConversorBase64File(src, 'file '+i)
-                    self.storage.ref('post').child(result.key).child('file '+i).put(file)
+                    result.ref.child('imgs').push({chave: true})
+                    .then(snap => {
+                        snap.ref.set({chave: snap.key})
+                        let file = ConversorBase64File(src, snap.key)
+                        self.storage.ref('post').child(result.key).child(snap.key).put(file)
+                    })
+
                 })
                 
             }).then(() => {

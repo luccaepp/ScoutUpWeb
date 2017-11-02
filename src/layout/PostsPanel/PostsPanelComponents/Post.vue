@@ -4,11 +4,14 @@ import StInformacoesPost from './Post/InformacoesPost.vue'
 import StDropdownOpcoesPost from './Post/DropdownOpcoesPost.vue'
 import StComentariosPanel from './Post/ComentariosPanel.vue'
 import StAreaConteudo from './Post/AreaConteudo.vue'
+import StFotosPanel from './Post/FotosPanel.vue'
+
 import {mapGetters} from 'vuex'
 var vm = {
     data(){
         return {
-            editando: false
+            editando: false,
+            fotos: []
         }
     },
     //Objetos herdados por props
@@ -18,7 +21,8 @@ var vm = {
         StInformacoesPost,
         StDropdownOpcoesPost,
         StComentariosPanel,
-        StAreaConteudo
+        StAreaConteudo,
+        StFotosPanel
     },
     computed: {
         ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
@@ -166,6 +170,10 @@ export default vm
             </div>
             <div class="row">
                 <st-area-conteudo @pararEdicao="editando = false" :pathParaOPost="pathParaOPost" :editando="editando" :post="post"></st-area-conteudo>
+            </div>
+
+            <div class="row">
+                <st-fotos-panel :pathParaOPost="pathParaArea + '/posts/' + post['.key']" :post="post"></st-fotos-panel>
             </div>
 
             <div class="row">
