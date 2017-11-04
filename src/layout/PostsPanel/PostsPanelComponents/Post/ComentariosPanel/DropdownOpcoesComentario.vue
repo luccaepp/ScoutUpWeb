@@ -16,7 +16,7 @@ export default vm
 </script>
 <template>
     <!-- DROPDOWN DAS OPÇÕES DO POST -->
-    <div class="dropdown col-xs-1 col-xs-offset-4 col-sm-offset-6 col-lg-1 col-lg-offset-5">
+    <div class="dropdown col-xs-1 col-lg-1">
         <span class="dropdown-toggle" type="button" data-toggle="dropdown">
             <span class="glyphicon glyphicon-chevron-down">
             </span>
