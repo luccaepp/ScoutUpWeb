@@ -1,6 +1,7 @@
 <script>
 import StItemEspecialidade from './ModalProgressao/ItemEspecialidade.vue'
 import { mapGetters } from 'vuex'
+import removerAcentos from '../../../funcoesGlobais/string/removerAcentos'
 
 export default {
     components: {
@@ -21,11 +22,17 @@ export default {
     watch: {
         itemAtivo(){
             if(this.itemAtivo){
+                console.log('itemAtivo', this.itemAtivo)
                 this.$bindAsArray('escopo', this.database.ref('escopoProgressao')
                                  .child('especialidades')
-                                 .child(this.itemAtivo.toLowerCase())
+                                 .child(this.removerAcentos(this.itemAtivo.toLowerCase()))
                                  )
             }
+        }
+    },
+    methods: {
+        removerAcentos(str){
+            return removerAcentos(str)
         }
     }
 }
@@ -45,7 +52,7 @@ export default {
                 </h4>
               </div>
               <div class="modal-body">
-                  <st-item-especialidade v-for="item in escopo" :item="item" :especialidade="itemAtivo" :key="item['.key']"></st-item-especialidade>
+                  <st-item-especialidade v-for="item in escopo" :item="item" :especialidade="removerAcentos(itemAtivo)" :key="item['.key']"></st-item-especialidade>
               </div>
           </div>
       </div>

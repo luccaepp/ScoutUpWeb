@@ -1,16 +1,21 @@
 <script>
 export default {
-  props: ['infoIMG', 'borda'],
+  props: ['infoIMG', 'borda', 'tipo'],
   data(){
     return {
       hoverado: false
+    }
+  },
+  computed: {
+    target(){
+      if(this.tipo == 'itemES') return '#modalProgressao'
     }
   }
 }
 </script>
 
 <template>
-  <div data-toggle="modal" data-target="#modalProgressao" :class="{bordado: borda, desbordado: !borda}" class="box-principal">
+  <div data-toggle="modal" :data-target="target" :class="{bordado: borda, desbordado: !borda}" class="box-principal">
     <img @mouseover="hoverado = true" 
          :src="infoIMG.url" alt="Ícone da progressão">
     <div @click="$emit('mostrarProgressao', infoIMG.nome)" class="text-center" v-if="hoverado" @mouseout="hoverado = false"

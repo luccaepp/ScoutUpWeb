@@ -5,7 +5,11 @@ export default {
     props: ['item', 'especialidade'],
     firebase(){
         return {
-
+            especialidadesDoItem: this.database.ref('progressaoUsuario')
+                                                            .child(this.usuarioDatabase['.key'])
+                                                            .child(this.especialidade.toLowerCase())
+                                                            .child('especialidades')
+                                                            .child(this.item['.key'])
         }
     },
     computed: {
@@ -27,21 +31,13 @@ export default {
     },
     created(){
         if(this.item)
-            this.$bindAsArray('subitens', this.subitensREF)
-        console.log('usu', this.usuarioDatabase['.key'])
-        this.$bindAsArray('especialidadesDoItem', this.database.ref('progressaoUsuario')
-                                                            .child(this.usuarioDatabase['.key'])
-                                                            .child(this.especialidade.toLowerCase())
-                                                            .child('especialidades')
-                                            )
-        
+            this.$bindAsArray('subitens', this.subitensREF)        
     },
     methods: {
         temConquista(subitem){
-            console.log('temConquista', this.especialidadesDoItem, subitem)
             return this.especialidadesDoItem 
                         ? this.especialidadesDoItem.length > 0
-                            ? this.especialidadesDoItem.filter(e => e['.key'] == subitem['.key']).length > 0
+                            ? this.especialidadesDoItem.filter(e => (+e['.key'] - 1) == subitem['.key']).length > 0
                             : false
                         : false
         }
@@ -58,17 +54,18 @@ export default {
               {{item.nome}}
               <i class="fa fa-trophy" aria-hidden="true"></i>
             </h3>
-            <div class="subitens">
-                <div class="subitem" v-for="subitem in subitens">
-                    <h4>
-                        <i v-if="temConquista(subitem)" class="fa fa-star" aria-hidden="true"></i>
-                        <i v-else class="fa fa-star-o" aria-hidden="true"></i>
-                        {{subitem['.value']}}
-                    </h4>
-                </div>
-            </div>
           </div>
-
+      </div>
+      <div class="col-xs-12">
+        <div class="subitens">
+            <div class="subitem" v-for="subitem in subitens">
+                <h4>
+                    <i v-if="temConquista(subitem)" class="fa fa-star text-warning" aria-hidden="true"></i>
+                    <i v-else class="fa fa-star-o text-warning" aria-hidden="true"></i>
+                    {{subitem['.value']}}
+                </h4>
+            </div>
+        </div>
       </div>
   </div>
 </template>
@@ -85,5 +82,11 @@ export default {
     padding: 15px;
 }
 
+.subitens{
+    background-color: rgba(100, 100, 100, .2);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
 
 </style>

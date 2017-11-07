@@ -3,11 +3,11 @@ const urlINI = '/src/assets/icones_progressao/'
 let arr_urls = [
     {
       url: 'esporte.png',
-      nome: 'Esporte'
+      nome: 'Desportos'
     },
     {
       url: 'globo.png',
-      nome: 'Ciência \ne\n Tecnologia'
+      nome: 'Ciência e Tecnologia'
     },
     {
       url: 'cultura.png',

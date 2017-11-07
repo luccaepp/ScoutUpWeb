@@ -36,14 +36,14 @@ export default {
           <h4 class="text-center">Especialidades</h4>
             <div v-masonry fit-width="true" transition-duration="1s" item-selector=".itemES">
               <div v-masonry-tile class="itemES" v-for="infoIMG in imgsEspecialidades">
-                <st-conquista @mostrarProgressao="mostrarProgressao" :borda="true" :infoIMG="infoIMG" class="gutter-wrap"></st-conquista>
+                <st-conquista tipo="itemES" @mostrarProgressao="mostrarProgressao" :borda="true" :infoIMG="infoIMG" class="gutter-wrap"></st-conquista>
               </div>
             </div>
 
             <h4 class="text-center">Interesse Especial</h4>
             <div v-masonry fit-width="true" transition-duration="1s" item-selector=".itemE">
               <div v-masonry-tile class="itemE" v-for="infoIMG in imgsEspecial">
-                <st-conquista @mostrarProgressao="mostrarProgressao" :infoIMG="infoIMG" class="gutter-wrap"></st-conquista>
+                <st-conquista tipo="itemE" @mostrarProgressao="mostrarProgressao" :infoIMG="infoIMG" class="gutter-wrap"></st-conquista>
               </div>
             </div>
             <st-modal-progressao :itemAtivo="itemAtivo"></st-modal-progressao>
