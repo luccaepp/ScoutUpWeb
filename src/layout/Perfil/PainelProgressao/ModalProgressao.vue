@@ -1,6 +1,33 @@
 <script>
+import StItemEspecialidade from './ModalProgressao/ItemEspecialidade.vue'
+import { mapGetters } from 'vuex'
+
 export default {
-    props: ['itemAtivo']
+    components: {
+        StItemEspecialidade
+    },
+    props: ['itemAtivo'],
+    data(){
+        return {
+            escopo: ''
+        }
+    },
+    computed: {
+        ...mapGetters({database: 'getDatabase'})
+    },
+    firebase(){
+        return { }
+    },
+    watch: {
+        itemAtivo(){
+            if(this.itemAtivo){
+                this.$bindAsArray('escopo', this.database.ref('escopoProgressao')
+                                 .child('especialidades')
+                                 .child(this.itemAtivo.toLowerCase())
+                                 )
+            }
+        }
+    }
 }
 </script>
 
@@ -18,7 +45,7 @@ export default {
                 </h4>
               </div>
               <div class="modal-body">
-                  Aqui será mostrada a progressão do usuário no item {{itemAtivo}}
+                  <st-item-especialidade v-for="item in escopo" :item="item" :especialidade="itemAtivo" :key="item['.key']"></st-item-especialidade>
               </div>
           </div>
       </div>
