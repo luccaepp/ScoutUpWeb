@@ -19,9 +19,9 @@ export default {
     }
   },
   methods: {
-    mostrarProgressao(nome){
-      this.itemAtivo = nome
-      console.log(nome)
+    mostrarProgressao(bundle){
+      this.itemAtivo = bundle
+      console.log(bundle.nome)
     }
   }
 }

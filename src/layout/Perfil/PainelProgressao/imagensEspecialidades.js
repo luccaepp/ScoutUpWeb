@@ -1,29 +1,36 @@
-const urlINI = '/src/assets/icones_progressao/'
+const urlINI = '/src/assets/icones_progressao/',
+      pathDbBase = '/escopoProgressao/especialidades/'
 
 let arr_urls = [
     {
       url: 'esporte.png',
-      nome: 'Desportos'
+      nome: 'Desportos',
+      db: 'desportos'
     },
     {
       url: 'globo.png',
-      nome: 'Ciência e Tecnologia'
+      nome: 'Ciência e Tecnologia',
+      db: 'ciencia e tecnologia'
     },
     {
       url: 'cultura.png',
-      nome: 'Cultura'
+      nome: 'Cultura',
+      db: 'cultura'
     },
     {
       url: 'corda.png',
-      nome: 'Habilidades Escoteiras'
+      nome: 'Habilidades Escoteiras',
+      db: 'habilidades escoteiras'
     },
     {
       url: 'servicos.png',
-      nome: 'Serviços'
+      nome: 'Serviços',
+      db: 'serviços'
     }
   ]
 
-for(let i = 0; i < arr_urls.length; i++)
+for(let i = 0; i < arr_urls.length; i++){
     arr_urls[i].url = urlINI + arr_urls[i].url
-
+    arr_urls[i].dbPATH = pathDbBase + arr_urls[i].db
+}
 export default arr_urls
