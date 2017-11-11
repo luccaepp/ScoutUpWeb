@@ -1,13 +1,19 @@
 <script>
 import { mapGetters } from 'vuex'
+import StTitulo from './Titulo.vue'
+import StSubItem from './Subitem.vue'
 
 export default {
     props: ['item', 'especialidade'],
+    components: {
+        StTitulo,
+        StSubItem
+    },
     firebase(){
         return {
             especialidadesDoItem: this.database.ref('progressaoUsuario')
                                                             .child(this.usuarioDatabase['.key'])
-                                                            .child(this.especialidade.toLowerCase())
+                                                            .child(this.especialidade)
                                                             .child('especialidades')
                                                             .child(this.item['.key'])
         }
@@ -17,7 +23,7 @@ export default {
         subitensREF(){
             return this.database.ref('escopoProgressao')
                                 .child('especialidades')
-                                .child(this.especialidade.toLowerCase())
+                                .child(this.especialidade)
                                 .child(this.item['.key'])
                                 .child('itens')
         }
@@ -37,7 +43,7 @@ export default {
         temConquista(subitem){
             return this.especialidadesDoItem 
                         ? this.especialidadesDoItem.length > 0
-                            ? this.especialidadesDoItem.filter(e => (+e['.key'] - 1) == subitem['.key']).length > 0
+                            ? this.especialidadesDoItem.filter(e => (+e['.key'] - 1) == subitem['.key'] && e['.value'] == true).length > 0
                             : false
                         : false
         }
@@ -46,47 +52,23 @@ export default {
 </script>
 
 <template>
-  <div class="row">
-      <div class="col-xs-12">
-          <div class="item text-center">
-            <h3>
-              <i class="fa fa-trophy" aria-hidden="true"></i>
-              {{item.nome}}
-              <i class="fa fa-trophy" aria-hidden="true"></i>
-            </h3>
-          </div>
-      </div>
-      <div class="col-xs-12">
-        <div class="subitens">
-            <div class="subitem" v-for="subitem in subitens">
-                <h4>
-                    <i v-if="temConquista(subitem)" class="fa fa-star text-warning" aria-hidden="true"></i>
-                    <i v-else class="fa fa-star-o text-warning" aria-hidden="true"></i>
-                    {{subitem['.value']}}
-                </h4>
-            </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <st-titulo :titulo="item.nome"></st-titulo>
         </div>
-      </div>
-  </div>
+        <div class="col-xs-12">
+        <div class="subitens">
+            <st-sub-item v-for="subitem in subitens" :subitem="subitem" :temConquista="temConquista(subitem)"></st-sub-item>
+        </div>
+        </div>
+    </div>
 </template>
 
 <style scoped>
-.item{
-    background-color: rgba(86, 64, 46, 1);
-    border: 1px solid;
-    color: #EACF9B;
-    border-color: #EACF9B;
-    font-family: claire;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    padding: 15px;
-}
-
 .subitens{
     background-color: rgba(100, 100, 100, .2);
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
 }
-
 </style>

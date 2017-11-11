@@ -1,10 +1,12 @@
 <script>
 import StItemEspecialidade from './ModalProgressao/ItemEspecialidade.vue'
+import StItemInteresseEspecial from './ModalProgressao/ItemInteresseEspecial.vue'
 import { mapGetters } from 'vuex'
 
 export default {
     components: {
-        StItemEspecialidade
+        StItemEspecialidade,
+        StItemInteresseEspecial
     },
     props: ['itemAtivo'],
     data(){
@@ -43,7 +45,14 @@ export default {
                 </h4>
               </div>
               <div class="modal-body">
-                  <st-item-especialidade v-for="item in escopo" :item="item" :especialidade="itemAtivo.db" :key="item['.key']"></st-item-especialidade>
+                  <template v-if="itemAtivo.tipo == 'especialidade'">
+                    <st-item-especialidade v-for="item in escopo" :item="item" :especialidade="itemAtivo.db" 
+                                            :key="item['.key']"></st-item-especialidade>
+                  </template>
+                  <template v-else-if="itemAtivo.tipo == 'interesse_especial'">
+                      <st-item-interesse-especial v-for="item in escopo" :key="item['.key']" :item="item" :insignia="itemAtivo">
+                      </st-item-interesse-especial>
+                  </template>
               </div>
           </div>
       </div>
