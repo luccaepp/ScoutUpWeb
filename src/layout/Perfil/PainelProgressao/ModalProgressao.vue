@@ -8,7 +8,7 @@ export default {
         StItemEspecialidade,
         StItemInteresseEspecial
     },
-    props: ['itemAtivo'],
+    props: ['itemAtivo', 'usuarioDaPag'],
     data(){
         return {
             escopo: ''
@@ -47,10 +47,10 @@ export default {
               <div class="modal-body">
                   <template v-if="itemAtivo.tipo == 'especialidade'">
                     <st-item-especialidade v-for="item in escopo" :item="item" :especialidade="itemAtivo.db" 
-                                            :key="item['.key']"></st-item-especialidade>
+                                            :key="item['.key']" :usuarioDaPag="usuarioDaPag"></st-item-especialidade>
                   </template>
                   <template v-else-if="itemAtivo.tipo == 'interesse_especial'">
-                      <st-item-interesse-especial v-for="item in escopo" :key="item['.key']" :item="item" :insignia="itemAtivo">
+                      <st-item-interesse-especial v-for="item in escopo" :key="item['.key']" :item="item" :insignia="itemAtivo" :usuarioDaPag="usuarioDaPag">
                       </st-item-interesse-especial>
                   </template>
               </div>

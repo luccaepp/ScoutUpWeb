@@ -4,7 +4,7 @@ import StTitulo from './Titulo.vue'
 import StSubItem from './Subitem.vue'
 
 export default {
-    props: ['item', 'especialidade'],
+    props: ['item', 'especialidade', 'usuarioDaPag'],
     components: {
         StTitulo,
         StSubItem
@@ -12,14 +12,14 @@ export default {
     firebase(){
         return {
             especialidadesDoItem: this.database.ref('progressaoUsuario')
-                                                            .child(this.usuarioDatabase['.key'])
+                                                            .child(this.usuarioDaPag['.key'])
                                                             .child(this.especialidade)
                                                             .child('especialidades')
                                                             .child(this.item['.key'])
         }
     },
     computed: {
-        ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
+        ...mapGetters({database: 'getDatabase'}),
         subitensREF(){
             return this.database.ref('escopoProgressao')
                                 .child('especialidades')

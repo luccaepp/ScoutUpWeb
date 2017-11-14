@@ -10,12 +10,12 @@ export default {
     firebase(){
         return { }
     },
-    props: ['item', 'insignia'],
+    props: ['item', 'insignia', 'usuarioDaPag'],
     components: {
         StSubItem
     },
     computed: {
-        ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
+        ...mapGetters({database: 'getDatabase'}),
         temConquista(){
             console.log(this.itemProgressaoUsuario.length)
             return this.item 
@@ -29,7 +29,7 @@ export default {
     },
     created(){
         this.$bindAsArray('itemProgressaoUsuario', this.database.ref('progressaoUsuario')
-                                                .child(this.usuarioDatabase['.key'])
+                                                .child(this.usuarioDaPag['.key'])
                                                 .child('atividadesRamo')
                                                 .child('insignias')
                                                 .child(this.insignia.db)                                                                                              

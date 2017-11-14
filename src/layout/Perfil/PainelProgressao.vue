@@ -7,6 +7,7 @@ import ImagensEspecial from './PainelProgressao/imagensEspecial'
 
 
 export default {
+  props: ['usuarioDaPag'],
   components: {
     StConquista,
     StModalProgressao
@@ -23,6 +24,9 @@ export default {
       this.itemAtivo = bundle
       console.log(bundle.nome)
     }
+  },
+  created(){
+    console.log('painel prog', this.usuarioDaPag)
   }
 }
 </script>
@@ -46,7 +50,7 @@ export default {
                 <st-conquista tipo="itemE" @mostrarProgressao="mostrarProgressao" :infoIMG="infoIMG" class="gutter-wrap"></st-conquista>
               </div>
             </div>
-            <st-modal-progressao :itemAtivo="itemAtivo"></st-modal-progressao>
+            <st-modal-progressao :usuarioDaPag="usuarioDaPag" :itemAtivo="itemAtivo"></st-modal-progressao>
         </div>
     </div>
 </template>
