@@ -62,13 +62,11 @@ var vm = {
       console.log(isCriado)
       return isCriado
     },
-    abrirChat(amigo){
-      if(!this.conversaJaExiste(amigo.chave)){
-        var conversaRef = this.$firebaseRefs.conversas.push()
-        this.chaveConversa = conversaRef.key
-        this.database.ref("usuario/"+this.usuarioDatabase['.key']+"/conversas").push({"chave": this.chaveConversa, "outroUser": amigo.chave})
-        this.database.ref("usuario/"+amigo.chave+"/conversas").push({"chave": this.chaveConversa, "outroUser": this.usuarioDatabase['.key']})
-      }
+    abrirChat(amigo){    
+      this.conversaJaExiste(amigo.chave)
+      // if(!this.conversaJaExiste(amigo.chave)){
+        
+      // }
       this.conversaSelecionada = this.$firebaseRefs.conversas.child(this.chaveConversa)
       this.amigoSelecionado = amigo
       this.mostrarChat = !this.mostrarChat
@@ -78,14 +76,16 @@ var vm = {
   computed: {
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', auth: 'getAuth', database: 'getDatabase', usuario: 'getUsuario',
                             firebase: 'getFirebase'}),
-    getCountAmigos(){
-      if(this.amigos && this.amigos != null){
-        return this.amigos.length
-      }
-    },
     getCountAmigosOnline(){
       if(this.amigosOnline && this.amigosOnline != null){
-        return this.amigosOnline.length
+        var count = 0
+        this.amigosOnline.forEach(amigo =>{
+          console.log("aloalo")
+          if(amigo.chave){
+            count++
+          }
+        })
+        return count
       }
     }
   }
@@ -102,7 +102,7 @@ export default vm
   </div>
   <div id="corpo-friendlist" class="collapse">
     <div class="list-group">
-      <li v-for="amigo in amigosOrdenado" class="item-lista list-group-item" @click="abrirChat(amigo)">
+      <li v-for="amigo in amigosOrdenado" v-if="amigo.chave" class="item-lista list-group-item" @click="abrirChat(amigo)">
           <i v-if="amigo.status == 'online'" class="fa fa-circle text-success" aria-hidden="true"></i>
           <i v-else-if="amigo.status == 'offline'" class="fa fa-circle text-danger" aria-hidden="true"></i>
           {{ amigo.nome }}
