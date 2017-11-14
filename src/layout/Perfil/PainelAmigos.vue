@@ -35,9 +35,15 @@ var vm = {
                 : 0
         },
         numAmigos(){
-            return this.amigos
-                ? this.amigos.length
-                : 0
+            var count = 0
+            if(this.amigos){
+                this.amigos.forEach(amigo=>{
+                    if(amigo.chave){
+                        count++
+                    }
+                })
+            }
+            return count
         }
     },
     methods: {
