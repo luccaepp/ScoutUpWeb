@@ -8,14 +8,15 @@ var vm = {
     data(){
         return {
             exibir: 'amigos'
-        }
+       }
     },
     firebase(){
         return {
             amigos: {
                 source: this.database.ref('/usuario/'+this.usuarioDaPag['.key']+'/amigos'),
                 asObject: false
-            }
+            },
+            conversas:  this.database.ref("conversas")
         }
     },
     watch: {
@@ -41,13 +42,21 @@ var vm = {
     },
     methods: {
         confirmarSolicitacao(solicitacao){
+            var conversaRef = this.$firebaseRefs.conversas.push()
+             var chaveConversa = conversaRef.key
             this.database.ref('/usuario/'+this.usuarioDatabase['.key']+'/amigos').push({
                 nome: solicitacao.de.nome,
-                chave: solicitacao.de.chave
+                chave: solicitacao.de.chave  
+            }).then(resultado => {
+                this.database.ref("usuario/"+this.usuarioDatabase['.key']+"/conversas").push(
+                    {"chave": chaveConversa, "outroUser": solicitacao.de.chave})
             }).then(resultado => {
                 this.database.ref('/usuario/'+solicitacao.de.chave+'/amigos').push({
                     nome: this.usuarioDatabase.nome,
                     chave: this.usuarioDatabase['.key']
+                }).then(resultado =>{
+                    this.database.ref("usuario/"+solicitacao.de.chave+"/conversas").push(
+                        {"chave": chaveConversa, "outroUser": this.usuarioDatabase['.key']})
                 })
                 }).then(resultado => this.excluirSolicitacao(solicitacao))
         },
@@ -74,7 +83,7 @@ export default vm
         </div>
         <div class="panel-body">
             <ul v-if="exibir == 'amigos'" class="list-group list-inline text-center list-amigos">
-                <item-amigo v-for="amigo in amigos" :amigo="amigo"></item-amigo>
+                <item-amigo v-for="amigo in amigos" :amigo="amigo" v-if="amigo.chave"></item-amigo>
             </ul>
             <ul v-else-if="exibir == 'solicitacoes'" class="list-group list-amigos">
                 <li v-for="solicitacao in usuarioDatabase.solicitacoesDeAmizade" class="list-group-item list-group-item-warning">
