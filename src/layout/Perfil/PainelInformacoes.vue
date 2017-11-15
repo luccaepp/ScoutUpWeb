@@ -22,9 +22,11 @@
         methods: {
         //Esse método só é chamado quando o usuário não está cadastrado em um grupo
         vaParaGrupo(){
-              if(this.usuarioDaPag.grupo || this.usuarioDaPag.secao){
+              if(this.usuarioDaPag.grupo){
+                this.$router.push(`/grupos/${this.usuarioDatabase.grupo}`)
                 return
               }
+              
               if(this.usuarioDatabase.tipo == 'escoteiro'){
                 //Usuário do tipo Escoteiro
 
@@ -33,7 +35,7 @@
                 //Usuário do tipo Escotista
                 PainelInformacoesBoxes.dialogOpcoesGrupo(this.$router)
               }
-            }
+        }
         },
         computed:{
             ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', database: 'getDatabase'}),
@@ -52,7 +54,7 @@ export default vm
 
 
 <template>
-    <div class="panel panel-info col-lg-10 col-lg-offset-1 painel-fix-padding">
+    <div class="panel panel-info painel-fix-padding">
         <div class="panel-heading"><i class="fa fa-info-circle" aria-hidden="true"></i> Informações</div>
         <div class="panel-body">
             <ul class="list-group text-center">
@@ -73,6 +75,7 @@ export default vm
                     {{usuarioDaPag.solicitacaoDeEntradaEmSecao.nomeGrupo}} (Não Confirmado)
                 </p>
                 </li>
+                <!-- Seção -->
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Seção:</h4>
                 <p v-if="secaoExiste" class="list-group-item-text">
@@ -81,7 +84,12 @@ export default vm
                 <p v-else-if="!ehDessePerfil">
                     Nenhuma seção adicionada...
                 </p>
-                <p v-else-if="!usuarioDaPag.solicitacaoDeEntradaEmSecao"><a href="#" @click.prevent="vaParaGrupo">Adicionar uma sessão...</a></p>
+                <!-- É desse perfil mas não tem seção e nem solicitação de entrada -->
+                <template v-else-if="!usuarioDaPag.solicitacaoDeEntradaEmSecao">
+                    <p v-if="usuarioDatabase.tipo == 'escotista'"><a href="#" @click.prevent="vaParaGrupo">Adicionar uma sessão...</a></p>
+                    <p v-else>Nenhuma seção adicionada...</p>
+                </template>
+                <!-- É desse perfil e tem solicitação de entrada -->
                 <p v-else class="text-warning">{{usuarioDaPag.solicitacaoDeEntradaEmSecao.nome}} (Não confirmado)</p>
                 </li>
                 <li v-if="usuarioDatabase.tipo == 'escoteiro'" class="list-group-item list-group-item-info">
@@ -105,5 +113,8 @@ export default vm
     li.list-group-item-info{
         padding: 15px;
     }
+}
+.panel{
+    margin-top: 40px;
 }
 </style>

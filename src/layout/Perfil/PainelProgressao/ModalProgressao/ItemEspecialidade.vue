@@ -58,7 +58,7 @@ export default {
         </div>
         <div class="col-xs-12">
         <div class="subitens">
-            <st-sub-item v-for="subitem in subitens" :subitem="subitem" :temConquista="temConquista(subitem)"></st-sub-item>
+            <st-sub-item v-for="subitem in subitens" :key="subitem['.key']" :subitem="subitem" :temConquista="temConquista(subitem)"></st-sub-item>
         </div>
         </div>
     </div>

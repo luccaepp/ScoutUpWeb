@@ -26,7 +26,7 @@
             cadastrarGrupo(){
                 let self = this
                 this.$firebaseRefs.grupos.push({
-                    nome: this.txtNome.replace(/\b\w/g, l => l.toUpperCase()),
+                    nome: this.txtNome.replace(/(?:^|\s)\S/g, l => l.toUpperCase()),
                     estado: this.estadoSelecionado.nome,
                     cidade: this.cidadeSelecionada,
                     criador: {

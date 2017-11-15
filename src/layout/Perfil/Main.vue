@@ -86,9 +86,7 @@ const readyCallbackUsuarioDaPag = function(snap){
                 })
             },
             atualizarFotoDePerfil(){
-                console.log('nem aqui')
                 this.storageRef = this.storage.ref('/fotoPerfil/' + this.$route.params.idUsuario)
-                console.log('atualizarFotoDePerfil()', this.storageRef)
                 let self = this
                 this.storageRef.getDownloadURL().then(url => self.srcFoto = url, erro => this.srcFoto = '')
             },
@@ -152,13 +150,10 @@ const readyCallbackUsuarioDaPag = function(snap){
                     :displayNome="displayNome"></st-painel-informacoes>
             </div>
             <div class="row">
-                <div class="wrapper col-sm-10 col-xs-12 col-sm-offset-1">
-                    <st-painel-amigos :ehDessePerfil="ehDessePerfil" :usuarioDaPag="usuarioDaPag">
-                    </st-painel-amigos>
-                    <st-painel-progressao :usuarioDaPag="usuarioDaPag">
-                    </st-painel-progressao>
-                </div>
-
+                <st-painel-amigos :ehDessePerfil="ehDessePerfil" :usuarioDaPag="usuarioDaPag">
+                </st-painel-amigos>
+                <st-painel-progressao :usuarioDaPag="usuarioDaPag">
+                </st-painel-progressao>
             </div>
         </template>
 
@@ -197,11 +192,6 @@ img.foto-perfil{
   top: 15px;
   padding-left: 0;
   padding-right: 0;
-}
-
-
-.wrapper{
-  padding: 0px;
 }
 
 
