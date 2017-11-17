@@ -16,6 +16,7 @@ export default {
   data(){
       return {
           editando: false,
+          fechado: true,
           datetimeInicial: null,
           datetimeFinal: null,
           txtTitulo: '',
@@ -126,7 +127,7 @@ function clone(obj){
 </script>
 
 <template>
-<div class="panel">
+<div :class="{fechado: fechado}" class="panel">
     <div class="panel-heading">
         <!-- Inputs que permitem alterar a Atividade -->
         <template v-if="editando">
@@ -140,6 +141,10 @@ function clone(obj){
         </template>
         <!-- Apenas Mostrando Informações -->
         <template v-else>
+            <button @click="fechado = !fechado" class="btn btn-sm btn-fechar">
+              <i class="fa" :class="{'fa-plus': fechado, 'fa-minus': !fechado}"></i>
+            </button>
+
             <i aria-hidden="true" class="fa fa-free-code-camp ifaccamp text-danger"></i>
             <span class="titEvento">{{event.title}} - <span class="text-success">{{event.atividade.tipo}}</span></span>
             <span class="pull-right">{{usaBR(event.date)}}</span>
@@ -298,5 +303,11 @@ function clone(obj){
 <style>
 .btn-space {
     margin-right: 5px;
+}
+.fechado > .panel-body, .fechado > .panel-footer{
+  display: none;
+}
+.btn-fechar{
+  margin-left: -10px;
 }
 </style>
