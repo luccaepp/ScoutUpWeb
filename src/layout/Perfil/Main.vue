@@ -7,7 +7,7 @@
     import {mapGetters} from 'vuex'
 
     import LeitorIMG from '../../funcoesGlobais/DOM/LeitorIMG'
-    
+
 const readyCallbackUsuarioDaPag = function(snap){
                     console.log('usuarioDaPagExiste main', snap.exists())
                     EventBus.$emit('usuarioDaPagExiste', snap.exists())
@@ -152,7 +152,7 @@ const readyCallbackUsuarioDaPag = function(snap){
             <div class="row">
                 <st-painel-amigos :ehDessePerfil="ehDessePerfil" :usuarioDaPag="usuarioDaPag">
                 </st-painel-amigos>
-                <st-painel-progressao :usuarioDaPag="usuarioDaPag">
+                <st-painel-progressao v-if="usuarioDaPag.tipo == 'escoteiro'" :usuarioDaPag="usuarioDaPag">
                 </st-painel-progressao>
             </div>
         </template>
