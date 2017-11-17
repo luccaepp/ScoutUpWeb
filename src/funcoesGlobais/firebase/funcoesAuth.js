@@ -3,7 +3,6 @@ export default {
         switch(tipo){
             case 'facebook': return new auth.FacebookAuthProvider()
             case 'google': return new auth.GoogleAuthProvider()
-            case 'twitter': return new auth.TwitterAuthProvider()
         }
     },
     montarObjUsuarioParaDatabaseComObjetoDoAuth(resultadoDoAuth, tipoUsuario){

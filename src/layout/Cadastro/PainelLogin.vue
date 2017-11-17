@@ -22,9 +22,6 @@
             loginFacebook(){
                 this.loginPersonalizado('facebook')
             },
-            loginTwitter(){
-                this.loginPersonalizado('twitter')
-            },
             loginGoogle(){
                 this.loginPersonalizado('google')
             },
@@ -72,7 +69,6 @@
             <div class="pull-right">
                 <i class="fa fa-facebook-square" aria-hidden="true" @click="loginFacebook()"></i>
                 <i class="fa fa-google-plus-square" aria-hidden="true" @click="loginGoogle()"></i>
-                <i class="fa fa-twitter-square" aria-hidden="true" @click="loginTwitter()"></i>
             </div>
         </div>
       </div>
@@ -96,9 +92,6 @@
     }
     .fa-google-plus-square{
         color:#EA4335;
-    }
-    .fa-twitter-square{
-        color:#2AA9E0;
     }
     .apenas{
         color:#999999;
