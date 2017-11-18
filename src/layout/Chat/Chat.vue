@@ -5,7 +5,7 @@ import timeStampFormatter from '../../funcoesGlobais/timeStamp/timeStamp'
 var vm = {
   firebase(){
     return {
-      mensagens: this.conversaRef
+      mensagens: this.conversaRef.child("mensagens")
     }
   },
   watch:{
@@ -71,7 +71,7 @@ var vm = {
           texto: this.txtMensagem.trim(),
           timeStamp: this.firebase.database.ServerValue.TIMESTAMP
       }
-      this.conversaRef.push(mensagem)
+      this.$firebaseRefs.mensagens.push(mensagem)
       this.cadastrarCountMensagensNaoLidas()
       this.mensagem = ''
       this.txtMensagem = ''

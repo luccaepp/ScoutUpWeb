@@ -20,8 +20,8 @@ var vm = {
     },
     amigos(){
       if(this.amigos){
-        this.amigosOnline = this.amigos.filter(amigo => amigo.status == 'online')
-        this.amigosOffline = this.amigos.filter(amigo => amigo.status == 'offline')
+        this.amigosOnline = this.amigos.filter(amigo => amigo.status == 'online' && !!amigo.chave)
+        this.amigosOffline = this.amigos.filter(amigo => amigo.status == 'offline' && !!amigo.chave)
         this.amigosOrdenado = this.amigosOnline.concat(this.amigosOffline)
         console.log("this.amigosOrdenado", this.amigosOrdenado)
 
@@ -78,14 +78,7 @@ var vm = {
                             firebase: 'getFirebase'}),
     getCountAmigosOnline(){
       if(this.amigosOnline && this.amigosOnline != null){
-        var count = 0
-        this.amigosOnline.forEach(amigo =>{
-          console.log("aloalo")
-          if(amigo.chave){
-            count++
-          }
-        })
-        return count
+        return this.amigosOnline.length
       }
     }
   }

@@ -111,6 +111,40 @@ const readyCallbackUsuarioDaPag = function(snap){
                                                                                     .then(resultado => self.atualizarFotoDePerfil()))
                     input.click()
                 }
+            },
+            removerAmigo(){
+                console.log("amigo", this.$route.params.idUsuario)
+                console.log("eu", this.usuarioDatabase['.key'])
+                var amigoFriendListRef 
+                var userFriendListRef
+                const userPagRef = this.database.ref('/usuario/'+this.usuarioDaPag['.key']+'/amigos/')
+                userPagRef.orderByChild('chave').equalTo(this.usuarioDatabase['.key']).once('child_added', amigo =>{
+                    console.log("userPagRef amigo", amigo.val())
+                    amigoFriendListRef = amigo.ref
+                    amigoFriendListRef.off()
+                    amigoFriendListRef.onDisconnect().cancel()
+                    amigoFriendListRef.remove()
+                })
+                this.database.ref('/usuario/'+this.usuarioDaPag['.key']+'/conversas/')
+                .orderByChild('outroUser').equalTo(this.usuarioDatabase['.key']).once('child_added').then(conversa =>{
+                    console.log("conversa.val().chave",conversa.val().chave)
+                    conversa.ref.remove()
+                    this.database.ref('conversas').orderByKey().equalTo(conversa.val().chave).once('child_added').then(conversa => conversa.ref.remove())
+                })
+
+                const userRef = this.database.ref('/usuario/'+this.usuarioDatabase['.key']+'/amigos/')
+                userRef.orderByChild('chave').equalTo(this.usuarioDaPag['.key']).once('child_added', amigo =>{
+                    console.log("userRef amigo", amigo.val())
+                    userFriendListRef = amigo.ref
+                    userFriendListRef.off()
+                    userFriendListRef.onDisconnect().cancel()
+                    userFriendListRef.remove()
+                })
+                var conversaRef
+                this.database.ref('/usuario/'+this.usuarioDatabase['.key']+'/conversas/')
+                .orderByChild('outroUser').equalTo(this.usuarioDaPag['.key']).once('child_added').then(conversa =>{
+                    conversa.ref.remove()
+                })
             }
         },
         created(){
@@ -141,6 +175,9 @@ const readyCallbackUsuarioDaPag = function(snap){
                             </button>
                             <button @click="cancelarSolicitacao()" class="btn btn-danger pull-right" v-if="solicitacaoEnviada">
                                 Cancelar Solicitação
+                            </button>
+                            <button @click="removerAmigo()" class="btn btn-danger pull-right" v-if="ehAmigo">
+                                Remover amigo
                             </button>
                         </div>
                     </div>

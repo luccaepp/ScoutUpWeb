@@ -48,18 +48,22 @@ var vm = {
     },
     methods: {
         confirmarSolicitacao(solicitacao){
-            var conversaRef = this.$firebaseRefs.conversas.push()
+            var conversaRef = this.$firebaseRefs.conversas.push({
+                users: [this.usuarioDatabase['.key'], solicitacao.de.chave]
+            })
              var chaveConversa = conversaRef.key
             this.database.ref('/usuario/'+this.usuarioDatabase['.key']+'/amigos').push({
                 nome: solicitacao.de.nome,
-                chave: solicitacao.de.chave  
+                chave: solicitacao.de.chave,
+                status: 'offline'
             }).then(resultado => {
                 this.database.ref("usuario/"+this.usuarioDatabase['.key']+"/conversas").push(
                     {"chave": chaveConversa, "outroUser": solicitacao.de.chave})
             }).then(resultado => {
                 this.database.ref('/usuario/'+solicitacao.de.chave+'/amigos').push({
                     nome: this.usuarioDatabase.nome,
-                    chave: this.usuarioDatabase['.key']
+                    chave: this.usuarioDatabase['.key'],
+                    status: this.usuarioDatabase.status
                 }).then(resultado =>{
                     this.database.ref("usuario/"+solicitacao.de.chave+"/conversas").push(
                         {"chave": chaveConversa, "outroUser": this.usuarioDatabase['.key']})

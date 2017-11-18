@@ -32,8 +32,7 @@ EventBus.$on('usuarioDatabasePreenchido', user =>{
 EventBus.$on('atualizarStatusNasFriendLists', userAtualRef => {
   const chaveUsuario = userAtualRef.key
   const usuariosRef = firebase.database().ref('/usuario/')
-  userAtualRef.child('/amigos').once('value', amigos => {
-    amigos.forEach(amigo => {
+  userAtualRef.child('/amigos').once('child_added', amigo => {
       usuariosRef.orderByKey().equalTo(amigo.val().chave).on('value',usuarios =>{
         usuarios.forEach(usuario => {
           if(usuario.val().status){
@@ -41,7 +40,6 @@ EventBus.$on('atualizarStatusNasFriendLists', userAtualRef => {
           }else{
             amigo.ref.update({status: 'offline'})
           }
-        })
       })
     })
   })
