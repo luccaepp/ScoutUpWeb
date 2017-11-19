@@ -22,7 +22,7 @@
       </ul>
       <template slot="lis-login">
         <li><router-link to="/cadastro"><span class="glyphicon glyphicon-user"></span> Cadastrar-se</router-link></li>
-        <li><router-link to="/cadastro"><span class="glyphicon glyphicon-log-in"></span> Entrar</router-link></li>
+        <li><router-link to="/login"><span class="glyphicon glyphicon-log-in"></span> Entrar</router-link></li>
       </template>
       
     </st-top-bar-prototipo>

@@ -5,12 +5,14 @@
   import StTopBarLogado from './layout/TopBars/TopBarLogado.vue'
   import Chat from './layout/Chat/Main.vue'
   import { mapGetters } from 'vuex'
+  import ModalCadastroTipo from './layout/Cadastro/ModalTipoCadastro.vue'
 
 
 export default{
   components: {
     StTopBarDeslogado,
     StTopBarLogado,
+    ModalCadastroTipo,
     Chat
   },
   data(){
@@ -49,6 +51,9 @@ export default{
     usuarioDatabase(){
       if(this.usuarioDatabase['.key']){
         EventBus.$emit('usuarioDatabasePreenchido', this.usuarioDatabase)
+        if(!this.usuarioDatabase.tipo){
+          EventBus.$emit('abrirModalCadastroTipo')
+        }
       }
     }
   }
@@ -62,6 +67,7 @@ export default{
     <st-top-bar-logado v-else></st-top-bar-logado>
     <router-view class="router" :firebase="firebase"></router-view>
     <chat v-if="conectado"></chat>
+    <modal-cadastro-tipo :v-if="usuarioDatabase && !usuarioDatabase.tipo"></modal-cadastro-tipo>
   </div>
 </template>
 

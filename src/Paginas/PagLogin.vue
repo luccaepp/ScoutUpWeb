@@ -1,7 +1,5 @@
 <script>
-  import StPainelCadastro from './../layout/Cadastro/PainelCadastro.vue'
   import StPainelLogin from './../layout/Cadastro/PainelLogin.vue'
-
   import { EventBus } from './../eventBus'
   import FuncoesFirebaseAuth from './../funcoesGlobais/firebase/funcoesAuth'
   import FuncoesFirebaseDatabase from './../funcoesGlobais/firebase/funcoesDatabase'
@@ -20,10 +18,10 @@
       }
     },
     components: {
-      StPainelCadastro
+      StPainelLogin
     },
     computed: {
-      ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase', firebase: 'getFirebase', auth: 'getAuth'})
+      ...mapGetters({database: 'getDatabase',usuarioDatabase:'getUsuarioDatabase', firebase: 'getFirebase', auth: 'getAuth'})
     },
     methods: {
       cadastrarUsuarioComEmailESenha(usuario){
@@ -109,8 +107,8 @@
 
 <template>
   <div class="container-fluid">
-  <st-painel-cadastro @cadastrar="cadastrarUsuarioComEmailESenha">
-  </st-painel-cadastro>
+  <st-painel-login>
+  </st-painel-login>
   </div>
 
 
@@ -143,17 +141,17 @@
     padding-right: 0;
     margin-top:100px;
     opacity: .92;
-  } 
+  }
 
- .panel-body-cadastro, .panel-heading-cadastro,
+  .panel-body-cadastro, .panel-heading-cadastro,
    .panel-body-login, .panel-heading-login{
     padding: 40px;
     padding-bottom: 0;
-  } 
+  }
 
   .form-group > input{
     margin-bottom:10px;
-  } 
+  }
   #cad{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-transform: uppercase;

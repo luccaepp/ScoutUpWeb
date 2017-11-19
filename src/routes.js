@@ -9,6 +9,7 @@ import PagAreaPatrulha from './Paginas/PagAreaPatrulha.vue'
 import PagAtividades from './Paginas/PagAtividades.vue'
 import PagOProjeto from './Paginas/PagOProjeto.vue'
 import PagSobreNos from './Paginas/PagSobreNos.vue'
+import PagLogin from './Paginas/PagLogin.vue'
 
 export default [
     {
@@ -18,6 +19,10 @@ export default [
     {
         path: "/cadastro",
         component: PagCadastro
+    },
+    {
+        path: "/login",
+        component: PagLogin
     },
     {
         path: "/usuarios/:idUsuario",

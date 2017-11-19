@@ -4,20 +4,20 @@
         data(){
             return {
                 txtEmail: '',
-                txtSenha: '',
-                radioText: ''
+                txtSenha: ''
+                // radioText: ''
             }
         },
         methods:{
             loginPersonalizado(tipoLogin){
-                var tipoUsuario
-                if(this.radioText){
-                    tipoUsuario = this.radioText
-                } else{
-                    alert('Escolha o tipo de usuário: Escoteiro ou Escotista')
-                    return
-                }
-                EventBus.$emit('loginPersonalizado', {tipoLogin: tipoLogin, tipoUsuario: tipoUsuario})
+                // var tipoUsuario
+                // // if(this.radioText){
+                // //     tipoUsuario = this.radioText
+                // } else{
+                //     alert('Escolha o tipo de usuário: Escoteiro ou Escotista')
+                //     return
+                // }
+                EventBus.$emit('loginPersonalizado', {tipoLogin: tipoLogin})
             },
             loginFacebook(){
                 this.loginPersonalizado('facebook')
@@ -36,7 +36,7 @@
 </script>
 
 <template>
-    <div class="col-lg-5 panel panel-info caixombra panel-auth">
+    <div class="col-lg-6 col-lg-offset-3 panel panel-info caixombra panel-auth">
         <div class="panel-heading panel-heading-login">
             <div class="row">
                 <div class="col-xs-6 col-xs-offset-3 img-container">
@@ -55,17 +55,6 @@
           <input type="password" class="form-control" placeholder="Digite sua Senha" v-model="txtSenha">
         <hr>
         <p class="text-left text-info">Login Personalizado</p>
-        <form class="text-left col-xs-7">
-            <span class="apenas">(Apenas se esta é sua primeira vez aqui)</span>
-            <br>
-            <span class="text-info"> Sou um: </span>
-
-            <label class="radio-inline" for="radioEscoteiroLogin"><input type="radio" id="radioEscoteiroLogin" name="radioUserLogin" value="escoteiro" v-model="radioText"> Escoteiro</label>
-
-            <label class="radio-inline" for="radioEscotistaLogin"><input type="radio" id="radioEscotistaLogin" name="radioUserLogin" value="escotista" v-model="radioText"> Escotista</label>
-
-
-        </form>
             <div class="pull-right">
                 <i class="fa fa-facebook-square" aria-hidden="true" @click="loginFacebook()"></i>
                 <i class="fa fa-google-plus-square" aria-hidden="true" @click="loginGoogle()"></i>
@@ -75,6 +64,7 @@
     </div>
     <div class="panel-footer">
       <div class="btn-toolbar">
+        <router-link to="/cadastro" class="go-to-cadastrar">Ainda não tem Conta?</router-link>
         <button class="btn btn-success pull-right" @click="login">Confirmar</button>
       </div>
     </div>
@@ -100,4 +90,7 @@
     .panel{
         margin-bottom: 0;
     }
+    .go-to-cadastrar{
+    margin-left: 15px;
+}
 </style>
