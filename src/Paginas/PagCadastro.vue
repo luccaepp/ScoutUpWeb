@@ -38,10 +38,15 @@
 
       },
       perfil(idUsuario){
-        if(!this.usuarioDatabase.tipo){
-          this.abrirModalCadastrarTipo()
+        if(this.usuarioDatabase != null && this.usuarioDatabase['.key'] != null){
+          console.log("this.usuarioDatabase", this.usuarioDatabase)
+          var tipo = this.usuarioDatabase.tipo
+          if(!tipo){
+            this.abrirModalCadastrarTipo()
+          }
+            this.$router.push('/usuarios/'+idUsuario)
+
         }
-        this.$router.push('/usuarios/'+idUsuario)
       },
       abrirModalCadastrarTipo(){
         EventBus.$emit('abrirModalCadastroTipo')
@@ -78,23 +83,6 @@
     mounted(){
       //Tratamentos do Bus
       console.log(this.database, this.firebase, this.auth)
-      EventBus.$on('loginPersonalizado', data => {
-        var tipoLogin = data.tipoLogin
-        var provider = FuncoesFirebaseAuth.retornaProvider(tipoLogin, this.firebase.auth)
-        this.loginPersonalizado(provider)
-
-      })
-
-      EventBus.$on('login', data => {
-        this.auth.signInWithEmailAndPassword(data.email, data.senha).then(resultado => {
-          console.info(resultado)
-          this.perfil(data.key)
-        }).catch(erro => {
-          alert('Não foi possível autenticar o usuário. \nVerifique as as informações nos campos')
-          console.error(erro)
-        })
-      })
-
     },
     beforeCreate(){
       document.body.className='cadastro'

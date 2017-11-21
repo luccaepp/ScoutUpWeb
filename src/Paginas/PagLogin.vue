@@ -36,10 +36,15 @@
 
       },
       perfil(idUsuario){
-        if(!this.usuarioDatabase.tipo){
-          this.abrirModalCadastrarTipo()
+        if(this.usuarioDatabase != null && this.usuarioDatabase['.key'] != null){
+          console.log("this.usuarioDatabase", this.usuarioDatabase)
+          var tipo = this.usuarioDatabase.tipo
+          if(!tipo){
+            this.abrirModalCadastrarTipo()
+          }
+            this.$router.push('/usuarios/'+idUsuario)
+
         }
-        this.$router.push('/usuarios/'+idUsuario)
       },
       abrirModalCadastrarTipo(){
         EventBus.$emit('abrirModalCadastroTipo')
@@ -84,9 +89,12 @@
       })
 
       EventBus.$on('login', data => {
+        console.log('nahanah')
         this.auth.signInWithEmailAndPassword(data.email, data.senha).then(resultado => {
           console.info(resultado)
-          this.perfil(data.key)
+          if(this.usuarioDatabase && this.usuarioDatabase['.key']){
+              this.perfil(this.usuarioDatabase['.key'])
+          }
         }).catch(erro => {
           alert('Não foi possível autenticar o usuário. \nVerifique as as informações nos campos')
           console.error(erro)

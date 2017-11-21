@@ -16,10 +16,8 @@ export default {
     cadastrarTipo(tipo){
         this.database.ref('usuario/'+ this.usuarioDatabase['.key']).update({
           tipo: tipo
-        }).then(()=> {
-            this.isTipoCadastrado = true
-            EventBus.$emit("fecharModalCadastroTipo")
-          })
+        }).then(() => this.isTipoCadastrado = true)
+        EventBus.$emit("fecharModalCadastroTipo")
     }
   },
   created(){

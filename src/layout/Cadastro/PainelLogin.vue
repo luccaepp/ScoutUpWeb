@@ -65,7 +65,7 @@
     <div class="panel-footer">
       <div class="btn-toolbar">
         <router-link to="/cadastro" class="go-to-cadastrar">Ainda não tem Conta?</router-link>
-        <button class="btn btn-success pull-right" @click="login">Confirmar</button>
+        <button class="btn btn-success pull-right" @click="login()">Confirmar</button>
       </div>
     </div>
     </div>

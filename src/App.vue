@@ -19,7 +19,7 @@ export default{
     return{
       conectado: false,
       firebase: this.$store.state.firebase,
-      pathsPermitidos: ['/cadastro', '/', '/o-projeto', '/sobre-nos']
+      pathsPermitidos: ['/cadastro','/login', '/', '/o-projeto', '/sobre-nos']
     }
   },
   beforeCreate(){
@@ -49,7 +49,7 @@ export default{
   },
   watch: {
     usuarioDatabase(){
-      if(this.usuarioDatabase['.key']){
+      if(this.usuarioDatabase && this.usuarioDatabase['.key']){
         EventBus.$emit('usuarioDatabasePreenchido', this.usuarioDatabase)
         if(!this.usuarioDatabase.tipo){
           EventBus.$emit('abrirModalCadastroTipo')
@@ -67,7 +67,7 @@ export default{
     <st-top-bar-logado v-else></st-top-bar-logado>
     <router-view class="router" :firebase="firebase"></router-view>
     <chat v-if="conectado"></chat>
-    <modal-cadastro-tipo :v-if="usuarioDatabase && !usuarioDatabase.tipo"></modal-cadastro-tipo>
+    <modal-cadastro-tipo :v-if="usuarioDatabase"></modal-cadastro-tipo>
   </div>
 </template>
 
