@@ -39,7 +39,8 @@ var vm = {
                 avaliacao: {
                     ups: 0,
                     downs: 0
-                }
+                },
+                tipo: 'comum'
             }
             //Cadastrando o Post na base de dados
             this.database.ref(this.pathParaArea+'/posts/').push(post).then(result => {

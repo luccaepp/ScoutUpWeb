@@ -1,5 +1,6 @@
 <script>
 import StPost from './PostsPanelComponents/Post.vue'
+import StPostDeAtividade from './PostsPanelComponents/PostDeAtividade.vue'
 import {mapGetters} from 'vuex'
 import {EventBus} from '../../eventBus'
 import _ from 'lodash' 
@@ -34,7 +35,8 @@ var vm = {
         }
     },
     components: {
-        StPost
+        StPost,
+        StPostDeAtividade
     }
 }
 export default vm
@@ -43,7 +45,19 @@ export default vm
     <div>
         <h2>Posts</h2>
         <template v-for="post in posts">
-            <st-post :ehDessaArea="ehDessaArea" :post="post" :area="area" :pathParaArea="pathParaArea"></st-post>
+            <st-post v-if="post.tipo == 'comum'" 
+                    :ehDessaArea="ehDessaArea" 
+                    :post="post" 
+                    :area="area" 
+                    :pathParaArea="pathParaArea" 
+                    :key="post['.key']">
+            </st-post>
+
+            <st-post-de-atividade v-else-if="post.tipo == 'atividade'"                     
+                    :ehDessaArea="ehDessaArea"
+                    :post="post"
+                    :key="post['.key']">
+            </st-post-de-atividade>
         </template>
         <div class="row">
             <div class="col-xs-10 col-xs-offset-1">
@@ -72,5 +86,21 @@ h2{
     font-family: claire;
     text-transform: uppercase;
     font-size:50px;
+}
+</style>
+
+<style>
+.panel-post {
+    position: relative;
+    border-radius: 30px;
+    border: 1px solid #eacf9b;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: transparent;
+    color:#eacf9b!important;
+    border-radius: 30px;
+    text-overflow: clip;
+}
+.panel-post > .panel-body{
+    padding-bottom: 10;
 }
 </style>

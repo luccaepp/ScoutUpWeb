@@ -197,7 +197,7 @@ export default vm
     font-family: claire;
     font-size: 20px;
 }
-.foto-perfil-usuario{
+i.foto-perfil-usuario{
     font-size: 60px;
     color: #eacf9b;
 }
@@ -220,18 +220,5 @@ export default vm
 .txt-area{
     padding:15px;
     border-radius: 5px;
-}
-.panel-post {
-    position: relative;
-    border-radius: 30px;
-    border: 1px solid #eacf9b;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: transparent;
-    color:#eacf9b!important;
-    border-radius: 30px;
-    text-overflow: clip;
-}
-.panel-post > .panel-body{
-    padding-bottom: 10;
 }
 </style>
