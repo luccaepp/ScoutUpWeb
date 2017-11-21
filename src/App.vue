@@ -39,11 +39,6 @@ export default{
         }
     })
   },
-  created(){
-    this.firebase.messaging().requestPermission()
-      .then(() => console.info('Permissão concedida'))
-      .catch(warn => console.warn('Permissão negada', warn))
-  },
   computed: {
     ...mapGetters({usuarioDatabase: 'getUsuarioDatabase'})
   },

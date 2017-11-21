@@ -282,6 +282,7 @@ function clone(obj){
   height: 260px;
   width: 290px;
 }
+.mapa {max-height:none;}
 
 @media(max-width: 768px){
   .mapa{
@@ -305,7 +306,8 @@ function clone(obj){
     margin-right: 5px;
 }
 .fechado > .panel-body, .fechado > .panel-footer{
-  display: none;
+  position: absolute;
+  left: -100%;
 }
 .btn-fechar{
   margin-left: -10px;
