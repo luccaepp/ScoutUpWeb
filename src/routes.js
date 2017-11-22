@@ -10,6 +10,7 @@ import PagAtividades from './Paginas/PagAtividades.vue'
 import PagOProjeto from './Paginas/PagOProjeto.vue'
 import PagSobreNos from './Paginas/PagSobreNos.vue'
 import PagLogin from './Paginas/PagLogin.vue'
+import PagConfirmarTipo from './Paginas/PagConfirmarTipo.vue'
 
 export default [
     {
@@ -59,5 +60,9 @@ export default [
     {
         path: '/sobre-nos',
         component: PagSobreNos
+    },
+    {
+      path: '/confirmarTipoUsuario',
+      component: PagConfirmarTipo
     }
 ]

@@ -29,43 +29,15 @@
     methods: {
       cadastrarUsuarioComEmailESenha(usuario){
           this.usuarioAtual = usuario
-          this.abrirModalCadastrarTipo()
+          this.abrirModalCadastrarTipo(true)
       },
       perfil(idUsuario){
         if(this.usuarioDatabase != null){
               this.$router.push('/usuarios/'+idUsuario)
         }
       },
-      abrirModalCadastrarTipo(){
-        EventBus.$emit('abrirModalCadastroTipo')
-      },
-      loginPersonalizado(provider){
-        this.auth.signInWithPopup(provider).then(resultado => {
-          //Se o usuário ainda não existe, crie ele
-          this.$bindAsArray('userExists', this.database.ref('/usuario/'+resultado.user.uid), null,
-           snap => {
-             if(!snap.exists()){
-              var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user)
-              if(!objUsuarioParaDatabase){
-                console.error('Erro: impossível montar todos os campos do usuário pelo provedor de autenticação')
-                throw 'Erro: impossível montar todos os campos do usuário pelo provedor de autenticação'
-              }
-
-              FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this, objUsuarioParaDatabase, resultado.user.uid)
-           } else{
-              this.perfil(resultado.user.uid)
-           }
-        })
-
-
-          //Router manda pra tela de perfil
-
-        }).catch(erro => {
-          switch(erro.code){
-            case "auth/account-exists-with-different-credential": alert("O seu e-mail já está cadastrado em outro método de login. Tente novamente com outro provedor de autenticação.") ;break;
-          }
-          console.error("Algo deu errado... "+erro.code+" "+erro.message)
-        })
+      abrirModalCadastrarTipo(Se_Eh_Email_E_Senha_True_Ou_Eh_Auth_Provider_False){
+        EventBus.$emit('abrirModalCadastroTipo', Se_Eh_Email_E_Senha_True_Ou_Eh_Auth_Provider_False)
       }
     },
     mounted(){
@@ -76,7 +48,7 @@
       document.body.className='cadastro'
 
       EventBus.$on('fecharModalCadastroTipo', tipo => {
-        
+
         this.usuarioAtual.tipo = tipo
         let usuario = this.usuarioAtual
         //Criando Usuário no Firebase Auth
@@ -88,14 +60,10 @@
           console.warn("Algo deu errado... "+erro.code+" "+erro.message)
         })
 
-        //FIM EVENTBUS
+        //FIM EVENTBUS FECHAR_MODAL_CADASTRO_TIPO
       })
     }
   }
-
-
-
-
 </script>
 
 

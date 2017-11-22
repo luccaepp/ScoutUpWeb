@@ -24,59 +24,42 @@
       ...mapGetters({database: 'getDatabase',usuarioDatabase:'getUsuarioDatabase', firebase: 'getFirebase', auth: 'getAuth'})
     },
     methods: {
-      cadastrarUsuarioComEmailESenha(usuario){
-          //Criando Usuário no Firebase Auth
-          this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then(snapshot => {
-            //Criando Usuário na Database
-            FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this, usuario, snapshot.uid)
-            this.perfil(snapshot.uid)
-          }).catch((erro) => {
-            console.warn("Algo deu errado... "+erro.code+" "+erro.message)
-          })
-
-      },
       perfil(idUsuario){
         if(this.usuarioDatabase != null && this.usuarioDatabase['.key'] != null){
-          console.log("this.usuarioDatabase", this.usuarioDatabase)
-          var tipo = this.usuarioDatabase.tipo
-          if(!tipo){
-            this.abrirModalCadastrarTipo()
-          }
-            this.$router.push('/usuarios/'+idUsuario)
-
+          this.$router.push('/usuarios/'+idUsuario)
         }
       },
-      abrirModalCadastrarTipo(){
-        EventBus.$emit('abrirModalCadastroTipo')
+      abrirModalCadastrarTipo(Se_Eh_Email_E_Senha_True_Ou_Eh_Auth_Provider_False){
+        EventBus.$emit('abrirModalCadastroTipo', Se_Eh_Email_E_Senha_True_Ou_Eh_Auth_Provider_False)
       },
       loginPersonalizado(provider){
-        this.auth.signInWithPopup(provider).then(resultado => {
-          //Se o usuário ainda não existe, crie ele
-          this.$bindAsArray('userExists', this.database.ref('/usuario/'+resultado.user.uid), null,
-           snap => {
-             if(!snap.exists()){
-              var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user)
-              if(!objUsuarioParaDatabase){
-                console.error('Erro: impossível montar todos os campos do usuário pelo provedor de autenticação')
-                throw 'Erro: impossível montar todos os campos do usuário pelo provedor de autenticação'
-              }
+          this.auth.signInWithPopup(provider).then(resultado => {
+            //Se o usuário ainda não existe, crie ele
+            this.$bindAsArray('userExists', this.database.ref('/usuario/'+resultado.user.uid), null,
+             snap => {
+               if(!snap.exists()){
+                var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user, tipo)
+                if(!objUsuarioParaDatabase){
+                  console.error('Erro: impossível montar todos os campos do usuário pelo provedor de autenticação')
+                  throw 'Erro: impossível montar todos os campos do usuário pelo provedor de autenticação'
+                }
 
-              FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this, objUsuarioParaDatabase, resultado.user.uid)
-           } else{
-              this.perfil(resultado.user.uid)
-           }
-        })
+                FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this, objUsuarioParaDatabase, resultado.user.uid)
+             } else{
+                this.perfil(resultado.user.uid)
+             }
+          })
 
 
-          //Router manda pra tela de perfil
+            //Router manda pra tela de perfil
 
-        }).catch(erro => {
-          switch(erro.code){
-            case "auth/account-exists-with-different-credential": alert("O seu e-mail já está cadastrado em outro método de login. Tente novamente com outro provedor de autenticação.") ;break;
-          }
-          console.error("Algo deu errado... "+erro.code+" "+erro.message)
-        })
-      }
+          }).catch(erro => {
+            switch(erro.code){
+              case "auth/account-exists-with-different-credential": alert("O seu e-mail já está cadastrado em outro método de login. Tente novamente com outro provedor de autenticação.") ;break;
+            }
+            console.error("Algo deu errado... "+erro.code+" "+erro.message)
+          })
+        }
     },
     mounted(){
       //Tratamentos do Bus

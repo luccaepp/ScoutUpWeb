@@ -6,7 +6,8 @@ export default {
   data(){
     return{
       radioText: 'escoteiro',
-      isTipoCadastrado: false
+      isTipoCadastrado: false,
+      Se_Eh_Email_E_Senha_True_Ou_Se_Eh_Auth_Provider_False: null
     }
   },
   computed: {
@@ -14,25 +15,27 @@ export default {
   },
   methods:{
     cadastrarTipo(tipo){
+      if(this.Se_Eh_Email_E_Senha_True_Ou_Se_Eh_Auth_Provider_False)
         EventBus.$emit("fecharModalCadastroTipo", tipo)
+        else
+          EventBus.$emit("tipoUsuarioAuthProviderSelecionado", tipo)
+
     }
   },
   created(){
-    EventBus.$on("abrirModalCadastroTipo", ()=>{
+    EventBus.$on("abrirModalCadastroTipo", Se_Eh_Email_E_Senha_True_Ou_Se_Eh_Auth_Provider_False => {
+      console.log('ehhhhh', Se_Eh_Email_E_Senha_True_Ou_Se_Eh_Auth_Provider_False)
+      this.Se_Eh_Email_E_Senha_True_Ou_Se_Eh_Auth_Provider_False = Se_Eh_Email_E_Senha_True_Ou_Se_Eh_Auth_Provider_False
       console.log("show modal tipo cadastro")
       $('#modal-cadastro-tipo').modal('show');
     })
     EventBus.$on("fecharModalCadastroTipo", ()=>{
       $('#modal-cadastro-tipo').modal('hide');
     })
+    EventBus.$on("tipoUsuarioAuthProviderSelecionado", ()=>{
+      $('#modal-cadastro-tipo').modal('hide');
+    })
     // queria fazer com que quando o modal fosse fechado ele automaticamente cadatraria como escoteiro, mas falhei
-
-    // $('#modal-cadastro-tipo').on('hidden.bs.modal', ()=>{
-    //   console.log("oi pessoal tsdasd")
-    //   if(!this.isTipoCadastrado){
-    //     this.cadastrarTipo('escoteiro')
-    //   }
-  // })
 
   }
 }

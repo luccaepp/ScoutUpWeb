@@ -12,7 +12,6 @@
         methods: {
             cadastrar(){
                 if(this.camposValidos()){
-
                     this.$emit('cadastrar', {nome: this.txtNome, email: this.txtEmail, senha: this.txtSenha})
                 } else{
                     alert('Preencha todos os campos corretamente para se cadastrar')
@@ -23,8 +22,6 @@
                                 this.txtSenha.length < 5 || this.txtSenha != this.txtConfirmarSenha);
                 return retorno;
             }
-        },
-        mounted(){
         }
     }
 </script>

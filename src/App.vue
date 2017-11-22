@@ -38,17 +38,24 @@ export default{
           this.$router.replace('/cadastro')
         }
     })
+
+    router.beforeEach((to, from, next) => {
+      if(this.usuarioDatabase && this.usuarioDatabase['.key']){
+        EventBus.$emit('usuarioDatabasePreenchido', this.usuarioDatabase)
+      }
+    })
+
   },
   computed: {
-    ...mapGetters({usuarioDatabase: 'getUsuarioDatabase'})
+    ...mapGetters({usuarioDatabase: 'getUsuarioDatabase', usuario: 'getUsuario'})
   },
   watch: {
     usuarioDatabase(){
-      if(this.usuarioDatabase && this.usuarioDatabase['.key']){
-        EventBus.$emit('usuarioDatabasePreenchido', this.usuarioDatabase)
-        if(!this.usuarioDatabase.tipo){
-          EventBus.$emit('abrirModalCadastroTipo')
-        }
+
+    },
+    '$route.path'(){
+      if(this.usuario && !this.usuarioDatabase.tipo){
+        this.$router.push('/confirmarTipoUsuario')
       }
     }
   }
