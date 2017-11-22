@@ -38,7 +38,7 @@ export default {
         return part.tipo == 'grupo'
                 ? '/grupos/' + part.chave
                 : part.tipo == 'secao'
-                    ? '/grupos/'+part.chaveGrupo+'/secoes/'+part.chave
+                    ? '/grupos/'+part.chaveGrupo+'/secoes/'+part.nome
                     : null
     },
     remover(){
