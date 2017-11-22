@@ -11,7 +11,8 @@
   export default {
     data(){
       return {
-        userExists: []
+        userExists: [],
+        usuarioAtual: null
       }
     },
     firebase(){
@@ -27,25 +28,12 @@
     },
     methods: {
       cadastrarUsuarioComEmailESenha(usuario){
-          //Criando Usuário no Firebase Auth
-          this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then(snapshot => {
-            //Criando Usuário na Database
-            FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this, usuario, snapshot.uid)
-            this.perfil(snapshot.uid)
-          }).catch((erro) => {
-            console.warn("Algo deu errado... "+erro.code+" "+erro.message)
-          })
-
+          this.usuarioAtual = usuario
+          this.abrirModalCadastrarTipo()
       },
       perfil(idUsuario){
-        if(this.usuarioDatabase != null && this.usuarioDatabase['.key'] != null){
-          console.log("this.usuarioDatabase", this.usuarioDatabase)
-          var tipo = this.usuarioDatabase.tipo
-          if(!tipo){
-            this.abrirModalCadastrarTipo()
-          }
-            this.$router.push('/usuarios/'+idUsuario)
-
+        if(this.usuarioDatabase != null){
+              this.$router.push('/usuarios/'+idUsuario)
         }
       },
       abrirModalCadastrarTipo(){
@@ -86,6 +74,22 @@
     },
     beforeCreate(){
       document.body.className='cadastro'
+
+      EventBus.$on('fecharModalCadastroTipo', tipo => {
+        
+        this.usuarioAtual.tipo = tipo
+        let usuario = this.usuarioAtual
+        //Criando Usuário no Firebase Auth
+        this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then(snapshot => {
+            //Criando Usuário na Database
+            FuncoesFirebaseDatabase.criarUsuarioNaDatabase(this, usuario, snapshot.uid)
+            this.perfil(snapshot.uid)
+        }).catch((erro) => {
+          console.warn("Algo deu errado... "+erro.code+" "+erro.message)
+        })
+
+        //FIM EVENTBUS
+      })
     }
   }
 
@@ -131,17 +135,17 @@
     padding-right: 0;
     margin-top:100px;
     opacity: .92;
-  } 
+  }
 
  .panel-body-cadastro, .panel-heading-cadastro,
    .panel-body-login, .panel-heading-login{
     padding: 40px;
     padding-bottom: 0;
-  } 
+  }
 
   .form-group > input{
     margin-bottom:10px;
-  } 
+  }
   #cad{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-transform: uppercase;

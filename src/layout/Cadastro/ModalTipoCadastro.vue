@@ -5,7 +5,7 @@ import { mapGetters } from 'vuex'
 export default {
   data(){
     return{
-      radioText: '',
+      radioText: 'escoteiro',
       isTipoCadastrado: false
     }
   },
@@ -14,10 +14,7 @@ export default {
   },
   methods:{
     cadastrarTipo(tipo){
-        this.database.ref('usuario/'+ this.usuarioDatabase['.key']).update({
-          tipo: tipo
-        }).then(() => this.isTipoCadastrado = true)
-        EventBus.$emit("fecharModalCadastroTipo")
+        EventBus.$emit("fecharModalCadastroTipo", tipo)
     }
   },
   created(){
@@ -46,11 +43,11 @@ export default {
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Voce é um?</h4> 
+                <h4 class="modal-title">Voce é um:</h4>
               </div>
               <div class="modal-body">
                  <form class="text-left col-xs-7">
-            <label class="radio-inline" for="radioEscoteiroLogin"><input type="radio" id="radioEscoteiroLogin" checked name="radioUserLogin" value="escoteiro" v-model="radioText"> Escoteiro</label>
+            <label class="radio-inline" for="radioEscoteiroLogin"><input type="radio" id="radioEscoteiroLogin" name="radioUserLogin" value="escoteiro" v-model="radioText"> Escoteiro</label>
 
             <label class="radio-inline" for="radioEscotistaLogin"><input type="radio" id="radioEscotistaLogin" name="radioUserLogin" value="escotista" v-model="radioText"> Escotista</label>
 
