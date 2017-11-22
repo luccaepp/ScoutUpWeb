@@ -39,10 +39,23 @@ export default{
         }
     })
 
-    router.beforeEach((to, from, next) => {
-      if(this.usuarioDatabase && this.usuarioDatabase['.key']){
-        EventBus.$emit('usuarioDatabasePreenchido', this.usuarioDatabase)
+    this.$router.beforeEach((to, from, next) => {
+      if(to === '/confirmarTipoUsuario'){
+        if(!this.usuario){
+          console.log('login poooooooooo')
+          return next('/login')
+        }
+        if(!this.usuarioDatabase.tipo) {
+          return next()
+        }
       }
+      if(this.usuarioDatabase){
+        console.log('entrandooooooooooo')
+        if(this.usuarioDatabase.tipo) return next(`/usuarios/${this.usuarioDatabase['.key']}`)
+        else return next('/confirmarTipoUsuario')
+      }
+
+      next()
     })
 
   },
@@ -51,12 +64,12 @@ export default{
   },
   watch: {
     usuarioDatabase(){
-
+      if(this.usuarioDatabase && this.usuarioDatabase['.key']){
+        EventBus.$emit('usuarioDatabasePreenchido', this.usuarioDatabase)
+      }
     },
     '$route.path'(){
-      if(this.usuario && !this.usuarioDatabase.tipo){
-        this.$router.push('/confirmarTipoUsuario')
-      }
+
     }
   }
 }
