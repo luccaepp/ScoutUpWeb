@@ -94,6 +94,15 @@ export default vm
                 </li>
                 <li v-if="usuarioDatabase.tipo == 'escoteiro'" class="list-group-item list-group-item-info">
                     <h4 class="list-group-item-heading">Patrulha: </h4>
+                    <p class="list-group-item-text">
+                        <span v-if="usuarioDaPag.patrulha">
+                            <router-link :to="`/grupos/${usuarioDaPag.grupo}/secoes/${usuarioDaPag.secao.nome}/patrulhas/${usuarioDaPag.patrulha.chave}`">
+                            </router-link>
+                        </span>
+                        <span v-else>
+                            Nenhuma patrulha adicionada...
+                        </span>
+                    </p>
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">E-mail:</h4>

@@ -19,7 +19,7 @@ export default{
     return{
       conectado: false,
       firebase: this.$store.state.firebase,
-      pathsPermitidos: ['/cadastro','/login', '/', '/o-projeto', '/sobre-nos']
+      pathsPermitidos: ['/cadastro','/login', '/', '/o-projeto', '/sobre-nos', '/confirmarTipoUsuario']
     }
   },
   beforeCreate(){
@@ -43,7 +43,7 @@ export default{
       console.log("nhanhanah")
       if(this.usuarioDatabase){
         console.log("lelelel", to)
-        if(to.path === `/usuarios/${this.usuarioDatabase['.key']}`){
+        if(this.pathsPermitidos.indexOf(to.path) == -1){
           console.log("alo rapaziada")
           if(!this.usuarioDatabase.tipo){
             console.log('login poooooooooo')
