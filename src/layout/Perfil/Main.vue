@@ -32,8 +32,7 @@ const readyCallbackUsuarioDaPag = function(snap){
         data(){
             return {
                 storageRef: null,
-                srcFoto: '',
-                usuarioDaPagExiste: false
+                srcFoto: ''
             }
         },
         watch: {

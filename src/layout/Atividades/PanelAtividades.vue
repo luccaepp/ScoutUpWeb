@@ -33,6 +33,30 @@ export default {
                     self.database.ref('/atividade/'+atividade.chave).remove()
                 }
             })
+        },
+        refresh(map){
+            if(map){
+                let vm = this, i = 0
+                if(map.length != 0)
+                    this.atividadesCarregadas = false
+                map.forEach(subMap => {
+                    i++
+                    this.database.ref('atividade').child(subMap.chaveAtividade).on('value', snap => {
+                        let atividadeEmSi = snap.val()
+                        //removendo atividade excluída
+                        if(!atividadeEmSi){
+                            vm.atividades.splice(vm.atividades.indexOf(atividadeEmSi), 1)
+                            return
+                        } 
+                        atividadeEmSi.chave = snap.key
+                        //Caso essa atividade já tenha sido inserida
+                        if(vm.atividades.filter(ativ => ativ.chave == snap.key).length != 0) return
+
+                        vm.atividades.push(atividadeEmSi)
+                    })
+                    if(map.length == i) vm.atividadesCarregadas = true
+                })
+            }
         }
     },
     computed: {
@@ -43,43 +67,10 @@ export default {
             this.fazerBinds()
         },
         mapAtividadesGrupo(){
-            if(this.mapAtividadesGrupo){
-                let vm = this, i = 0
-                if(this.mapAtividadesGrupo.length != 0)
-                    this.atividadesCarregadas = false
-                this.mapAtividadesGrupo.forEach(map => {
-                    i++
-                    this.database.ref('atividade').child(map.chaveAtividade).on('value', snap => {
-                        let atividadeEmSi = snap.val()
-                        if(!atividadeEmSi) return
-                        atividadeEmSi.chave = snap.key
-                        //Caso essa atividade já tenha sido inserida
-                        if(vm.atividades.filter(ativ => ativ.chave == snap.key).length != 0) return
-
-                        vm.atividades.push(atividadeEmSi)
-                    })
-                    if(vm.mapAtividadesGrupo.length == i) vm.atividadesCarregadas = true
-                })
-            }
+            this.refresh(this.mapAtividadesGrupo)
         },
         mapAtividadesSecao(){
-            if(this.mapAtividadesSecao){
-                let vm = this, i = 0
-                if(this.mapAtividadesSecao.length != 0)
-                    this.atividadesCarregadas = false
-                this.mapAtividadesSecao.forEach(map => {
-                    i++
-                    vm.database.ref('atividade').child(map.chaveAtividade).on('value', snap => {
-                        let atividadeEmSi = snap.val()
-                        atividadeEmSi.chave = snap.key
-                        //Caso essa atividade já tenha sido inserida
-                        if(vm.atividades.filter(ativ => ativ.chave == snap.key).length != 0) return
-
-                        vm.atividades.push(atividadeEmSi)
-                    })
-                    if(this.mapAtividadesSecao.length == i) vm.atividadesCarregadas = true
-                })
-            }
+            this.refresh(this.mapAtividadesSecao)
         },
         atividades(){
                 console.log('atividades', this.atividades)
@@ -96,6 +87,7 @@ export default {
         }
     },
     created(){
+        let self = this
         this.fazerBinds()
     }
 }

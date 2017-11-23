@@ -55,32 +55,32 @@ export default vm
 </script>
 
 <template>
-    <div class="panel panel-primary">
+    <div class="panel panel-success">
         <div class="panel-heading">
             <i aria-hidden="true" class="fa fa-users"></i> Patrulhas
         </div>
         <div class="panel-body">
             <ul class="list-group">
                 <!-- Caso a seção não tenha sido carregada ainda -->
-                <span v-if="!secao" class="text-primary">
+                <span v-if="!secao" class="text-success">
                     <i class="fa fa-spinner fa-spin"></i>
                 </span>
                 <!-- Caso a seção tenha sido carregada e tenha patrulhas para mostrar -->
                 <template v-else-if="patrulhas.length">
-                    <li v-for="patrulha in patrulhas" class="list-group-item list-group-item-primary text-primary">
+                    <li v-for="patrulha in patrulhas" class="list-group-item list-group-item-success text-success">
                         <i aria-hidden="true" class="fa fa-users"></i> 
                         <router-link :to="retornaLinkPatrulha(patrulha)">{{patrulha.nome}}</router-link>
                     </li>
                 </template>
                 <!-- Caso a seção não tenha patrulhas cadastradas -->
                 <template v-else>
-                    <li class="list-group-item list-group-item-primary text-primary">
+                    <li class="list-group-item list-group-item-success text-success">
                         Nenhuma patrulha cadastrada nessa seção...
                     </li>
                 </template>
                 <template v-if="usuarioEhEscotistaDaSecao">
-                    <li class="list-group-item list-group-item-primary">
-                        <span @click="adicionarPatrulha()" class="adicionarPatrulha text-primary">
+                    <li class="list-group-item list-group-item-success">
+                        <span @click="adicionarPatrulha()" class="adicionarPatrulha text-success">
                             <i class="fa fa-plus text-success" aria-hidden="true"></i>
                             Adicionar uma Patrulha
                         </span>
