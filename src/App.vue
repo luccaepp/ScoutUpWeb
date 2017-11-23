@@ -40,22 +40,18 @@ export default{
     })
 
     this.$router.beforeEach((to, from, next) => {
-      if(to === '/confirmarTipoUsuario'){
-        if(!this.usuario){
-          console.log('login poooooooooo')
-          return next('/login')
-        }
-        if(!this.usuarioDatabase.tipo) {
-          return next()
-        }
-      }
+      console.log("nhanhanah")
       if(this.usuarioDatabase){
-        console.log('entrandooooooooooo')
-        if(this.usuarioDatabase.tipo) return next(`/usuarios/${this.usuarioDatabase['.key']}`)
-        else return next('/confirmarTipoUsuario')
+        console.log("lelelel", to)
+        if(to.path === `/usuarios/${this.usuarioDatabase['.key']}`){
+          console.log("alo rapaziada")
+          if(!this.usuarioDatabase.tipo){
+            console.log('login poooooooooo')
+            return next('/confirmarTipoUsuario')
+          }
+        }
       }
-
-      next()
+      return next()
     })
 
   },

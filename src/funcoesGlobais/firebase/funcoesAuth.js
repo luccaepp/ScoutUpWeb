@@ -5,8 +5,9 @@ export default {
             case 'google': return new auth.GoogleAuthProvider()
         }
     },
-    montarObjUsuarioParaDatabaseComObjetoDoAuth(resultadoDoAuth, tipoUsuario){
-        var nome, email, tipo, baseMsgErr='Impossível adquirir o seguinte campo do provedor de autenticação: ';
+    montarObjUsuarioParaDatabaseComObjetoDoAuth(resultadoDoAuth){
+        //, tipo tipoUsuario
+        var nome, email, baseMsgErr='Impossível adquirir o seguinte campo do provedor de autenticação: ';
         if(resultadoDoAuth.displayName){
             nome = resultadoDoAuth.displayName
         } else if(resultadoDoAuth.user){
@@ -23,6 +24,7 @@ export default {
             return false
         }
 
-        return {nome: nome, email: email, tipo: tipoUsuario}
+        return {nome: nome, email: email}
+        //tipo: tipoUsuario
   }
 }

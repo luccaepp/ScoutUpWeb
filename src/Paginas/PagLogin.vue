@@ -38,7 +38,7 @@
             this.$bindAsArray('userExists', this.database.ref('/usuario/'+resultado.user.uid), null,
              snap => {
                if(!snap.exists()){
-                var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user, tipo)
+                var objUsuarioParaDatabase = FuncoesFirebaseAuth.montarObjUsuarioParaDatabaseComObjetoDoAuth(resultado.user)
                 if(!objUsuarioParaDatabase){
                   console.error('Erro: impossível montar todos os campos do usuário pelo provedor de autenticação')
                   throw 'Erro: impossível montar todos os campos do usuário pelo provedor de autenticação'
