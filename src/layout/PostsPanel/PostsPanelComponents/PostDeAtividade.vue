@@ -32,7 +32,7 @@ export default {
 
 <template>
     <!-- PAINEL DO POST -->
-  <div class="panel panel-post panel-transparent col-xs-12">
+  <div class="panel panel-post panel-transparent col-xs-12" v-if="atividade">
     <div class="panel-heading">
       <div class="row">
           <!-- Foto de Perfil do Usuário que realizou o Post -->
@@ -47,10 +47,9 @@ export default {
     </div>
     <div class="panel-body">
       <div class="row">
-        {{atividade}}
-      </div>
-      <div class="row">
+        <p>Local:</p>
         <gmap-map
+          v-if="local"
           :center="local"
           :zoom="14"
           map-type-id="hybrid"

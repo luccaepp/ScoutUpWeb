@@ -11,7 +11,8 @@ var vm = {
     data(){
         return {
             adicionandoMembrosPatrulha: false,
-            membros: ''
+            membros: '',
+            convitesDaSecao: []
         }
     },
     firebase(){
