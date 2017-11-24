@@ -1,6 +1,6 @@
 <script>
 export default {
-  
+
 }
 </script>
 
@@ -19,7 +19,8 @@ export default {
                         </div>
                         <div class="col-xs-9">
                             <div class="well">
-                                Textinho sobre eu
+                                Sou responsável por boa parte da programação da parte web e do
+                                back-end do software. :D
                             </div>
                         </div>
                     </div>
@@ -28,7 +29,8 @@ export default {
                     <div class="row">
                         <div class="col-xs-9">
                             <div class="well">
-                                Textinho sobre o heitor
+                                Minha responsabilidade foi principal na parte web, em que fiz a troca
+                                de mensagens e soluções de problemas em geral.
                             </div>
                         </div>
                         <div class="col-xs-3">
@@ -41,14 +43,14 @@ export default {
                     <div class="row">
                         <div class="col-xs-3">
                             <img class="img-circle" src="../assets/nos/mamede.jpg" alt="Foto do Mamede">
-                            <p>Gustavo Mamede</p>     
+                            <p>Gustavo Mamede</p>
                         </div>
                         <div class="col-xs-9">
                             <div class="well">
                                 Textinho sobre o mamede
                             </div>
                         </div>
-                    </div>  
+                    </div>
                 </li>
                 <li class="list-group-item">
                     <div class="row">
@@ -59,9 +61,9 @@ export default {
                         </div>
                         <div class="col-xs-3">
                             <img src="../assets/nos/lucca.jpg" alt="Foto do Lucca" class="img-circle">
-                            <p>Lucca Eppinger</p>  
+                            <p>Lucca Eppinger</p>
                         </div>
-                    </div>                  
+                    </div>
                 </li>
             </ul>
         </div>
@@ -92,4 +94,3 @@ body{
     border-bottom-width: 1px;
 }
 </style>
-

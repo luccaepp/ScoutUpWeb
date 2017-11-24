@@ -10,7 +10,7 @@ export default function(isso, nome){
         var secaoPatrulhaUsuario, objPadrao = {
                 chave: snap.key,
                 'nome': nome
-            } 
+            }
 
         if(!isso.PATHLIST){
             return
@@ -31,7 +31,7 @@ export default function(isso, nome){
                 'patrulha': objPadrao
             }
         }
-
-        isso.database.ref('/usuario/'+isso.usuarioDatabase['.key']).update(secaoPatrulhaUsuario)
+        if(isso.PATHLIST.tipo == 'secao')
+          isso.database.ref('/usuario/'+isso.usuarioDatabase['.key']).update(secaoPatrulhaUsuario)
     })
 }

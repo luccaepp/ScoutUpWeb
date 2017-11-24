@@ -26,7 +26,7 @@
                 this.$router.push(`/grupos/${this.usuarioDatabase.grupo}`)
                 return
               }
-              
+
               if(this.usuarioDatabase.tipo == 'escoteiro'){
                 //Usuário do tipo Escoteiro
 
@@ -92,11 +92,12 @@ export default vm
                 <!-- É desse perfil e tem solicitação de entrada -->
                 <p v-else class="text-warning">{{usuarioDaPag.solicitacaoDeEntradaEmSecao.nome}} (Não confirmado)</p>
                 </li>
-                <li v-if="usuarioDatabase.tipo == 'escoteiro'" class="list-group-item list-group-item-info">
+                <li v-if="usuarioDaPag.tipo == 'escoteiro'" class="list-group-item list-group-item-info">
                     <h4 class="list-group-item-heading">Patrulha: </h4>
                     <p class="list-group-item-text">
                         <span v-if="usuarioDaPag.patrulha">
                             <router-link :to="`/grupos/${usuarioDaPag.grupo}/secoes/${usuarioDaPag.secao.nome}/patrulhas/${usuarioDaPag.patrulha.chave}`">
+                              {{usuarioDaPag.patrulha.nome}}
                             </router-link>
                         </span>
                         <span v-else>

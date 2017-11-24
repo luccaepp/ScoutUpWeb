@@ -26,6 +26,7 @@
                 this.loginPersonalizado('google')
             },
             login(){
+            console.log('chamou login pelo botaos')
                 EventBus.$emit('login', {email: this.txtEmail, senha: this.txtSenha})
             }
         },

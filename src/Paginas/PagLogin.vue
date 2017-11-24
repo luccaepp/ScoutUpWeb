@@ -74,9 +74,9 @@
       EventBus.$on('login', data => {
         console.log('nahanah')
         this.auth.signInWithEmailAndPassword(data.email, data.senha).then(resultado => {
-          console.info(resultado)
-          if(this.usuarioDatabase && this.usuarioDatabase['.key']){
-              this.perfil(this.usuarioDatabase['.key'])
+          console.info(resultado.uid)
+          if(resultado.uid){
+              this.perfil(resultado.uid)
           }
         }).catch(erro => {
           alert('Não foi possível autenticar o usuário. \nVerifique as as informações nos campos')

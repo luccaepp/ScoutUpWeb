@@ -1,5 +1,6 @@
 <script>
 import { mapGetters } from 'vuex'
+import StComentariosPanel from './Post/ComentariosPanel.vue'
 export default {
   props: ['ehDessaArea', 'post'],
   data(){
@@ -7,6 +8,9 @@ export default {
       atividade: null,
       local: null
     }
+  },
+  components: {
+    StComentariosPanel
   },
   firebase(){
     return {
@@ -56,6 +60,9 @@ export default {
           class="mapa"
           >
         </gmap-map>
+      </div>
+      <div class="row">
+
       </div>
     </div>
   </div>
