@@ -71,7 +71,7 @@ export default {
 
             //Aglomerando atividade
             let novaAtividade = {
-                titulo, tipo, materiais, inicio, termino, local, participantes
+                titulo: titulo.trim(), tipo, materiais, inicio, termino, local, participantes
             }
 
             //Validando
@@ -98,8 +98,8 @@ export default {
             //Caso não haja um lugar setado
             if(!this.lugar){
                 return {
-                    lat: 10,
-                    lng: 10
+                    lat: -25.4284,
+                    lng: -49.2733
                 }
             }
 
