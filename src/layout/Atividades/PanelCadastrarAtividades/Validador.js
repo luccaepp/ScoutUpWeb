@@ -22,10 +22,9 @@ export default {
             : !participantesValido
             ? "Adicione pelo menos um participante."
             : ""
-        if(mensagemErro === "")
-            return true
 
-        return this.emitirAlert(mensagemErro)
+
+        return mensagemErro === "" ? true : this.emitirAlert(mensagemErro)
     },
     emitirAlert(mensagemErro){
         alert(mensagemErro)
