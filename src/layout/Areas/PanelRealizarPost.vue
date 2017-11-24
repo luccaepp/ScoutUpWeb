@@ -110,7 +110,7 @@ export default vm
             </div>
             <div class="panel panel-info panel-fotos">
                 <div class="panel-heading">
-                    <i data-v-4210859e="" aria-hidden="true" class="fa fa-picture-o"></i>
+                    <i aria-hidden="true" class="fa fa-picture-o"></i>
                     Fotos
                 </div>
                 <div class="panel-body">

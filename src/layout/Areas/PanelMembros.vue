@@ -74,7 +74,7 @@ export default vm
         <div class="panel-body">
             <ul v-if="exibirMembros" class="list-group">
                 <!-- Esse <li> é pra adicionar membros na seção -->
-                <li v-if="ehEscotistaDaArea && tipoArea=='secao' && convitesDaSecao.length != 0">
+                <li v-if="(ehEscotistaDaArea || usuarioDatabase.tipo == 'escotista') && tipoArea=='secao' && convitesDaSecao.length != 0">
                   <st-panel-adicionar-membro-na-secao :secao="area" :convites="convitesDaSecao"></st-panel-adicionar-membro-na-secao>
                 </li>
                 <li v-for="membro in membros" class="list-group-item list-group-item-warning">
@@ -82,7 +82,7 @@ export default vm
                     <router-link class="text-warning" :to="'/usuarios/'+membro['.key']">{{membro.nome}}</router-link>
                 </li>
                 <!-- Esse <li> serve apenas para o panelMembros da Área de Patrulha -->
-                <li v-if="ehEscotistaDaArea && tipoArea=='patrulha'" class="list-group-item list-group-item-warning">
+                <li v-if="(ehEscotistaDaArea || usuarioDatabase.tipo == 'escotista') && tipoArea=='patrulha'" class="list-group-item list-group-item-warning">
                     <span v-if="!adicionandoMembrosPatrulha" @click="adicionandoMembrosPatrulha = true"
                         id="addMembrosPatrulha"><i class="fa fa-plus text-success" aria-hidden="true"></i> Adicionar Membros</span>
                     <st-panel-selecionar-membro-secao @pararDeExibir="adicionandoMembrosPatrulha = false" :membrosAtuais="membros"
