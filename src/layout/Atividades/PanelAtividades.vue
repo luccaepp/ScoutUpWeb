@@ -50,8 +50,11 @@ export default {
                         } 
                         atividadeEmSi.chave = snap.key
                         //Caso essa atividade já tenha sido inserida
-                        if(vm.atividades.filter(ativ => ativ.chave == snap.key).length != 0) return
-
+                        // if(vm.atividades.filter(ativ => ativ.chave == snap.key).length != 0) return
+                        vm.atividades.forEach(ativ => {
+                            if(ativ.chave == snap.key && ativ != atividadeEmSi)
+                            vm.atividades.splice(vm.atividades.indexOf(ativ), 1)
+                        })
                         vm.atividades.push(atividadeEmSi)
                     })
                     if(map.length == i) vm.atividadesCarregadas = true
