@@ -1,4 +1,5 @@
 <script>
+import StDropdownOpcoesUsuario from './DropdownOpcoesUsuario.vue'
 import {mapGetters} from 'vuex'
 import StPanelSelecionarMembroSecao from './PanelMembros/PanelSelecionarMembroSecao.vue'
 import StPanelAdicionarMembroNaSecao from './PanelMembros/PanelAdicionarMembroNaSecao.vue'
@@ -6,7 +7,8 @@ var vm = {
     props: ['area', 'tipoArea', 'ehEscotistaDaArea', 'secaoPatrulha'],
     components: {
         StPanelSelecionarMembroSecao,
-        StPanelAdicionarMembroNaSecao
+        StPanelAdicionarMembroNaSecao,
+        StDropdownOpcoesUsuario
     },
     data(){
         return {
@@ -61,7 +63,12 @@ var vm = {
                                                             .child('solicitacoes')
                                                           )
       }
-  }
+    },
+    methods:{
+        isVoceMesmo(usuario){
+            return this.usuarioDatabase['.key'] === usuario['.key']
+        }
+    }
 }
 export default vm
 </script>
@@ -80,6 +87,7 @@ export default vm
                 <li v-for="membro in membros" :key="membro['.key']" class="list-group-item list-group-item-warning">
                     <i class="fa fa-user-circle" aria-hidden="true"></i>
                     <router-link class="text-warning" :to="'/usuarios/'+membro['.key']">{{membro.nome}}</router-link>
+                                        <st-dropdown-opcoes-usuario :usuario="membro" :tipoArea="tipoArea" v-if="(ehEscotistaDaArea || usuarioDatabase.tipo == 'escotista') && !isVoceMesmo(membro)"></st-dropdown-opcoes-usuario>
                 </li>
                 <!-- Esse <li> serve apenas para o panelMembros da Área de Patrulha -->
                 <li v-if="(ehEscotistaDaArea || usuarioDatabase.tipo == 'escotista') && tipoArea=='patrulha'" class="list-group-item list-group-item-warning">
