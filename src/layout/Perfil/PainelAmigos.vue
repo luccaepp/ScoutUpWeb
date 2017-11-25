@@ -52,14 +52,16 @@ var vm = {
              var chaveConversa = conversaRef.key
             this.database.ref('/usuario/'+this.usuarioDatabase['.key']+'/amigos').push({
                 nome: solicitacao.de.nome,
-                chave: solicitacao.de.chave  
+                chave: solicitacao.de.chave,
+                countMensagensNaoLidas: 0  
             }).then(resultado => {
                 this.database.ref("usuario/"+this.usuarioDatabase['.key']+"/conversas").push(
                     {"chave": chaveConversa, "outroUser": solicitacao.de.chave})
             }).then(resultado => {
                 this.database.ref('/usuario/'+solicitacao.de.chave+'/amigos').push({
                     nome: this.usuarioDatabase.nome,
-                    chave: this.usuarioDatabase['.key']
+                    chave: this.usuarioDatabase['.key'],
+                    countMensagensNaoLidas: 0  
                 }).then(resultado =>{
                     this.database.ref("usuario/"+solicitacao.de.chave+"/conversas").push(
                         {"chave": chaveConversa, "outroUser": this.usuarioDatabase['.key']})

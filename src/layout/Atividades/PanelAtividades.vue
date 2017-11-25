@@ -94,16 +94,16 @@ export default {
 </script>
 <template>
     <div class="container panel-atividades">
-        <vue-event-calendar :events="eventos">
-            <template scope="props">
-                <!-- RAIZ -->
-                <div class="row">
-                    <div v-for="(event, index) in props.showEvents" class="event-item">
-                        <panel-atividade @remover="remover" :event="event"></panel-atividade>
+            <vue-event-calendar class="calendar" :events="eventos">
+                <template scope="props">
+                    <!-- RAIZ -->
+                    <div class="row">
+                        <div v-for="(event, index) in props.showEvents" class="event-item">
+                            <panel-atividade @remover="remover" :event="event"></panel-atividade>
+                        </div>
                     </div>
-                </div>
-            </template>
-        </vue-event-calendar>
+                </template>
+            </vue-event-calendar>
         <div v-if="usuarioDatabase && usuarioDatabase.tipo == 'escotista'" class="row">
             <div class="btn-toolbar col-xs-12">
                 <div class="pull-right">
@@ -131,6 +131,20 @@ export default {
     margin-top: 100px;
   }
 }
+
+/* .calendar{
+    background-color: rgba(86, 64, 46, 0.8);
+    border-radius: 10px;
+}
+.item{
+    color: white !important;
+}
+span.is-today{
+    background-color: white !important ;
+}
+.is-event{
+    background-color: rgba(86, 64, 46, 0.8) !important;
+} */
 
 </style>
 

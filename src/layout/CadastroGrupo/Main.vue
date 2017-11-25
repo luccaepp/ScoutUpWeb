@@ -1,4 +1,6 @@
 <script>
+import Validador from './Validador'
+
     var vm = {
         firebase() {
             return {
@@ -24,17 +26,23 @@
         },
         methods: {
             cadastrarGrupo(){
-                let self = this
-                this.$firebaseRefs.grupos.push({
+                if(!this.estadoSelecionado || !this.cidadeSelecionada)
+                    return Validador.emitirAlert("Selecione um estado.")
+
+                let self = this   
+                let grupo = {
                     nome: this.txtNome.replace(/(?:^|\s)\S/g, l => l.toUpperCase()),
                     estado: this.estadoSelecionado.nome,
                     cidade: this.cidadeSelecionada,
-                    criador: {
-                        chave: this.retornaUsuarioDatabase['.key'], 
-                        nome: this.retornaUsuarioDatabase['nome']
-                    },
+                        criador: {
+                            chave: this.retornaUsuarioDatabase['.key'], 
+                            nome: this.retornaUsuarioDatabase['nome']
+                        },
                     timeStamp: this.$store.state.firebase.database.ServerValue.TIMESTAMP
-                }).then(snapshot => {
+                }
+                if(!Validador.validar(grupo))
+                    return
+                this.$firebaseRefs.grupos.push(grupo).then(snapshot => {
                     this.retornaDatabase.ref('/usuario/'+this.retornaUsuarioDatabase['.key']).update({
                         grupo: snapshot.key
                     })
