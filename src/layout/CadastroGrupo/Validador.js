@@ -18,7 +18,7 @@ export default {
         return mensagemErro === "" ? true : this.emitirAlert(mensagemErro)
     },
     emitirAlert(mensagemErro){
-        alert(mensagemErro)
+        bootbox.alert(mensagemErro)
         return false
     }
 

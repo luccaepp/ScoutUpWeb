@@ -14,7 +14,7 @@
                 if(this.camposValidos()){
                     this.$emit('cadastrar', {nome: this.txtNome, email: this.txtEmail, senha: this.txtSenha})
                 } else{
-                    alert('Preencha todos os campos corretamente para se cadastrar')
+                    bootbox.alert('Preencha todos os campos corretamente para se cadastrar')
                 }
             },
             camposValidos(){
