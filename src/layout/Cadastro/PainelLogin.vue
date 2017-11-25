@@ -92,6 +92,9 @@
         margin-bottom: 0;
     }
     .go-to-cadastrar{
-    margin-left: 15px;
-}
+        margin-left: 15px;
+    }
+    .panel{
+        margin-bottom: 100px;
+    }
 </style>

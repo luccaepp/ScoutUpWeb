@@ -30,12 +30,12 @@
     <div class="col-lg-6 col-lg-offset-3 panel panel-warning caixombra panel-auth">
         <div class="panel-heading panel-heading-cadastro">
             <div class="row">
-                <div class="col-xs-6 col-xs-offset-3 img-container">
+                <div class="col-xs-12 img-container">
                     <img class="scout-image" src="../../assets/logo_scoutup_maior.png" alt="Logo do ScoutUp!">
                 </div>
             </div>
             <div class="row">
-                <h2 class="col-xs-6 col-xs-offset-3 text-center" id="cad">Cadastre-se</h2>
+                <h2 class="col-xs-12 col-xs-offset-0 text-center" id="cad">Cadastre-se</h2>
             </div>
         </div>
     <div class="panel-body panel-body-cadastro">
@@ -65,8 +65,11 @@
 </template>
 
 <style scoped>
+.panel-heading{
+    padding: 15px;
+}
 .panel{
-    margin-bottom: 0;
+    margin-bottom: 100px;
 }
 .ja-cadastrado{
     margin-left: 15px;
