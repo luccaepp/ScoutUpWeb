@@ -19,6 +19,7 @@ export default {
     computed: {
         ...mapGetters({storage: 'getStorage', database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
         ehAutor(){
+            if(!this.post.usuarioGerador) return false
             if(this.usuarioDatabase['.key'] == this.post.usuarioGerador.chave) return true
             return false
         }
@@ -73,7 +74,7 @@ export default {
 
             this.srcs = []
             this.imgs.forEach(img => {
-                if(img.chave != img['.key']) return
+                if(!img.chave || img.chave != img['.key']) return
                 this.storage.ref('post').child(this.post['.key']).child(img['.key']).getDownloadURL().then(url => {
                     self.srcs.push({url, img})
                 }).catch(err => {})

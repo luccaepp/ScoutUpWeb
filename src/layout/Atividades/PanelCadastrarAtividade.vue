@@ -71,7 +71,11 @@ export default {
 
             //Aglomerando atividade
             let novaAtividade = {
-                titulo: titulo.trim(), tipo, materiais, inicio, termino, local, participantes
+                titulo: titulo.trim(), tipo, materiais, inicio, termino, local, participantes,
+                usuarioGerador: {
+                    nome: this.usuarioDatabase.nome,
+                    chave: this.usuarioDatabase['.key']
+                }
             }
 
             //Validando
@@ -93,7 +97,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({database: 'getDatabase'}),
+        ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
         centro(){
             //Caso não haja um lugar setado
             if(!this.lugar){
