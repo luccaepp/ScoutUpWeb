@@ -79,7 +79,7 @@
               this.perfil(resultado.uid)
           }
         }).catch(erro => {
-          alert('Não foi possível autenticar o usuário. \nVerifique as as informações nos campos')
+          bootbox.alert('Não foi possível autenticar o usuário. \nVerifique as as informações nos campos')
           console.error(erro)
         })
       })

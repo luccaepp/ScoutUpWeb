@@ -7,7 +7,7 @@ var vm = {
     },
     methods: {
       excluirUsuario(){
-        if(confirm("Você realmente deseja remover "+ this.usuario.nome + "?")){
+        if(bootbox.confirm("Você realmente deseja remover "+ this.usuario.nome + "?")){
           const userRef = this.database.ref(`usuario/${this.usuario['.key']}`)
           if(this.tipoArea === 'grupo')
             return userRef.child(this.tipoArea).remove()

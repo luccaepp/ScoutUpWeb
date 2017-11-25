@@ -16,6 +16,7 @@ export default {
             this.outrosMateriais.push(material)
       },
       adicionarMaterial(material){
+          if(!material) return bootbox.alert("Material sem nome.")
           this.$emit('adicionarMaterial', material)
           if(this.outrosMateriais.indexOf(material) != -1)
             this.outrosMateriais.splice(this.outrosMateriais.indexOf(material), 1)
