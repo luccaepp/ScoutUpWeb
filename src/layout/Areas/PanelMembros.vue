@@ -81,13 +81,13 @@ export default vm
         <div class="panel-body">
             <ul v-if="exibirMembros" class="list-group">
                 <!-- Esse <li> é pra adicionar membros na seção -->
-                <li v-if="(ehEscotistaDaArea || usuarioDatabase.tipo == 'escotista') && tipoArea=='secao' && convitesDaSecao.length != 0">
+                <li v-if="(ehEscotistaDaArea || (usuarioDatabase.tipo == 'escotista' && $route.params.idGrupo == usuarioDatabase.grupo)) && tipoArea=='secao' && convitesDaSecao.length != 0">
                   <st-panel-adicionar-membro-na-secao :secao="area" :convites="convitesDaSecao"></st-panel-adicionar-membro-na-secao>
                 </li>
                 <li v-for="membro in membros" :key="membro['.key']" class="list-group-item list-group-item-warning">
                     <i class="fa fa-user-circle" aria-hidden="true"></i>
                     <router-link class="text-warning" :to="'/usuarios/'+membro['.key']">{{membro.nome}}</router-link>
-                                        <st-dropdown-opcoes-usuario :usuario="membro" :tipoArea="tipoArea" v-if="(ehEscotistaDaArea || usuarioDatabase.tipo == 'escotista') && !isVoceMesmo(membro)"></st-dropdown-opcoes-usuario>
+                                        <st-dropdown-opcoes-usuario :usuario="membro" :tipoArea="tipoArea" v-if="(ehEscotistaDaArea || (usuarioDatabase.tipo == 'escotista' && $route.params.idGrupo == usuarioDatabase.grupo)) && !isVoceMesmo(membro)"></st-dropdown-opcoes-usuario>
                 </li>
                 <!-- Esse <li> serve apenas para o panelMembros da Área de Patrulha -->
                 <li v-if="(ehEscotistaDaArea || usuarioDatabase.tipo == 'escotista') && tipoArea=='patrulha'" class="list-group-item list-group-item-warning">
