@@ -307,7 +307,7 @@ function clone(obj){
 }
 .fechado > .panel-body, .fechado > .panel-footer{
   position: absolute;
-  left: -100%;
+  left: -1000%;
 }
 .btn-fechar{
   margin-left: -10px;

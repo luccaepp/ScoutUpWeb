@@ -97,10 +97,8 @@ export default {
             <vue-event-calendar class="calendar" :events="eventos">
                 <template scope="props">
                     <!-- RAIZ -->
-                    <div class="row">
                         <div v-for="(event, index) in props.showEvents" class="event-item">
-                            <panel-atividade @remover="remover" :event="event"></panel-atividade>
-                        </div>
+                        <panel-atividade @remover="remover" :event="event"></panel-atividade>
                     </div>
                 </template>
             </vue-event-calendar>
@@ -128,11 +126,11 @@ export default {
 }
 @media(max-width: 768px) {
   .panel-atividades{
-    margin-top: 100px;
+    margin-top: 0px;
   }
 }
 
-/* .calendar{
+.calendar{
     background-color: rgba(86, 64, 46, 0.8);
     border-radius: 10px;
 }
@@ -142,14 +140,38 @@ export default {
 span.is-today{
     background-color: white !important ;
 }
+
+.event > .date-num{
+    color: white!important;
+}
+
+.weeks{
+    font-size: 15px!important;
+}
+
+.date-num{
+    font-size: 15px!important;
+}
+
 .is-event{
-    background-color: rgba(86, 64, 46, 0.8) !important;
-} */
+    border: 1px solid white!important;
+}
+
+@media(width: 768px){
+    .events-wrapper{
+        position: relative!important;
+        left: 0!important;
+    }
+}
 
 </style>
 
 <style scoped>
 .table > thead > tr > th, .table > tbody > tr > td{
     text-align: center;
+}
+
+.panel-atividades{
+    margin-bottom: 100px;
 }
 </style>

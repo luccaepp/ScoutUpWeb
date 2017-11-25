@@ -110,7 +110,7 @@ export default vm
         </div>
         <div class="panel-footer">
             <div class="btn-toolbar">
-                <button @click="exibir = 'amigos'" class="btn btn-warning form-control btnAmigos">
+                <button @click="exibir = 'amigos'" class="btn btn-success form-control btnAmigos">
                     <span class="badge">{{numAmigos}}</span> Amigos
                 </button>
                 <button @click="exibir = 'solicitacoes'" v-if="ehDessePerfil" class="btn btn-primary form-control">

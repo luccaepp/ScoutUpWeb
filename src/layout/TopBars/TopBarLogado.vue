@@ -78,6 +78,9 @@
                 }
                 this.dropdownExpandido = this.$refs.dropdownMenuExpandido.className.split(' ').indexOf('open') == -1
             }
+        },
+        created(){
+            this.$router.beforeEach((to, from, next) => {this.dropdownExpandido = false;next();})
         }
     }
 
