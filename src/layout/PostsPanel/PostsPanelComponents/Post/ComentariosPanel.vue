@@ -14,7 +14,7 @@ var vm = {
     },
     firebase(){
         return {
-            comentarios: this.database.ref(this.pathParaOPost+'/comentarios/').limitToLast(this.limitAtual)
+            comentarios: this.database.ref(this.pathParaOPost+'/comentarios/')
         }
     },
     props: ['pathParaOPost', 'ehDessaArea', 'post'],
@@ -25,11 +25,8 @@ var vm = {
     computed: {
         ...mapGetters({database : 'getDatabase'}),
         comentariosLimitados(){
-            return this.post
-                     ? this.post.comentarios
-                        ? Object.keys(this.post.comentarios).map(key => this.post.comentarios[key]).slice(0, this.limitAtual)
-                        : null
-                     :null
+            if(!this.post || !this.comentarios) return null
+            return this.comentarios.slice(0, this.limitAtual)
 
         },
         limiteAtingido(){

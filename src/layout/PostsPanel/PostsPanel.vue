@@ -56,6 +56,7 @@ export default vm
             <st-post-de-atividade v-else-if="post.tipo == 'atividade'"                     
                     :ehDessaArea="ehDessaArea"
                     :post="post"
+                    :pathParaArea="pathParaArea"
                     :key="post['.key']">
             </st-post-de-atividade>
         </template>

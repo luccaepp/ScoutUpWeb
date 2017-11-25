@@ -28,7 +28,6 @@ var vm = {
         ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
         //Retorna o path no firebase para o Post
         pathParaOPost(){
-            console.log('path para o post', this.post)
             return this.pathParaArea+'/posts/'+this.post['.key']
         },
         postUpado(){
@@ -173,7 +172,7 @@ export default vm
             </div>
 
             <div class="row">
-                <st-fotos-panel :pathParaOPost="pathParaArea + '/posts/' + post['.key']" :post="post"></st-fotos-panel>
+                <st-fotos-panel :temPermissao="usuarioDatabase['.key'] == post.usuarioGerador.chave" :pathParaOPost="pathParaArea + '/posts/' + post['.key']" :post="post"></st-fotos-panel>
             </div>
 
             <div class="row">

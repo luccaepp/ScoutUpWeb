@@ -77,7 +77,7 @@ export default vm
                 <li v-if="(ehEscotistaDaArea || usuarioDatabase.tipo == 'escotista') && tipoArea=='secao' && convitesDaSecao.length != 0">
                   <st-panel-adicionar-membro-na-secao :secao="area" :convites="convitesDaSecao"></st-panel-adicionar-membro-na-secao>
                 </li>
-                <li v-for="membro in membros" class="list-group-item list-group-item-warning">
+                <li v-for="membro in membros" :key="membro['.key']" class="list-group-item list-group-item-warning">
                     <i class="fa fa-user-circle" aria-hidden="true"></i>
                     <router-link class="text-warning" :to="'/usuarios/'+membro['.key']">{{membro.nome}}</router-link>
                 </li>
