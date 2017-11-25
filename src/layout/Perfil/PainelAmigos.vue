@@ -91,7 +91,7 @@ export default vm
         </div>
         <div class="panel-body">
             <ul v-if="exibir == 'amigos'" class="list-group list-inline text-center list-amigos">
-                <item-amigo v-for="amigo in amigos" :key="amigo.chave" :amigo="amigo" v-if="amigo.chave"></item-amigo>
+                <item-amigo class="col-xs-12" v-for="amigo in amigos" :key="amigo.chave" :amigo="amigo" v-if="amigo.chave"></item-amigo>
             </ul>
             <ul v-else-if="exibir == 'solicitacoes'" class="list-group list-amigos">
                 <li v-for="solicitacao in usuarioDatabase.solicitacoesDeAmizade" class="list-group-item list-group-item-warning">
