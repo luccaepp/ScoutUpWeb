@@ -8,19 +8,12 @@ var vm = {
     props: ['area', 'ehDessaArea', 'pathParaArea'],
     data(){
         return {
-            limitAtual: 15
+            limitAtual: 15,
+            posts: []
         }
     },
     firebase(){
-        return {
-            posts: {
-                source: this.refPosts,
-                asObject: false,
-                readyCallback(){
-                    console.log('ready posts')
-                }
-            }
-        }
+        return {  }
     },
     computed: {
         ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase'}),
@@ -32,11 +25,18 @@ var vm = {
     watch: {
         limitAtual(){
             this.$bindAsObject('posts', this.refPosts)
+        },
+        refPosts(){
+            this.$unbind('posts')
+            this.$bindAsArray('posts', this.refPosts)
         }
     },
     components: {
         StPost,
         StPostDeAtividade
+    },
+    created(){
+        this.$bindAsArray('posts', this.refPosts)
     }
 }
 export default vm
