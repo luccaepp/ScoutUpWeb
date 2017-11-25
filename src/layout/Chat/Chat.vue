@@ -66,8 +66,8 @@ var vm = {
       if(!this.txtMensagem)
         return
       let mensagem = {
-          nome: this.auth.currentUser.displayName,
-          chave: this.auth.currentUser.uid,
+          nome: this.usuarioDatabase.nome,
+          chave: this.usuarioDatabase['.key'],
           texto: this.txtMensagem.trim(),
           timeStamp: this.firebase.database.ServerValue.TIMESTAMP
       }
