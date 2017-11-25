@@ -101,6 +101,12 @@ h2{
     border-radius: 30px;
     text-overflow: clip;
 }
+
+@media(max-width: 768px){
+    .area{
+        padding: 20px!important;
+    }
+}
 .panel-post > .panel-body{
     padding-bottom: 10;
 }

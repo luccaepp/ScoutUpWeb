@@ -51,9 +51,11 @@ var vm = {
                 self.srcs.forEach(src => {
                     result.ref.child('imgs').push({chave: true})
                     .then(snap => {
-                        snap.ref.set({chave: snap.key})
                         let file = ConversorBase64File(src, snap.key)
-                        self.storage.ref('post').child(result.key).child(snap.key).put(file)
+                        self.storage.ref('post').child(result.key).child(snap.key).put(file).then(result => {
+                            console.log('putado', result)
+                            snap.ref.set({chave: snap.key})
+                        })
                     })
 
                 })

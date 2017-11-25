@@ -96,6 +96,9 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
 </template>
 
 <style scoped>
+.header{
+  z-index: 999;
+}
 .fa-chevron-circle-down{
   font-size: 100px;
   cursor: pointer;

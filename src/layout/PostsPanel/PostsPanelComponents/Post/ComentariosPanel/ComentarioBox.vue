@@ -102,20 +102,18 @@ export default vm
 </script>
 <template>
     <!-- Comentário BOX -->
-    <div v-if="comentario.usuarioGerador" class="col-sm-11">
-        <!-- Wrapper da Caixa do Comentário -->
-        <div class="col-xs-9 col-sm-11 col-sm-offset-1">
+    <div v-if="comentario.usuarioGerador" class="col-xs-12 col-sm-11">
             <!-- Foto de Perfil -->
             <div class="row">
-                <i class="fa fa-user-circle foto-comment col-xs-2 col-sm-1" aria-hidden="true"></i>
+                <i class="fa fa-user-circle foto-comment col-xs-3 col-sm-1" aria-hidden="true"></i>
                 <!-- Painel Comentário  -->
-                <div class="panel panel-comment col-xs-9 col-xs-offset-1 col-sm-offset-1">
+                <div class="panel panel-comment col-xs-9 col-xs-offset-0 col-sm-offset-1">
                     
                     <div class="panel-heading">
-                        <st-dropdown-opcoes-comentario v-if="usuarioDatabase['.key'] == comentario.usuarioGerador.chave" :pathParaOComentario="pathParaOComentario"></st-dropdown-opcoes-comentario>
+                        <st-dropdown-opcoes-comentario class="pull-right" v-if="usuarioDatabase['.key'] == comentario.usuarioGerador.chave" :pathParaOComentario="pathParaOComentario"></st-dropdown-opcoes-comentario>
                         <strong>{{comentario.usuarioGerador.nome}}</strong> 
                         <span class="text-muted">{{retornaTimeStampFormatado(comentario.timeStamp)}}</span>
-                        <div class="pull-right">
+                        <div class="updown-wrap">
                         <span @click="upar()" class="up-down-link">({{numeroDeUps}}) Up! <i class="fa fa-level-up" aria-hidden="true"></i></span>
                         <br>
                         <span @click="downsar()" class="up-down-link">({{numeroDeDowns}}) Down <i class="fa fa-level-down" aria-hidden="true"></i></span>
@@ -126,10 +124,38 @@ export default vm
                     </div><!-- /panel-body -->
                 </div><!-- /panel-comment -->
             </div>
-        </div>
     </div>
 </template>
 <style scoped>
+
+@media(max-width: 768px){
+    .panel-heading{
+        min-height: 100px;
+    }
+    .updown-wrap{
+        position: absolute;
+        right: 5px;
+        top: 40px;
+        clear: both;
+    }
+}
+@media(min-width: 769px){
+    .updown-wrap{
+        position: absolute;
+        top: 5px;
+        right: 70px;
+    }
+}
+@media(max-width: 343px){
+    .panel-heading{
+        min-height: 120px;
+    }
+    .updown-wrap{
+        top: 60px;
+    }
+}
+
+
 .text-muted{
     font-size: 12px;
 }
