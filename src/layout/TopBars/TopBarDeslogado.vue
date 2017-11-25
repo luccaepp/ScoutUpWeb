@@ -11,7 +11,7 @@
 
 
 <template>
-  <st-top-bar-prototipo>
+  <st-top-bar-prototipo :logado="false">
       <ul slot="lis-navbar" class="nav navbar-nav list-inline">
         <li>
             <router-link to="/o-projeto" id="a1" class="a">O Projeto</router-link>

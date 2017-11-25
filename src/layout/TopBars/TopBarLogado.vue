@@ -6,6 +6,11 @@
     import Status from './../../status/status'
 
     export default {
+        data(){
+            return {
+                dropdownExpandido: false
+            }
+        },
         firebase(){
             return {
 
@@ -65,18 +70,30 @@
                 Status.atualizarStatus('offline')
                 this.$store.state.database.goOffline()
                 this.$store.state.auth.signOut()
+            },
+            menuExpandido(){
+                if(!this.$refs.dropdownMenuExpandido){
+                    this.dropdownExpandido = false
+                    return
+                }
+                this.dropdownExpandido = this.$refs.dropdownMenuExpandido.className.split(' ').indexOf('open') == -1
             }
         }
     }
 
 </script>
 <template>
-    <st-top-bar-prototipo>
+    <st-top-bar-prototipo :dropdownExpandido="dropdownExpandido" :logado="true">
         <ul slot="lis-navbar" class="nav navbar-nav list-inline">
         <template v-if="usuarioDatabase">
             <template v-if="usuarioDatabase.grupo">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-object-ungroup" aria-hidden="true"></i> Minhas Áreas <span class="caret"></span></a>
+                <li ref="dropdownMenuExpandido" @click="menuExpandido()" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-object-ungroup" aria-hidden="true"></i> 
+                        Minhas Áreas 
+                        <span class="caret">
+                        </span>
+                    </a>
                         <ul class="dropdown-menu caixombra">
                         <li><router-link :to="retornaLinkGrupo"><i class="fa fa-building" aria-hidden="true"></i> Grupo</router-link></li>
                         <li v-if="usuarioDatabase.secao"><router-link :to="retornaLinkSecao"><i class="fa fa-object-group" aria-hidden="true"></i> Seção</router-link></li>

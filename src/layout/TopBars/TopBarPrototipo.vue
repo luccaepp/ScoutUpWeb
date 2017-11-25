@@ -2,22 +2,32 @@
 import {mapGetters} from 'vuex'
 import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
   export default {
+    props: ['logado', 'dropdownExpandido'],
     components: {
       InputComAutocomplete
     },
     data(){
       return {
         hideTopBar: false,
-        usuarioBuscado: null
+        usuarioBuscado: null,
+        expanded: false
       }
     },
     watch: {
-      usuarioBuscado(){
-
+      hideTopBar(){
+        console.log('trocou', this.hideTopBar)
+        this.chch()
       }
     },
     computed: {
       ...mapGetters({usuario: 'getUsuario'})
+    },
+    methods: {
+      chch(){
+        if(this.$refs.toggleado)
+          this.expanded = window.getComputedStyle(this.$refs.toggleado).display === 'none'
+        else this.expanded = false
+      }
     }
   }
 </script>
@@ -32,7 +42,7 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
 
               <div class="navbar-header">
                   <router-link to="/"><div class="navbar-brand" id="logo"></div></router-link>
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggleado">
+                  <button @click="chch" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggleado">
                     <span class="sr-only">Botão de Toggle</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -40,7 +50,7 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
                   </button>
               </div>
 
-              <div class="collapse navbar-collapse col-lg-6" id="toggleado">
+              <div ref="toggleado" class="collapse navbar-collapse col-lg-6" id="toggleado">
                   <slot name="lis-navbar"></slot>
                 </div>
                 <ul id="navbar-right" class="nav navbar-nav navbar-right">
@@ -63,13 +73,21 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
 
               </nav>
               <div class="col-xs-2 col-xs-offset-10">
-                <i @click="hideTopBar = true" class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                <i @click="hideTopBar = true"
+                 :class="{
+                   'dropdownExpandido': dropdownExpandido,
+                   'chevron-logado': logado,
+                   'chevron-deslogado': !logado,
+                   'expandido': expanded,
+                   'n-expandido': !expanded
+                 }"
+                 class="fa fa-chevron-circle-up" aria-hidden="true"></i>
               </div>
           </div>
           <div id="opt-mostrar-top-bar" key="mostrarHeader" v-else>
             <div class="container">
               <div class="col-xs-12 text-center">
-                  <i @click="hideTopBar = false" class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                  <i @click="hideTopBar = false;chch()" class="fa fa-chevron-circle-down" aria-hidden="true"></i>
               </div>
             </div>
           </div>
@@ -94,7 +112,7 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
 
 }
 
-@media(max-width: 1238px){
+@media(max-width: 1239px){
   .fa-chevron-circle-up{
       top: 88px;
   }
@@ -107,22 +125,61 @@ import InputComAutocomplete from './TopBarPrototipo/InputComAutocomplete.vue'
   }
 }
 
-@media(max-width: 768px){
+@media(max-width: 767px){
     .fa-chevron-circle-up{
-      top: 235px;
-      right: 30px;
       border-color: #56402E;
       border-style: solid;
       display: inline-block;
       border-radius: 300px;
-      box-shadow: 0px 0px 2px #888;
-      width: 80px;
-      height: 80px;
+      width: 45px;
+      height: 45px;
       background-color: rgba(0, 0, 0, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 90px;
+      font-size: 45px;
+  }
+
+  /* Esse é o dropdown externo */
+  .expandido{
+    top: 900px;
+  } 
+
+  /* Esse é o dropdown interno */
+  .dropdownExpandido{
+    top: 410px!important;
+  }
+
+  .chevron-deslogado.n-expandido{
+      top: 150px;
+      right: 30px;
+    -webkit-transition: ease 0.5s;
+    -moz-transition: ease 0.5s;
+    transition: ease 0.5s;
+  }
+
+  .chevron-deslogado.expandido{
+    -webkit-transition: ease 0.5s;
+    -moz-transition: ease 0.5s;
+    transition: ease 0.5s;
+    top: 240px;
+    right: 30px;
+  }
+
+  .chevron-logado.n-expandido{
+      top: 210px;
+      right: 30px;
+    -webkit-transition: ease 0.5s;
+    -moz-transition: ease 0.5s;
+    transition: ease 0.5s;
+  }
+
+  .chevron-logado.expandido{
+    -webkit-transition: ease 0.5s;
+    -moz-transition: ease 0.5s;
+    transition: ease 0.5s;
+    top: 310px;
+    right: 30px;
   }
 }
 </style>
