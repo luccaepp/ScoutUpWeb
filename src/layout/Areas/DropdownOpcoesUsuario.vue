@@ -7,7 +7,8 @@ var vm = {
     },
     methods: {
       excluirUsuario(){
-        if(bootbox.confirm("Você realmente deseja remover "+ this.usuario.nome + "?")){
+        bootbox.confirm("Você realmente deseja remover "+ this.usuario.nome + "?", querExcluir => {
+        if(!querExcluir) return
           const userRef = this.database.ref(`usuario/${this.usuario['.key']}`)
           if(this.tipoArea === 'grupo')
             return userRef.child(this.tipoArea).remove()
@@ -17,8 +18,8 @@ var vm = {
             return userRef.child(this.tipoArea).remove()
             .then(() => userRef.child('patrulha').remove())
           return userRef.child(this.tipoArea).remove()
-        }
-      }           
+        })
+    }    
     }
 }
 export default vm
