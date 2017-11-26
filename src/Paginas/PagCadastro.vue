@@ -24,7 +24,7 @@
       StPainelCadastro
     },
     computed: {
-      ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase', firebase: 'getFirebase', auth: 'getAuth'})
+      ...mapGetters({database: 'getDatabase', usuarioDatabase: 'getUsuarioDatabase', firebase: 'getFirebase', usuario: 'getUsuario', auth: 'getAuth'})
     },
     methods: {
       cadastrarUsuarioComEmailESenha(usuario){

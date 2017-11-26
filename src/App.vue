@@ -51,6 +51,9 @@ export default{
           }
         }
       }
+      if(this.pathsPermitidos.indexOf(to.path) == 0 || this.pathsPermitidos.indexOf(to.path) == 1){
+        return next(!this.conectado)
+      }
       return next()
     })
 
