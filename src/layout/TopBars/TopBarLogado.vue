@@ -98,9 +98,9 @@
                         </span>
                     </a>
                         <ul class="dropdown-menu caixombra">
-                        <li><router-link :to="retornaLinkGrupo"><i class="fa fa-building" aria-hidden="true"></i> Grupo</router-link></li>
-                        <li v-if="usuarioDatabase.secao"><router-link :to="retornaLinkSecao"><i class="fa fa-object-group" aria-hidden="true"></i> Seção</router-link></li>
-                        <li v-if="usuarioDatabase.patrulha"><router-link :to="retornaLinkPatrulha"><i class="fa fa-users" aria-hidden="true"></i> Patrulha</router-link></li>
+                        <li class="hovTopbar"><router-link :to="retornaLinkGrupo"><i class="fa fa-building" aria-hidden="true"></i> Grupo</router-link></li>
+                        <li class="hovTopbar" v-if="usuarioDatabase.secao"><router-link :to="retornaLinkSecao"><i class="fa fa-object-group" aria-hidden="true"></i> Seção</router-link></li>
+                        <li class="hovTopbar" v-if="usuarioDatabase.patrulha"><router-link :to="retornaLinkPatrulha"><i class="fa fa-users" aria-hidden="true"></i> Patrulha</router-link></li>
                     </ul>
                 </li>
                 <li>
@@ -131,8 +131,8 @@
 </template>
 
 <style scoped>
-.dropdown-menu > li:hover{
-    background-color: black!important;
+li.hovTopbar > a:hover{
+    background-color: rgba(33, 33, 33, .2);
 }
 .fa-spinner{
     color: #E1CF9B;
