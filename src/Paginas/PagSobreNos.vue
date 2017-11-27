@@ -47,7 +47,7 @@ export default {
                         </div>
                         <div class="col-xs-9">
                             <div class="well">
-                                Textinho sobre o mamede
+                                Minha responsabilidade foi de administrar o andamento projeto e criar o guia do usuário.
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@ export default {
                     <div class="row">
                         <div class="col-xs-9">
                             <div class="well">
-                                Textinho sobre o lucca
+                                Fui Idealizador do projeto e programador da plataforma Android.
                             </div>
                         </div>
                         <div class="col-xs-3">
