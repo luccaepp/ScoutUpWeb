@@ -63,7 +63,7 @@ export default vm
                 </li>
                 <li class="list-group-item list-group-item-info">
                 <h4 class="list-group-item-heading">Grupo:</h4>
-                <p v-if="grupoDoUsuarioDaPag['.key'] && grupoDoUsuarioDaPag['.key'] != 'undefined'" class="list-group-item-text">
+                <p v-if="grupoDoUsuarioDaPag && grupoDoUsuarioDaPag['.key'] && grupoDoUsuarioDaPag['.key'] != 'undefined'" class="list-group-item-text">
                     <router-link :to="'/grupos/'+grupoDoUsuarioDaPag['.key']">{{grupoDoUsuarioDaPag.nome}}</router-link>
                 </p>
                 <p v-else-if="!ehDessePerfil">Nenhum grupo adicionado...</p>
