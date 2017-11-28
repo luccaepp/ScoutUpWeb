@@ -25,9 +25,9 @@
     },
     methods: {
       perfil(idUsuario){
-        if(this.usuarioDatabase != null && this.usuarioDatabase['.key'] != null){
+        // if(this.usuarioDatabase != null && this.usuarioDatabase['.key'] != null){
           this.$router.push('/usuarios/'+idUsuario)
-        }
+        // }
       },
       abrirModalCadastrarTipo(Se_Eh_Email_E_Senha_True_Ou_Eh_Auth_Provider_False){
         EventBus.$emit('abrirModalCadastroTipo', Se_Eh_Email_E_Senha_True_Ou_Eh_Auth_Provider_False)
@@ -74,8 +74,9 @@
       EventBus.$on('login', data => {
         console.log('nahanah')
         this.auth.signInWithEmailAndPassword(data.email, data.senha).then(resultado => {
-          console.info(resultado.uid)
+          console.info("resultado",resultado.uid)
           if(resultado.uid){
+            console.log("chegou aqui?")
               this.perfil(resultado.uid)
           }
         }).catch(erro => {
