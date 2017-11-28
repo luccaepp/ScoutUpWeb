@@ -57,18 +57,18 @@ export default {
       if(this.atividade['.key']){
         console.log('carregou ativPOST', this.atividade)
         this.local = this.atividade.local
-
+        this.presentes.length = 0
         //adicionando os membros confirmados
         if(this.atividade.presentes){
           Object.keys(this.atividade.presentes).forEach(presenteKey => {
             let valorPresente = this.atividade.presentes[presenteKey]
-            if(!valorPresente) return
+            console.log("valorPresente",presenteKey,  valorPresente)
+            if(!valorPresente || valorPresente === 'false') return
             this.database.ref(`usuario/${presenteKey}`).once('value', snap => {
-              
               let part = snap.val()
+              console.log("part", part)
               part.chave = snap.key
               this.presentes.push(part)
-            
             })
           })
         }
