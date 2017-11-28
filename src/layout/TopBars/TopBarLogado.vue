@@ -66,9 +66,7 @@
         },
         methods: {
             logout(){
-                console.log('deslogando')
-                Status.atualizarStatus('offline')
-                this.$store.state.database.goOffline()
+
                 this.$store.state.auth.signOut()
             },
             menuExpandido(){

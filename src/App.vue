@@ -6,6 +6,7 @@
   import Chat from './layout/Chat/Main.vue'
   import { mapGetters } from 'vuex'
   import ModalCadastroTipo from './layout/Cadastro/ModalTipoCadastro.vue'
+  import Status from './status/status.js'
 
 
 export default{
@@ -32,6 +33,9 @@ export default{
 
     })
     EventBus.$on('usuarioDesconectado', () =>{
+            console.log('deslogando')
+      Status.atualizarStatus('offline')
+      this.$store.state.database.goOffline()
       var path = this.$route.path
       this.conectado = false
      if (this.pathsPermitidos.indexOf(path) == -1) {
@@ -63,7 +67,8 @@ export default{
   },
   watch: {
     usuarioDatabase(){
-      if(this.usuarioDatabase && this.usuarioDatabase['.key']){
+      console.log('usuarioDatabase alterado', this.usuarioDatabase)
+      if(this.usuarioDatabase && this.usuarioDatabase['.key'] && this.usuarioDatabase['.key'] != 'undefined' && this.usuarioDatabase['.key'] != 'null'){
         EventBus.$emit('usuarioDatabasePreenchido', this.usuarioDatabase)
       }
     },
